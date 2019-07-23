@@ -9,8 +9,9 @@ export function login(jsonForm) {
 }
 export function test() {
   return request({
-    url: '/api/func/ventas/getQueryDataListByInputStringMobile',
-    method: 'post'
+    url: '/func/ventas/getCommodityListByInputStringMobile',
+    method: 'post',
+    data: {}
   })
 }
 
