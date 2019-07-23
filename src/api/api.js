@@ -7,5 +7,11 @@ export function login(jsonForm) {
     data: jsonForm
   })
 }
+export function test() {
+  return request({
+    url: '/api/func/ventas/getQueryDataListByInputStringMobile',
+    method: 'post'
+  })
+}
 
 

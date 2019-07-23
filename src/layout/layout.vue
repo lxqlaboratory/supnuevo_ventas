@@ -88,7 +88,6 @@
   }
 
   .main-content {
-    padding: 0 20%;
-
+    padding: 0 10%;
   }
 </style>
