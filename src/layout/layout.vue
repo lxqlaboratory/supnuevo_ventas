@@ -8,16 +8,16 @@
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
 
           <el-menu-item index="1">
-            <router-link :to="{'name':'method1'}">Method1</router-link>
+            <router-link :to="{'name':'method1'}">供应商信息</router-link>
           </el-menu-item>
           <el-menu-item index="2">
-            <router-link :to="{'name':'method3'}">Method3</router-link>
+            <router-link :to="{'name':'method3'}">商品计划购买</router-link>
           </el-menu-item>
           <el-menu-item index="3">
-            <router-link :to="{'name':'method4'}">Method4</router-link>
+            <router-link :to="{'name':'method4'}">商品信息维护</router-link>
           </el-menu-item>
           <el-submenu index="4">
-            <template slot="title">Method2</template>
+            <template slot="title">帮助</template>
             <el-menu-item index="2-1">p</el-menu-item>
             <el-menu-item index="2-2">p</el-menu-item>
             <el-menu-item index="2-3">a</el-menu-item>
@@ -88,6 +88,6 @@
   }
 
   .main-content {
-    padding: 0 10%;
+    padding: 0 8%;
   }
 </style>
