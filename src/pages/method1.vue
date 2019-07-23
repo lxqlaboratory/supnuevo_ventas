@@ -113,7 +113,7 @@
               <el-form-item label="经纬度">
                 <!--longitude  latitude-->
                 <el-input v-model="form.longitude" disabled="disabled" style="width: 49%"/>
-                <el-input v-model="form.latitude" disabled="disabled" style="width: 49%"/>
+                <el-input v-model="form.latitude" disabled="disabled" style="width: 48%"/>
               </el-form-item>
             </el-col>
             <el-col style="float: right" :span="10">
