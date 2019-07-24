@@ -1,7 +1,7 @@
 <template>
   <div style="padding:30px;">
     <el-container>
-      <el-aside style="height: 900px" >
+      <el-aside style="height: 80%" >
         <el-form label-width="80px"><br>
           <el-form-item label="计划标志" prop="planNum" >
             <el-select v-model="value" value="" placeholder="请选择..." @change="getValue" style="width: 100% ">
