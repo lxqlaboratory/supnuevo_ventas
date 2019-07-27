@@ -281,7 +281,7 @@
 </template>
 
 <script>
-  import { test } from '../api/api'
+  import  {getSupnuevoVentasInfoFormByVentasIdWeb } from '../api/api'
   export default {
 
     data() {
@@ -415,8 +415,8 @@
       },
       fetchData() {
         // this.listLoading = true
-        test().then(response => {
-          this.list = response.data
+        getSupnuevoVentasInfoFormByVentasIdWeb().then(response => {
+          this.list = response.dataMap
         })
         // this.listLoading = false
       },
