@@ -7,32 +7,29 @@ export function login(jsonForm) {
     data: jsonForm
   })
 }
-export function getCommodityPriceFormByPriceId(priceId) {
+
+export function allRentPlanListOfVentas() {
   return request({
-    url: '/func/ventas/getCommodityPriceFormByPriceId',
-    method: 'post',
-    data: {
-      priceId
-    }
-  })
-}
-export function getSupnuevoVentasRentPlanListOfVentas(ventasId) {
-  return request({
-    url: '/func/ventas/getSupnuevoVentasRentPlanListOfVentas',
-    method: 'post',
-    data: {
-      ventasId
-    }
-  })
-}
-export function getVentasCommodityPriceOptionList() {
-  return request({
-    url: '/ventas/getVentasCommodityPriceOptionList',
+    url: '/ventas/getSupnuevoVentasRentPlanListOfVentas',
     method: 'post',
     data: {
     }
   })
 }
 
-
-
+export function getSupnuevoVentasPlanFeeInfoWeb() {
+  return request({
+    url: '/ventas/getSupnuevoVentasPlanFeeInfoWeb',
+    method: 'post',
+    data: {
+    }
+  })
+}
+export function getSupnuevoVentasInfoFormByVentasIdWeb() {
+  return request({
+    url: '/ventas/getSupnuevoVentasInfoFormByVentasIdWeb',
+    method: 'post',
+    data: {
+    }
+  })
+}
