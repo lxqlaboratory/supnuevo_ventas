@@ -116,7 +116,7 @@ export function getCommodityBySearchEngineOld(descripcion) { //引擎查询
 
 export function changeTableStation(newIndex,oldIndex) { //引擎查询
   return request({
-    url: '/ventas/changeTableStation',
+    url: '/ventas/changeTableStationWeb',
     method: 'post',
     data: {
       newIndex,
