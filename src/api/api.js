@@ -165,3 +165,70 @@ export function deleteCommodityCatalogWeb(catalogId,isCommodity) { //编辑-删�
     }
   })
 }
+
+export function getCommodityPriceFormByOrderNumWeb(orderNum) {  // 干什么用的
+  return request({
+    url: '/sale/getCommodityPriceFormByOrderNumWeb',
+    method: 'post',
+    data: {
+      orderNum
+    }
+  })
+}
+
+export function saveOrUpdateSupnuevoVentasCommodityWeb(priceId,commodityId,tamanoId,codigo,descripcion) {  //右边的  传什么值  跟saveOrUpdateSupnuevoVentasCommodityPriceWeb区别
+  return request({
+    url: '/sale/saveOrUpdateSupnuevoVentasCommodityWeb',
+    method: 'post',
+    data: {
+      priceId,
+      commodityId,
+      tamanoId,
+      codigo,
+      descripcion
+    }
+  })
+}
+export function saveOrUpdateSupnuevoVentasCommodityPriceWeb(priceId,commodityId,codigoEntreno,codigo,price) {  //左边的
+  return request({
+    url: '/sale/saveOrUpdateSupnuevoVentasCommodityPriceWeb',
+    method: 'post',
+    data: {
+      priceId,
+      commodityId,
+      codigoEntreno,
+      codigo,
+      price
+    }
+  })
+}
+
+export function clearSupnuevoVentasCommodityPriceWeb(priceId) {
+  return request({
+    url: '/sale/clearSupnuevoVentasCommodityPriceWeb',
+    method: 'post',
+    data: {
+      priceId
+    }
+  })
+}
+
+export function insertSupnuevoVentasCommodityPriceWeb(priceId) {  // 还需要吗
+  return request({
+    url: '/sale/insertSupnuevoVentasCommodityPriceWeb',
+    method: 'post',
+    data: {
+      priceId
+    }
+  })
+}
+
+export function deleteSupnuevoVentasCommodityPriceWeb(priceId) {
+  return request({
+    url: '/sale/deleteSupnuevoVentasCommodityPriceWeb',
+    method: 'post',
+    data: {
+      priceId
+    }
+  })
+}
