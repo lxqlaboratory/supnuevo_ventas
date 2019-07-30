@@ -8,7 +8,7 @@ export function login(jsonForm) {
   })
 }
 
-export function allRentPlanListOfVentas() {
+export function allRentPlanListOfVentas() {//获取计划列表
   return request({
     url: '/ventas/getSupnuevoVentasRentPlanListOfVentas',
     method: 'post',
@@ -17,7 +17,7 @@ export function allRentPlanListOfVentas() {
   })
 }
 
-export function getSupnuevoVentasPlanFeeInfoWeb() {
+export function getSupnuevoVentasPlanFeeInfoWeb() {//商品计划购买
   return request({
     url: '/ventas/getSupnuevoVentasPlanFeeInfoWeb',
     method: 'post',
@@ -30,6 +30,36 @@ export function getSupnuevoVentasInfoFormByVentasIdWeb() {
     url: '/ventas/getSupnuevoVentasInfoFormByVentasIdWeb',
     method: 'post',
     data: {
+    }
+  })
+}
+export function getCityInfoListOfProvinceWeb(provinceId) { //city
+  return request({
+    url: '/ventas/getCityInfoListOfProvinceWeb',
+    method: 'post',
+    data: {
+      provinceId
+    }
+  })
+}
+export function addOneMergeRentPlanToVentas() { //购买计划
+  return request({
+    url: '/ventas/addOneMergeRentPlanToVentas',
+    method: 'post',
+    data: {
+    }
+  })
+}
+export function editDeliverGoodWeb(deliverId, provinceId, cityId, minAmount, deliverFee) {//编辑送货
+  return request({
+    url: '/ventas/updateSupnuevoVentasDeliverGoodWeb',
+    method: 'POST',
+    data: {
+      deliverId,
+      provinceId,
+      cityId,
+      minAmount,
+      deliverFee
     }
   })
 }

@@ -37,7 +37,7 @@
 <!--            <el-input v-model="dayCount" disabled/>-->
 <!--          </el-form-item>-->
           <el-form-item>
-            <el-button type="primary" @click="dialogVisible = true">购买</el-button>
+            <el-button type="primary" @click="buyPlanOfVentas">购买</el-button>
           </el-form-item>
           <el-dialog
             title="日志信息"
@@ -47,15 +47,33 @@
             style="margin-left: 0px;"
           >
             <el-form label-width="120px">
-              <el-form-item label="日志生成时间:" prop="logTime"/>
-              <el-form-item label="日志客户ID:" prop="ventasId"/>
-              <el-form-item label="日志种类名称:" prop="logType"/>
-              <el-form-item label="新计划信息:" prop="planInfo"/>
-              <el-form-item label="以前计划信息:" prop="oldPlanInfo"/>
-              <el-form-item label="新计划付款:" prop="rentFee"/>
-              <el-form-item label="增加费用原因:" prop="dayFee"/>
-              <el-form-item label="以前计划退款:"/>
-              <el-form-item label="退回费用原因:"/>
+              <el-form-item label="日志生成时间:" prop="logTime">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
+              <el-form-item label="日志客户ID:" prop="ventasId">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
+              <el-form-item label="日志种类名称:" prop="logType">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
+              <el-form-item label="新计划信息:" prop="planInfo">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
+              <el-form-item label="以前计划信息:" prop="oldPlanInfo">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
+              <el-form-item label="新计划付款:" prop="rentFee">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
+              <el-form-item label="增加费用原因:" prop="dayFee">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
+              <el-form-item label="以前计划退款:">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
+              <el-form-item label="退回费用原因:">
+                <el-input v-model="dayFee" disabled/>
+              </el-form-item>
               <div style="text-align: center">
                 <el-button @click="innerVisible = true;dialogVisible = false">确 认</el-button>
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -294,6 +312,26 @@
         this.dayCount = obj.dayCount;
         this.customCount = obj.customCount;
         this.getNewDay();
+      },
+
+      buyPlanOfVentas:function(){
+        this.dialogVisible = true
+        addOneMergeRentPlanToVentas().then(response => {
+          alert('aaaaaaaa')
+          this.msg =  response.data.cataLogId
+          if (this.msg > 0) {
+            this.$message({
+              message: '更新成功',
+              type: 'success'
+            })
+            getCommodityCatalogListOptionInfoList1(this.shangpinleiParentId).then(response => {
+              this.options1 = response.arrayList
+            })
+          } else {
+            this.$message.error('购买失败')
+          }
+        })
+        this.dialogVisible1=false
       },
 
       fetchData() {
