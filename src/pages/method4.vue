@@ -60,6 +60,7 @@
       <el-container style="height: 700px;margin-left: 3%">
         <el-aside width="20%">
           <el-table
+
             :data="tableData"
             style="width: 100%"
             height="500"
@@ -70,7 +71,9 @@
             <el-table-column v-for="(item, index) in col"
                              :key="`col_${index}`"
                              :prop="dropCol[index].prop"
-                             :label="item.label">
+                             :label="item.label"
+
+              >
             </el-table-column>
           </el-table>
         </el-aside>
@@ -215,7 +218,7 @@
               <el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>
               <el-button @click="clearSupnuevoVentasCommodityPrice">清除</el-button>
               <el-button @click="deleteSupnuevoVentasCommodityPrice">删除</el-button>
-              <el-button>导入价格</el-button>
+              <el-button @click="test1" ref="click1">导入价格</el-button>
               <el-button @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>
             </el-row>
           </el-footer>
@@ -316,23 +319,17 @@
       }
     },
     computed: {
-      // 'tableData1': function() {
-      //   var search = this.filterText
-      //   if (search) {
-      //     return this.tableData.filter(function(dataNews) {
-      //       return Object.keys(dataNews).some(function(key) {
-      //         return String(dataNews[key]).toLowerCase().indexOf(search) > -1
-      //       })
-      //     })
-      //   }
-      //   return this.tableData
-      // }
     },
     created() {
       this.fetchData()
     },
-
+    mounted(){
+      // this.$refs.click1.$el.click();
+    },
     methods: {
+      test1(){
+        alert(1111)
+      },
       rowDrop() {    // 行拖拽
         const tbody = document.querySelector('.el-table__body-wrapper tbody')
         const _this = this
@@ -353,6 +350,7 @@
         getCommodityCatalogListOptionInfoList(this.parentId).then(response => {  //获取商品类
           this.options = response.arrayList
         })
+
       },
       sraa(row) {
         this.category=''
@@ -382,6 +380,8 @@
               if ((response.data.rubroId) == this.options[i].catalogId) {
                 this.category = this.options[i].catalogName
                 this.shangpinlei = this.options[i].catalogName;//记录选择的商品类
+                this.shangpinleiParentId = this.options[i].catalogId
+
               }
             }
             //alert((response.data.rubroId)+"")
@@ -391,6 +391,7 @@
                 if ((response.data.setmarcaId) == this.options1[i].catalogId) {
                   this.brand = this.options1[i].catalogName
                   this.shangpinpinpai = this.options1[i].catalogName;//记录选择的商品品牌
+                  this.shangpinpinpaiParentId = this.options1[i].catalogId
                   this.rulelist.shangpinpinpaidialog = this.shangpinpinpai
                 }
               }
@@ -400,6 +401,7 @@
               for (i = 0; i < this.options2.length; i++) {
                 if ((response.data.presentacionId) == this.options2[i].catalogId) {
                   this.typ = this.options2[i].catalogName
+                  this.xinghaoParentId = this.options2[i].catalogId
                   this.xinghao = this.options2[i].catalogName;//记录选择的型号
                 }
               }
@@ -626,7 +628,7 @@
         })
         this.dialogVisible2=false
       },
-      shanchushangpinpinpaimethod:function(){    // 删除含量
+      shanchuhanliangmethod:function(){    // 删除含量
         deleteCommodityCatalogWeb(this.hanliangParentId ,this.isCommodity).then(response => {
           this.msg =  response.re
           if (this.msg === 1) {
@@ -802,7 +804,10 @@
             this.$message.error('保存失败')
           }
         })
-      }
+      },
+         handdle(event) {
+         console.log(event)
+     }
     }
   }
 </script>

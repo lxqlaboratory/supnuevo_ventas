@@ -213,7 +213,7 @@ export function clearSupnuevoVentasCommodityPriceWeb(priceId) {
   })
 }
 
-export function insertSupnuevoVentasCommodityPriceWeb(priceId) {  // 还需要吗
+export function insertSupnuevoVentasCommodityPriceWeb(priceId) {
   return request({
     url: '/sale/insertSupnuevoVentasCommodityPriceWeb',
     method: 'post',
