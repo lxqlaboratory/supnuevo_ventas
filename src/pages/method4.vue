@@ -65,6 +65,7 @@
             height="500"
             row-key="value"
             @row-click="sraa"
+            highlight-current-row
           >
             <el-table-column v-for="(item, index) in col"
                              :key="`col_${index}`"
@@ -211,10 +212,11 @@
           </el-container>
           <el-footer style="margin-left: 100px;">
             <el-row>
-              <el-button>提交</el-button>
-              <el-button>清除</el-button>
-              <el-button>删除</el-button>
+              <el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>
+              <el-button @click="clearSupnuevoVentasCommodityPrice">清除</el-button>
+              <el-button @click="deleteSupnuevoVentasCommodityPrice">删除</el-button>
               <el-button>导入价格</el-button>
+              <el-button @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>
             </el-row>
           </el-footer>
         </el-form>
@@ -225,7 +227,7 @@
 <script>
   import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
-  , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb} from '../api/api'
+  , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb} from '../api/api'
   export default {
     data() {
       return {
@@ -306,7 +308,11 @@
         xiugaixinghaobutton:true,
         shanchuxinghaobutton:true,
         xiugaihanliangbutton:true,
-        shanchuhanliangbutton:true  //是否展示删除修改按钮
+        shanchuhanliangbutton:true,  //是否展示删除修改按钮
+
+        priceId:'',   // 商品ID
+        commodityId:'', //公共商品库ID
+        orderNum:''
       }
     },
     computed: {
@@ -349,11 +355,66 @@
         })
       },
       sraa(row) {
+        this.category=''
+        this.brand=''
+        this.typ=''
+        this.volume=''
         getCommodityPriceFormByPriceId(row.value).then(response => {      //点击左侧序列取得数据
           this.codigoEntreno = response.codigoEntreno
           this.codigo = response.codigo
           this.price = response.price
           this.descripcion=response.descripcion
+          this.priceId = response.priceId
+          this.commodityId= response.commodityId
+          this.orderNum = response.orderNum
+          this.getCommodityPriceFormByOrderNumWeb()
+        })
+      },
+      getCommodityPriceFormByOrderNumWeb() {
+        getCommodityPriceFormByOrderNumWeb(this.orderNum+'').then(response => {
+          if (response.data.rubroId != null) {
+            this.showshangpinpinpai =false
+            this.showxinghao=true
+            this.showhanliang =true
+            var i = 0;
+            // alert(response.data.rubroId)
+            for (i; i < this.options.length; i++) {
+              if ((response.data.rubroId) == this.options[i].catalogId) {
+                this.category = this.options[i].catalogName
+                this.shangpinlei = this.options[i].catalogName;//记录选择的商品类
+              }
+            }
+            //alert((response.data.rubroId)+"")
+            getCommodityCatalogListOptionInfoList1((response.data.rubroId) + "").then(response1 => {
+              this.options1 = response1.arrayList
+              for (i = 0; i < this.options1.length; i++) {
+                if ((response.data.setmarcaId) == this.options1[i].catalogId) {
+                  this.brand = this.options1[i].catalogName
+                  this.shangpinpinpai = this.options1[i].catalogName;//记录选择的商品品牌
+                  this.rulelist.shangpinpinpaidialog = this.shangpinpinpai
+                }
+              }
+            })
+            getCommodityCatalogListOptionInfoList1((response.data.setmarcaId) + "").then(response1 => {
+              this.options2 = response1.arrayList
+              for (i = 0; i < this.options2.length; i++) {
+                if ((response.data.presentacionId) == this.options2[i].catalogId) {
+                  this.typ = this.options2[i].catalogName
+                  this.xinghao = this.options2[i].catalogName;//记录选择的型号
+                }
+              }
+            })
+            getCommodityCatalogListOptionInfoList1((response.data.presentacionId) + "").then(response1 => {
+              this.options3 = response1.arrayList
+              for (i = 0; i < this.options3.length; i++) {
+                if ((response.data.tamanoId) == this.options3[i].catalogId) {
+                  this.volume = this.options3[i].catalogName
+                  this.hanliangParentId = this.options3[i].catalogId
+                  this.hanliang = this.options3[i].catalogName
+                }
+              }
+            })
+          }
         })
       },
       getValue: function(vId) { //获取商品品牌
@@ -420,6 +481,7 @@
           return item.catalogId === vId;//筛选出匹配数据
         });
         this.hanliangParentId = obj.catalogId;//记录含量的catalogId
+        // alert(this.hanliangParentId)
         this.hanliang = obj.catalogName;//记录选择的含量
         // alert(this.shangpinlei+'--'+this.shangpinpinpai+'--'+this.xinghao+'--'+this.hanliang)
       },
@@ -533,7 +595,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '修改成功',
+              message: '删除成功',
               type: 'success'
             })
             this.brand=''
@@ -541,7 +603,7 @@
               this.options1 = response.arrayList
             })
           } else {
-            this.$message.error('修改失败')
+            this.$message.error('删除失败')
           }
         })
         this.dialogVisible1=false
@@ -551,7 +613,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '修改成功',
+              message: '删除成功',
               type: 'success'
             })
             this.typ=''
@@ -559,7 +621,7 @@
               this.options2 = response.arrayList
             })
           } else {
-            this.$message.error('修改失败')
+            this.$message.error('删除失败')
           }
         })
         this.dialogVisible2=false
@@ -569,7 +631,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '修改成功',
+              message: '删除成功',
               type: 'success'
             })
             this.volume=''
@@ -577,7 +639,7 @@
               this.options3 = response.arrayList
             })
           } else {
-            this.$message.error('修改失败')
+            this.$message.error('删除失败')
           }
         })
         this.dialogVisible3=false
@@ -684,8 +746,81 @@
           this.fenlei=this.shangpinlei+'-'+this.shangpinpinpai+'-'+this.xinghao
           this.dialogVisible3 = true
        // }
+      },
+      deleteSupnuevoVentasCommodityPrice(){
+        deleteSupnuevoVentasCommodityPriceWeb(this.priceId).then(response => {
+          this.msg =  response.re
+          if (this.msg === 1) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.fetchData()
+          } else {
+            this.$message.error('删除失败')
+          }
+        })
+      },
+      clearSupnuevoVentasCommodityPrice(){
+        clearSupnuevoVentasCommodityPriceWeb(this.priceId).then(response => {
+          this.msg =  response.re
+          if (this.msg === 1) {
+            this.$message({
+              message: '清除成功',
+              type: 'success'
+            })
+            this.fetchData()
+          } else {
+            this.$message.error('清除失败')
+          }
+        })
+      },
+      saveOrUpdateSupnuevoVentasCommodityPrice(){
+        saveOrUpdateSupnuevoVentasCommodityPriceWeb(this.priceId,this.commodityId,this.codigoEntreno,this.codigo,this.price).then(response => {
+          this.msg =  response.re
+          if (this.msg === 1) {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+            this.fetchData()
+          } else {
+            this.$message.error('保存失败')
+          }
+        })
+      },
+      saveOrUpdateSupnuevoVentasCommodity(){
+        saveOrUpdateSupnuevoVentasCommodityWeb(this.priceId,this.commodityId,this.hanliangParentId,this.codigo,this.descripcion).then(response => {
+          this.msg =  response.re
+          if (this.msg === 1) {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+            this.fetchData()
+          } else {
+            this.$message.error('保存失败')
+          }
+        })
       }
     }
   }
 </script>
+<style>
+  /* 用来设置当前页面element全局table的内间距 */
+  .el-table__row td{
+    padding: 0;
+  }
+  /* 用来设置当前页面element全局table 选中某行时的背景色*/
+  .el-table__body tr.current-row>td{
+    background-color: #e3f1e9 !important;
+    /* color: #f19944; */  /* 设置文字颜色，可以选择不设置 */
+  }
+  /* 用来设置当前页面element全局table 鼠标移入某行时的背景色*/
+  .el-table--enable-row-hover .el-table__body tr:hover>td {
+    background-color: #def1ee;
+    /* color: #f19944; */ /* 设置文字颜色，可以选择不设置 */
+  }
+</style>
+
 
