@@ -81,7 +81,7 @@ export function getSupnuevoVentasRentPlanListOfVentas(ventasId) {
     }
   })
 }
-export function getVentasCommodityPriceOptionList() {
+export function getVentasCommodityPriceOptionList() {  // 获取左侧序列
   return request({
     url: '/ventas/getVentasCommodityPriceOptionList',
     method: 'post',
@@ -89,7 +89,7 @@ export function getVentasCommodityPriceOptionList() {
     }
   })
 }
-export function getCommodityCatalogListOptionInfoList(parentId) { //获取商品类 parentId为null
+export function getCommodityCatalogListOptionInfoList(parentId) { //获取商品类 parentId为null 用了
   return request({
     url: '/ventas/getCommodityCatalogListOptionInfoList',
     method: 'post',
@@ -98,7 +98,7 @@ export function getCommodityCatalogListOptionInfoList(parentId) { //获取商品
     }
   })
 }
-export function getCommodityCatalogListOptionInfoList1(parentId) { //获取商品品牌 型号 含量 参数为string类型
+export function getCommodityCatalogListOptionInfoList1(parentId) { //获取商品品牌 型号 含量 参数为string类型  用了
   return request({
     url: '/ventas/getCommodityCatalogListOptionInfoList1',
     method: 'post',
@@ -107,7 +107,7 @@ export function getCommodityCatalogListOptionInfoList1(parentId) { //获取商�
     }
   })
 }
-export function insertSupnuevoVentasCommodityPrice(parentId,) { //插入 还没用呢
+export function insertSupnuevoVentasCommodityPrice(parentId,) { //插入 没用
   return request({
     url: '/ventas/insertSupnuevoVentasCommodityPrice',
     method: 'post',
@@ -116,7 +116,7 @@ export function insertSupnuevoVentasCommodityPrice(parentId,) { //插入 还没�
     }
   })
 }
-export function getQueryDataListByInputStringMobile(codigo) { //条形码查询
+export function getQueryDataListByInputStringMobile(codigo) { //条形码查询  没用
   return request({
     url: '/ventas/getQueryDataListByInputStringMobile',
     method: 'post',
@@ -125,7 +125,7 @@ export function getQueryDataListByInputStringMobile(codigo) { //条形码查询
     }
   })
 }
-export function getDescripcionListByDescripcionPrefix(descripcion) { //名称查询
+export function getDescripcionListByDescripcionPrefix(descripcion) { //名称查询 没用
   return request({
     url: '/ventas/getDescripcionListByDescripcionPrefix',
     method: 'post',
@@ -134,7 +134,7 @@ export function getDescripcionListByDescripcionPrefix(descripcion) { //名称查
     }
   })
 }
-export function getCommodityBySearchEngineOld(descripcion) { //引擎查询
+export function getCommodityBySearchEngineOld(descripcion) { //引擎查询  没用
   return request({
     url: '/ventas/getCommodityBySearchEngineOld',
     method: 'post',
@@ -144,7 +144,7 @@ export function getCommodityBySearchEngineOld(descripcion) { //引擎查询
   })
 }
 
-export function changeTableStation(newIndex,oldIndex) { //引擎查询
+export function changeTableStation(newIndex,oldIndex) { //拖拽表格
   return request({
     url: '/ventas/changeTableStationWeb',
     method: 'post',
@@ -155,9 +155,9 @@ export function changeTableStation(newIndex,oldIndex) { //引擎查询
   })
 }
 
-export function getCommodityCatalogListOptionInfoListWeb(parentId) { //
+export function getCommodityCatalogListOptionInfoListWeb(parentId) { //  没用
   return request({
-    url: '/sale/getCommodityCatalogListOptionInfoListWeb',
+    url: '/ventas/getCommodityCatalogListOptionInfoListWeb',
     method: 'post',
     data: {
       parentId
@@ -167,7 +167,7 @@ export function getCommodityCatalogListOptionInfoListWeb(parentId) { //
 
 export function addNewCommodityCatalogWeb(parentId,catalogName) { // 编辑-新增
   return request({
-    url: '/sale/addNewCommodityCatalogWeb',
+    url: '/ventas/addNewCommodityCatalogWeb',
     method: 'post',
     data: {
       parentId,
@@ -177,7 +177,7 @@ export function addNewCommodityCatalogWeb(parentId,catalogName) { // 编辑-新�
 }
 export function modifyCommodityCatalogWeb(catalogId,catalogName) { //编辑-修改
   return request({
-    url: '/sale/modifyCommodityCatalogWeb',
+    url: '/ventas/modifyCommodityCatalogWeb',
     method: 'post',
     data: {
       catalogId,
@@ -187,7 +187,7 @@ export function modifyCommodityCatalogWeb(catalogId,catalogName) { //编辑-修�
 }
 export function deleteCommodityCatalogWeb(catalogId,isCommodity) { //编辑-删除
   return request({
-    url: '/sale/deleteCommodityCatalogWeb',
+    url: '/ventas/deleteCommodityCatalogWeb',
     method: 'post',
     data: {
       catalogId,
@@ -196,19 +196,9 @@ export function deleteCommodityCatalogWeb(catalogId,isCommodity) { //编辑-删�
   })
 }
 
-export function getCommodityPriceFormByOrderNumWeb(orderNum) {  // 干什么用的
+export function saveOrUpdateSupnuevoVentasCommodityWeb(priceId,commodityId,tamanoId,codigo,descripcion) {  //右边的
   return request({
-    url: '/sale/getCommodityPriceFormByOrderNumWeb',
-    method: 'post',
-    data: {
-      orderNum
-    }
-  })
-}
-
-export function saveOrUpdateSupnuevoVentasCommodityWeb(priceId,commodityId,tamanoId,codigo,descripcion) {  //右边的  传什么值  跟saveOrUpdateSupnuevoVentasCommodityPriceWeb区别
-  return request({
-    url: '/sale/saveOrUpdateSupnuevoVentasCommodityWeb',
+    url: '/ventas/saveOrUpdateSupnuevoVentasCommodityWeb',
     method: 'post',
     data: {
       priceId,
@@ -221,7 +211,7 @@ export function saveOrUpdateSupnuevoVentasCommodityWeb(priceId,commodityId,taman
 }
 export function saveOrUpdateSupnuevoVentasCommodityPriceWeb(priceId,commodityId,codigoEntreno,codigo,price) {  //左边的
   return request({
-    url: '/sale/saveOrUpdateSupnuevoVentasCommodityPriceWeb',
+    url: '/ventas/saveOrUpdateSupnuevoVentasCommodityPriceWeb',
     method: 'post',
     data: {
       priceId,
@@ -233,9 +223,9 @@ export function saveOrUpdateSupnuevoVentasCommodityPriceWeb(priceId,commodityId,
   })
 }
 
-export function clearSupnuevoVentasCommodityPriceWeb(priceId) {
+export function clearSupnuevoVentasCommodityPriceWeb(priceId) {  //用了
   return request({
-    url: '/sale/clearSupnuevoVentasCommodityPriceWeb',
+    url: '/ventas/clearSupnuevoVentasCommodityPriceWeb',
     method: 'post',
     data: {
       priceId
@@ -243,9 +233,9 @@ export function clearSupnuevoVentasCommodityPriceWeb(priceId) {
   })
 }
 
-export function insertSupnuevoVentasCommodityPriceWeb(priceId) {
+export function insertSupnuevoVentasCommodityPriceWeb(priceId) {  //没用
   return request({
-    url: '/sale/insertSupnuevoVentasCommodityPriceWeb',
+    url: '/ventas/insertSupnuevoVentasCommodityPriceWeb',
     method: 'post',
     data: {
       priceId
@@ -253,12 +243,85 @@ export function insertSupnuevoVentasCommodityPriceWeb(priceId) {
   })
 }
 
-export function deleteSupnuevoVentasCommodityPriceWeb(priceId) {
+export function deleteSupnuevoVentasCommodityPriceWeb(priceId) {   //左侧删除
   return request({
-    url: '/sale/deleteSupnuevoVentasCommodityPriceWeb',
+    url: '/ventas/deleteSupnuevoVentasCommodityPriceWeb',
     method: 'post',
     data: {
       priceId
+    }
+  })
+}
+
+export function getCommodityPriceFormByPriceIdWeb(priceId) {  //没用
+  return request({
+    url: '/ventas/getCommodityPriceFormByPriceIdWeb',
+    method: 'post',
+    data: {
+      priceId
+    }
+  })
+}
+export function getCommodityPriceFormByIndexCodigoWeb(codigo) {   //条形码查询
+  return request({
+    url: '/ventas/getCommodityPriceFormByIndexCodigoWeb',
+    method: 'post',
+    data: {
+      codigo
+    }
+  })
+}
+export function getCommodityPriceFormBySearchFormWeb(searchMode,commodityId,codigo) {
+  return request({
+    url: '/ventas/getCommodityPriceFormBySearchFormWeb',
+    method: 'post',
+    data: {
+      searchMode,
+      commodityId,
+      codigo
+    }
+  })
+}
+export function getCommodityPriceFormByOrderNumWeb(orderNum) {
+  return request({
+    url: '/ventas/getCommodityPriceFormByOrderNumWeb',
+    method: 'post',
+    data: {
+      orderNum
+    }
+  })
+}
+export function getCommodityPriceFormByCodigoEntrenoWeb(codigoEntreno) {
+  return request({
+    url: '/ventas/getCommodityPriceFormByCodigoEntrenoWeb',
+    method: 'post',
+    data: {
+      codigoEntreno
+    }
+  })
+}
+export function getFirstCommodityPriceFormOfVentasWeb() {
+  return request({
+    url: '/ventas/getFirstCommodityPriceFormOfVentasWeb',
+    method: 'post',
+    data: {
+    }
+  })
+}
+export function getLastSavedCommodityPriceFormOfVentasWeb() {
+  return request({
+    url: '/ventas/getLastSavedCommodityPriceFormOfVentasWeb',
+    method: 'post',
+    data: {
+    }
+  })
+}
+export function getLastOrderNumCommodityPriceFormOfVentasWeb(orderNum) {
+  return request({
+    url: '/ventas/getLastOrderNumCommodityPriceFormOfVentasWeb',
+    method: 'post',
+    data: {
+      orderNum
     }
   })
 }

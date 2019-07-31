@@ -230,7 +230,7 @@
 <script>
   import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
-  , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb} from '../api/api'
+  , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb, getCommodityPriceFormByIndexCodigoWeb} from '../api/api'
   export default {
     data() {
       return {
@@ -365,7 +365,56 @@
           this.priceId = response.priceId
           this.commodityId= response.commodityId
           this.orderNum = response.orderNum
-          this.getCommodityPriceFormByOrderNumWeb()
+          // this.getCommodityPriceFormByOrderNumWeb()
+          if (response.rubroId != null) {
+            this.showshangpinpinpai =false
+            this.showxinghao=true
+            this.showhanliang =true
+            var i = 0;
+            // (response.rubroId)
+            for (i; i < this.options.length; i++) {
+              if ((response.rubroId) == this.options[i].catalogId) {
+                this.category = this.options[i].catalogName
+                this.shangpinlei = this.options[i].catalogName;//记录选择的商品类
+                this.shangpinleiParentId = this.options[i].catalogId
+
+              }
+            }
+            // alert((response.rubroId)+"")
+            getCommodityCatalogListOptionInfoList1((response.rubroId) + "").then(response1 => {
+              this.options1 = response1.arrayList
+              for (i = 0; i < this.options1.length; i++) {
+                if ((response.marcaId) == this.options1[i].catalogId) {
+                  this.brand = this.options1[i].catalogName
+                  this.shangpinpinpai = this.options1[i].catalogName;//记录选择的商品品牌
+                  this.shangpinpinpaiParentId = this.options1[i].catalogId
+                  this.rulelist.shangpinpinpaidialog = this.shangpinpinpai
+                }
+              }
+            })
+
+            getCommodityCatalogListOptionInfoList1((response.marcaId) + "").then(response1 => {
+              this.options2 = response1.arrayList
+              for (i = 0; i < this.options2.length; i++) {
+                if ((response.presentacionId) == this.options2[i].catalogId) {
+                  this.typ = this.options2[i].catalogName
+                  this.xinghaoParentId = this.options2[i].catalogId
+                  this.xinghao = this.options2[i].catalogName;//记录选择的型号
+                }
+              }
+            })
+            getCommodityCatalogListOptionInfoList1((response.presentacionId) + "").then(response1 => {
+              this.options3 = response1.arrayList
+              for (i = 0; i < this.options3.length; i++) {
+                if ((response.tamanoId) == this.options3[i].catalogId) {
+                  this.volume = this.options3[i].catalogName
+                  this.hanliangParentId = this.options3[i].catalogId
+                  this.hanliang = this.options3[i].catalogName
+                }
+              }
+            })
+          }
+
         })
       },
       getCommodityPriceFormByOrderNumWeb() {
@@ -678,12 +727,65 @@
         this.lpmc=false;
       },
       search1(){       //条形码查询方法
-        getQueryDataListByInputStringMobile(this.filterText).then(response => {
-          this.codigoEntreno = response.object.codigoEntreno
-          this.codigo = response.object.codigo
-          this.price = response.object.price
-          this.descripcion=response.object.descripcion
-        })
+        getCommodityPriceFormByIndexCodigoWeb(this.filterText).then(response => {
+              this.codigoEntreno = response.data.codigoEntreno
+              this.codigo = response.data.codigo
+              this.price = response.data.price
+              this.descripcion=response.data.descripcion
+              this.priceId = response.data.priceId
+              this.commodityId= response.data.commodityId
+              this.orderNum = response.data.orderNum
+              // this.getCommodityPriceFormByOrderNumWeb()
+              if (response.data.rubroId != null) {
+                this.showshangpinpinpai =false
+                this.showxinghao=true
+                this.showhanliang =true
+                var i = 0;
+                // (response.rubroId)
+                for (i; i < this.options.length; i++) {
+                  if ((response.data.rubroId) == this.options[i].catalogId) {
+                    this.category = this.options[i].catalogName
+                    this.shangpinlei = this.options[i].catalogName;//记录选择的商品类
+                    this.shangpinleiParentId = this.options[i].catalogId
+
+                  }
+                }
+                // alert((response.rubroId)+"")
+                getCommodityCatalogListOptionInfoList1((response.data.rubroId) + "").then(response1 => {
+                  this.options1 = response1.arrayList
+                  for (i = 0; i < this.options1.length; i++) {
+                    if ((response.data.setmarcaId) == this.options1[i].catalogId) {
+                      this.brand = this.options1[i].catalogName
+                      this.shangpinpinpai = this.options1[i].catalogName;//记录选择的商品品牌
+                      this.shangpinpinpaiParentId = this.options1[i].catalogId
+                      this.rulelist.shangpinpinpaidialog = this.shangpinpinpai
+                    }
+                  }
+                })
+
+                getCommodityCatalogListOptionInfoList1((response.data.setmarcaId) + "").then(response1 => {
+                  this.options2 = response1.arrayList
+                  for (i = 0; i < this.options2.length; i++) {
+                    if ((response.data.presentacionId) == this.options2[i].catalogId) {
+                      this.typ = this.options2[i].catalogName
+                      this.xinghaoParentId = this.options2[i].catalogId
+                      this.xinghao = this.options2[i].catalogName;//记录选择的型号
+                    }
+                  }
+                })
+                getCommodityCatalogListOptionInfoList1((response.data.presentacionId) + "").then(response1 => {
+                  this.options3 = response1.arrayList
+                  for (i = 0; i < this.options3.length; i++) {
+                    if ((response.data.tamanoId) == this.options3[i].catalogId) {
+                      this.volume = this.options3[i].catalogName
+                      this.hanliangParentId = this.options3[i].catalogId
+                      this.hanliang = this.options3[i].catalogName
+                    }
+                  }
+                })
+              }
+
+            })
       },
       search2(){     //商品名称查询方法
         getDescripcionListByDescripcionPrefix(this.filterText).then(response => {
@@ -778,7 +880,7 @@
         })
       },
       saveOrUpdateSupnuevoVentasCommodityPrice(){
-        saveOrUpdateSupnuevoVentasCommodityPriceWeb(this.priceId,this.commodityId,this.codigoEntreno,this.codigo,this.price).then(response => {
+        saveOrUpdateSupnuevoVentasCommodityPriceWeb(this.priceId,this.commodityId,this.codigoEntreno+'',this.codigo,this.price+'').then(response => {
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
