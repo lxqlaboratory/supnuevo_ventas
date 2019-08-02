@@ -42,11 +42,29 @@ export function getCityInfoListOfProvinceWeb(provinceId) { //city
     }
   })
 }
-export function addOneMergeRentPlanToVentas() { //购买计划
+export function addOneMergeRentPlanToVentas() { //
   return request({
     url: '/ventas/addOneMergeRentPlanToVentas',
     method: 'post',
     data: {
+    }
+  })
+}
+export function getSupnuevoVentasLogMapByPlanIdWeb(planId) { //购买计划获得日志信息
+  return request({
+    url: '/ventas/getSupnuevoVentasLogMapByPlanIdWeb',
+    method: 'post',
+    data: {
+      planId
+    }
+  })
+}
+export function addSupnuevoVentasRentPlanToVentasWeb(planId) { //购买计划
+  return request({
+    url: '/ventas/addSupnuevoVentasRentPlanToVentasWeb',
+    method: 'post',
+    data: {
+      planId
     }
   })
 }
@@ -60,6 +78,55 @@ export function editDeliverGoodWeb(deliverId, provinceId, cityId, minAmount, del
       cityId,
       minAmount,
       deliverFee
+    }
+  })
+}
+export function createDeliverGoodWeb(deliverId, provinceId, cityId, minAmount, deliverFee) {//添加送货
+  return request({
+    url: '/ventas/createSupnuevoVentasDeliverGoodWeb',
+    method: 'POST',
+    data: {
+      deliverId,
+      provinceId,
+      cityId,
+      minAmount,
+      deliverFee
+    }
+  })
+}
+export function deleteDeliverGoodWeb(deliverId) {//删除送货
+  return request({
+    url: '/ventas/deleteSupnuevoVentasDeliverGoodWeb',
+    method: 'POST',
+    data: {
+      deliverId
+    }
+  })
+}
+export function uploadSupnuevoVentasPhotoImageWeb() {//上传照片
+  return request({
+    url: '/ventas/uploadSupnuevoVentasPhotoImageWeb',
+    method: 'POST',
+    data: {
+    }
+  })
+}
+export function updateSupnuevoVentasInfoAndRubroList(ventasId,rubroIdList,nombre,email,pagina,cityId,direccion,telefono,principalContactos,observaciones,nota) {//保存供应商信息
+  return request({
+    url: '/ventas/updateSupnuevoVentasInfoAndRubroList',
+    method: 'POST',
+    data: {
+      ventasId,
+      rubroIdList,
+      nombre,
+      email,
+      pagina,
+      cityId,
+      direccion,
+      telefono,
+      principalContactos,
+      observaciones,
+      nota
     }
   })
 }

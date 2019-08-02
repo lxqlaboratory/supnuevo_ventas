@@ -47,35 +47,35 @@
             style="margin-left: 0px;"
           >
             <el-form label-width="120px">
-              <el-form-item label="日志生成时间:" prop="logTime">
-                <el-input v-model="dayFee" disabled/>
+              <el-form-item label="日志生成时间:" prop="logTimeStr">
+                <el-input v-model="logTimeStr"  disabled/>
               </el-form-item>
               <el-form-item label="日志客户ID:" prop="ventasId">
-                <el-input v-model="dayFee" disabled/>
+                <el-input v-model="ventasId" disabled/>
               </el-form-item>
               <el-form-item label="日志种类名称:" prop="logType">
-                <el-input v-model="dayFee" disabled/>
+                <el-input v-model="logTypeStr" disabled/>
               </el-form-item>
               <el-form-item label="新计划信息:" prop="planInfo">
-                <el-input v-model="dayFee" disabled/>
+                <el-input v-model="planInfo" disabled/>
               </el-form-item>
               <el-form-item label="以前计划信息:" prop="oldPlanInfo">
-                <el-input v-model="dayFee" disabled/>
+                <el-input v-model="oldPlanInfo" disabled/>
               </el-form-item>
               <el-form-item label="新计划付款:" prop="rentFee">
-                <el-input v-model="dayFee" disabled/>
+                <el-input v-model="total" disabled/>
               </el-form-item>
               <el-form-item label="增加费用原因:" prop="dayFee">
-                <el-input v-model="dayFee" disabled/>
+                <el-input v-model="addFeeTypeStr" disabled/>
               </el-form-item>
               <el-form-item label="以前计划退款:">
-                <el-input v-model="dayFee" disabled/>
+                <el-input v-model="oldBalance" disabled/>
               </el-form-item>
               <el-form-item label="退回费用原因:">
-                <el-input v-model="dayFee" disabled/>
+                <el-input v-model="returnFeeTypeStr" disabled/>
               </el-form-item>
               <div style="text-align: center">
-                <el-button @click="innerVisible = true;dialogVisible = false">确 认</el-button>
+                <el-button @click="addPlanToVentas">确 认</el-button>
                 <el-button @click="dialogVisible = false">取 消</el-button>
               </div>
             </el-form>
@@ -222,11 +222,19 @@
   </div>
 </template>
 <script>
-  import {allRentPlanListOfVentas, getSupnuevoVentasPlanFeeInfoWeb} from '../api/api'
+  import {allRentPlanListOfVentas, getSupnuevoVentasPlanFeeInfoWeb,addOneMergeRentPlanToVentas,getSupnuevoVentasLogMapByPlanIdWeb,addSupnuevoVentasRentPlanToVentasWeb} from '../api/api'
 
   export default {
     data() {
       return {
+        logTimeStr:'',
+        logTypeStr:'',
+        planInfo:'',
+        oldPlanInfo:'',
+        total:'',
+        addFeeTypeStr:'',
+        oldBalance:'',
+        returnFeeTypeStr:'',
         value: '',
         rentFeeBalance: '',
         commodityCount_size: '',
@@ -251,7 +259,7 @@
         workPlanList: [],
         feeList: [],
         planList: [],
-
+        logForm:''
       }
     },
     created() {
@@ -304,6 +312,8 @@
         console.log(obj.startDate)
         console.log(obj.dayCount);
         console.log(obj.endDate);
+        console.log(obj.planId+'planId');
+        this.planId = obj.planId;
         this.planName = obj.planName;
         this.commodityCount = obj.commodityCount;
         // this.startDate = obj.startDate;
@@ -316,32 +326,43 @@
 
       buyPlanOfVentas:function(){
         this.dialogVisible = true
-        addOneMergeRentPlanToVentas().then(response => {
-          alert('aaaaaaaa')
-          this.msg =  response.data.cataLogId
-          if (this.msg > 0) {
-            this.$message({
-              message: '更新成功',
-              type: 'success'
-            })
-            getCommodityCatalogListOptionInfoList1(this.shangpinleiParentId).then(response => {
-              this.options1 = response.arrayList
-            })
-          } else {
-            this.$message.error('购买失败')
-          }
+        getSupnuevoVentasLogMapByPlanIdWeb(this.planId).then(response => {
+         this.logForm = response.data
+          this.logTimeStr = response.data.logTimeStr
+          this.logTypeStr = response.data.logTypeStr
+          this.planInfo = response.data.planInfo
+          this.oldPlanInfo = response.data.oldPlanInfo
+          this.total = response.data.total
+          this.oldBalance = response.data.oldBalance
+          this.returnFeeTypeStr = response.data.returnFeeTypeStr
+          this.addFeeTypeStr = response.data.addFeeTypeStr
+          this.ventasId = response.data.ventasId
         })
         this.dialogVisible1=false
+      },
+      addPlanToVentas:function(){
+        addSupnuevoVentasRentPlanToVentasWeb(this.planId).then(response =>{
+          this.msg =  response.re
+          if (this.msg === 1) {
+            this.$message({
+              message: '购买成功',
+              type: 'success'
+            })
+          } else {
+            this.$message.error('更新失败')
+          }
+          this.dialogVisible = false
+        })
       },
 
       fetchData() {
         this.listLoading = true
         getSupnuevoVentasPlanFeeInfoWeb().then(response => {
-          this.commodityCount_size = response.commodityCount
-          this.rentFeeBalance = response.rentFeeBalance
-          this.planList = response.planList
-          this.workPlanList = response.workPlanList
-          this.feeList = response.feeList
+          this.commodityCount_size = response.data.commodityCount
+          this.rentFeeBalance = response.data.rentFeeBalance
+          this.planList = response.data.planList
+          this.workPlanList = response.data.workPlanList
+          this.feeList = response.data.feeList
           /*   console.log(response)
              console.log("planList="+response.planList)
              console.log("planList="+response.workPlanList)
