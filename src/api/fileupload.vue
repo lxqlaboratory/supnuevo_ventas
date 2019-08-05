@@ -1,14 +1,16 @@
 <template>
     <div>
       <el-upload
-        style="margin-left: 15px;"
+        style="margin-left: 15px;" name="file"
         :action='baseUrl+url'
         :multiple="false"
+        :file-list="fileList"
+        :data="formData"
+        :with-credentials="true"
         :show-file-list="true"
         :accept="accepttype"
         :on-success="uploadSuccess"
         :on-error="uploadError"
-        :withCredentials="true"
         :on-remove="remove"
         :limit="limitnum"
         :on-preview="onPreview"
@@ -27,7 +29,15 @@
       name: 'Fileupload',
       data() {
         return {
-          baseUrl: 'http://localhost/supnuevo_ventas'
+          fileList:[],
+          baseUrl: 'http://localhost/supnuevo_ventas',
+          formData:{
+            title:'uyjg',
+            desc:'fjfj',
+            priority:'',
+            occurDate:'',
+            file:''
+          }
         }
       },
       props: {

@@ -35,6 +35,7 @@
           </el-form-item>
 <!--照片上传-->
           <div>
+            <el-form-item label="图片">
            <!--<el-upload
               class="avatar-uploader"
               action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb"
@@ -44,13 +45,14 @@
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>-->
-            <fileupload url="/degree/uploadSupnuevoVentasPhotoImageWeb"
+            <fileupload url="/ventas/uploadSupnuevoVentasPhotoImageWeb"
                         accepttype=".jpg,.jpeg,.png"
                         @successcallback="onSuccess"
                         @preview="onPreview"
                         remarks="只能上传.pdf文件"
             >上传文件
             </fileupload>
+            </el-form-item>
           </div>
 
         </el-aside >
