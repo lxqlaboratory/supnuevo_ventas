@@ -107,12 +107,11 @@ export function getCommodityCatalogListOptionInfoList1(parentId) { //获取商�
     }
   })
 }
-export function insertSupnuevoVentasCommodityPrice(parentId,) { //插入 没用
+export function insertSupnuevoVentasCommodityPrice() { //插入 没用
   return request({
-    url: '/ventas/insertSupnuevoVentasCommodityPrice',
+    url: '/ventas/insertSupnuevoVentasCommodityPriceWeb1',
     method: 'post',
     data: {
-      parentId
     }
   })
 }
@@ -271,17 +270,28 @@ export function getCommodityPriceFormByIndexCodigoWeb(codigo) {   //条形码查
     }
   })
 }
-export function getCommodityPriceFormBySearchFormWeb(searchMode,commodityId,codigo) {
+
+export function getCommodityPriceFormByCatalogId(catalogId) {   //类型品牌描述尺寸查询查询
   return request({
-    url: '/ventas/getCommodityPriceFormBySearchFormWeb',
+    url: '/ventas/getCommodityPriceFormByCatalogId1',
     method: 'post',
     data: {
-      searchMode,
-      commodityId,
-      codigo
+      catalogId
     }
   })
 }
+
+// export function getCommodityPriceFormBySearchFormWeb(searchMode,commodityId,codigo) {   //全部查询 没用
+//   return request({
+//     url: '/ventas/getCommodityPriceFormBySearchFormWeb',
+//     method: 'post',
+//     data: {
+//       searchMode,
+//       commodityId,
+//       codigo
+//     }
+//   })
+// }
 export function getCommodityPriceFormByOrderNumWeb(orderNum) {
   return request({
     url: '/ventas/getCommodityPriceFormByOrderNumWeb',

@@ -4,49 +4,72 @@
       <el-header height="150px" style="text-align: center">
         <br><br>
         <!--条形码尾位查询法-->
-        <div style="width:250px; padding-bottom: 10px; float: left;" v-show="txm" >
-          <el-input
-            v-model="filterText"
-            placeholder="请输入条形码尾位"
-            class="filterText"
-            clearable
-          >
+        <div style="width:350px; padding-bottom: 10px; float: left;" v-show="txm" >
+          <!--<el-input-->
+            <!--v-model="filterText"-->
+            <!--placeholder="请输入条形码尾位"-->
+            <!--class="filterText"-->
+            <!--clearable-->
+          <!--&gt;</el-input>-->
+              <el-autocomplete
+                class="inline-input"
+                v-model="filterText"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入条形码"
+              >
             <el-button slot="append" icon="el-icon-search" @click=" search1" />
-          </el-input>
+              </el-autocomplete>
         </div>
         <!--商品名称查询法-->
-        <div style="width:250px; padding-bottom: 10px; float: left;" v-show="spmc" >
-          <el-input
+        <div style="width:350px; padding-bottom: 10px; float: left;" v-show="spmc" >
+          <!--<el-input-->
+          <!--v-model="filterText"-->
+          <!--placeholder="请输入条形码尾位"-->
+          <!--class="filterText"-->
+          <!--clearable-->
+          <!--&gt;</el-input>-->
+          <el-autocomplete
+            class="inline-input"
             v-model="filterText"
+            :fetch-suggestions="querySearch"
             placeholder="请输入商品名称"
-            class="filterText"
-            clearable
           >
             <el-button slot="append" icon="el-icon-search" @click=" search2" />
-          </el-input>
+          </el-autocomplete>
         </div>
         <!--引擎查询法-->
         <div style="width:250px; padding-bottom: 10px; float: left;" v-show="yq" >
-          <el-input
+          <el-autocomplete
+            class="inline-input"
             v-model="filterText"
-            placeholder="请输入关键字"
-            class="filterText"
-            clearable
+            :fetch-suggestions="querySearch"
+            placeholder="请输入"
           >
             <el-button slot="append" icon="el-icon-search" @click=" search3" />
-          </el-input>
+          </el-autocomplete>
         </div>
         <!--类型-品牌-描述-尺寸查询法-->
-        <div style="width:250px; padding-bottom: 10px; float: left;" v-show="lpmc" >
-          <el-input
-            v-model="filterText"
-            placeholder="lexingpinpai"
-            class="filterText"
-            clearable
-          >
-            <el-button slot="append" icon="el-icon-search" @click=" search4" />
-
-          </el-input>
+        <div style="width:500px; padding-bottom: 10px; float: left;" v-show="lpmc" >
+          <!--<el-input-->
+            <!--v-model="filterText"-->
+            <!--placeholder="lexingpinpai"-->
+            <!--class="filterText"-->
+            <!--clearable-->
+          <!--&gt;-->
+            <!--<el-button slot="append" icon="el-icon-search" @click=" search4" />-->
+          <!--</el-input>-->
+          <el-select v-model="searchshangpinlei" placeholder="请选择..." @change="getSearchValue"  style="width: 120px ">
+            <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
+          </el-select>
+          <el-select  v-model="searchshangpinpinpai"  placeholder="请选择..." @change="getSearchValue1" style="width: 120px ">
+            <el-option v-for="item in searchOptions1" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
+          </el-select>
+          <el-select  v-model="searchxinghao"  placeholder="请选择..." @change="getSearchValue2" style="width: 120px ">
+            <el-option v-for="item in searchOptions2" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
+          </el-select>
+          <el-select v-model="searchhanliang"   placeholder="请选择..." @change="getSearchValue3" style="width: 120px ">
+            <el-option v-for="item in searchOptions3" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
+          </el-select>
         </div>
         <div>
           <el-radio-group v-model="radio">
@@ -230,7 +253,7 @@
 <script>
   import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
-  , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb, getCommodityPriceFormByIndexCodigoWeb} from '../api/api'
+  , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId} from '../api/api'
   export default {
     data() {
       return {
@@ -315,7 +338,21 @@
 
         priceId:'',   // 商品ID
         commodityId:'', //公共商品库ID
-        orderNum:''
+        orderNum:'',
+
+        resultList:[], // 搜索时用的数据
+        result:[],
+        searchList:[],
+        searchResult:'',
+
+        searchOptions1:[], //类型品牌描述尺查询时用到
+        searchOptions2:[],
+        searchOptions3:[],
+        searchshangpinlei:'',
+        searchshangpinpinpai:'',
+        searchxinghao:'',
+        searchhanliang:'',
+
       }
     },
     computed: {
@@ -327,8 +364,13 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
-      test1(){
-        alert(1111)
+      querySearch(queryString, cb) { //用于搜索建议
+        var resultList = this.result
+        var results = queryString ? resultList.filter(item => {
+          const isValue = item.value && ((item.value.toLowerCase().indexOf(queryString) >= 0)||(item.value.indexOf(queryString) >= 0))
+          return (isValue)
+        }) : resultList
+        cb(results)
       },
       rowDrop() {    // 行拖拽
         const tbody = document.querySelector('.el-table__body-wrapper tbody')
@@ -345,12 +387,19 @@
       fetchData() {
         getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
           this.tableData = response.ArrayList
+          this.searchList = response.resultList
+          this.result=[{}]
+          for (let item of response.resultList) {
+            this.result.push({"value": item.codigo})
+          }
           this.rowDrop()
         })
         getCommodityCatalogListOptionInfoList(this.parentId).then(response => {  //获取商品类
           this.options = response.arrayList
         })
-
+        // getCommodityPriceFormByCatalogId(521).then(response => {  //获取商品类
+        //
+        // })
       },
       sraa(row) {
         this.category=''
@@ -536,6 +585,99 @@
         this.hanliang = obj.catalogName;//记录选择的含量
         // alert(this.shangpinlei+'--'+this.shangpinpinpai+'--'+this.xinghao+'--'+this.hanliang)
       },
+
+      getSearchValue: function(vId) { //搜索时用  获取商品品牌
+        let obj = {};
+        obj = this.options.find((item)=>{//这里的selectList就是上面遍历的数据源
+          return item.catalogId === vId;//筛选出匹配数据
+        });
+        getCommodityCatalogListOptionInfoList1(obj.catalogId).then(response => {
+          this.searchOptions1 = response.arrayList
+        })
+      },
+      getSearchValue1: function(vId) { //获取型号
+        let obj = {};
+        obj = this.searchOptions1.find((item)=>{//这里的selectList就是上面遍历的数据源
+          return item.catalogId === vId;//筛选出匹配数据
+        });
+        getCommodityCatalogListOptionInfoList1(obj.catalogId).then(response => {
+          this.searchOptions2 = response.arrayList
+        })
+      },
+      getSearchValue2: function(vId) { //获取含量
+        let obj = {};
+        obj = this.searchOptions2.find((item)=>{//这里的selectList就是上面遍历的数据源
+          return item.catalogId === vId;//筛选出匹配数据
+        });
+        getCommodityCatalogListOptionInfoList1(obj.catalogId).then(response => {
+          this.searchOptions3= response.arrayList
+        })
+      },
+      getSearchValue3: function(vId) { //记录含量
+        let obj = {};
+        obj = this.searchOptions3.find((item)=>{//这里的selectList就是上面遍历的数据源
+          return item.catalogId === vId;//筛选出匹配数据
+        });
+        getCommodityPriceFormByCatalogId(obj.catalogId).then(response => {  //获取商品类
+          this.codigoEntreno = response.codigoEntreno
+          this.codigo = response.codigo
+          this.price = response.price
+          this.descripcion=response.descripcion
+          this.priceId = response.priceId
+          this.commodityId= response.commodityId
+          this.orderNum = response.orderNum
+          // this.getCommodityPriceFormByOrderNumWeb()
+          if (response.rubroId != null) {
+            this.showshangpinpinpai =false
+            this.showxinghao=true
+            this.showhanliang =true
+            var i = 0;
+            // (response.rubroId)
+            for (i; i < this.options.length; i++) {
+              if ((response.rubroId) == this.options[i].catalogId) {
+                this.category = this.options[i].catalogName
+                this.shangpinlei = this.options[i].catalogName;//记录选择的商品类
+                this.shangpinleiParentId = this.options[i].catalogId
+
+              }
+            }
+            // alert((response.rubroId)+"")
+            getCommodityCatalogListOptionInfoList1((response.rubroId) + "").then(response1 => {
+              this.options1 = response1.arrayList
+              for (i = 0; i < this.options1.length; i++) {
+                if ((response.marcaId) == this.options1[i].catalogId) {
+                  this.brand = this.options1[i].catalogName
+                  this.shangpinpinpai = this.options1[i].catalogName;//记录选择的商品品牌
+                  this.shangpinpinpaiParentId = this.options1[i].catalogId
+                  this.rulelist.shangpinpinpaidialog = this.shangpinpinpai
+                }
+              }
+            })
+
+            getCommodityCatalogListOptionInfoList1((response.marcaId) + "").then(response1 => {
+              this.options2 = response1.arrayList
+              for (i = 0; i < this.options2.length; i++) {
+                if ((response.presentacionId) == this.options2[i].catalogId) {
+                  this.typ = this.options2[i].catalogName
+                  this.xinghaoParentId = this.options2[i].catalogId
+                  this.xinghao = this.options2[i].catalogName;//记录选择的型号
+                }
+              }
+            })
+            getCommodityCatalogListOptionInfoList1((response.presentacionId) + "").then(response1 => {
+              this.options3 = response1.arrayList
+              for (i = 0; i < this.options3.length; i++) {
+                if ((response.tamanoId) == this.options3[i].catalogId) {
+                  this.volume = this.options3[i].catalogName
+                  this.hanliangParentId = this.options3[i].catalogId
+                  this.hanliang = this.options3[i].catalogName
+                }
+              }
+            })
+          }
+
+        })
+      },
       xinzengshangpinpinpaimethod:function(){   // 新增商品品牌
         addNewCommodityCatalogWeb(this.shangpinleiParentId ,this.rulelist.shangpinpinpaidialog).then(response => {
           this.msg =  response.data.cataLogId
@@ -699,6 +841,13 @@
         this.filterText = ''
       },
       showtxm(){       // 展示条形码搜索框
+        this.clear()
+        getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
+          this.result=[{}]
+          for (let item of response.resultList) {
+            this.result.push({"value": item.codigo})
+          }
+        })
         this.filterText=''
         this.txm = true;
         this.yq = false;
@@ -706,6 +855,7 @@
         this.lpmc=false;
       },
       showlpmc(){    //展示类型品牌描述尺寸搜索框
+        this.clear()
         this.filterText=''
         this.lpmc=true;
         this.txm = false;
@@ -713,6 +863,13 @@
         this.spmc = false
       },
       showyq(){     // 展示引擎查询搜索框
+        this.clear()
+        getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
+          this.result=[{}]
+          for (let item of response.resultList) {
+            this.result.push({"value": item.codigoAndDescripcion})
+          }
+        })
         this.filterText=''
         this.yq = true;
         this.txm = false;
@@ -720,14 +877,37 @@
         this.lpmc=false;
       },
       showspmc(){     // 展示商品名称搜索框
+        this.clear()
+        getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
+          this.result=[{}]
+          for (let item of response.resultList) {
+            this.result.push({"value": item.descripcion})
+          }
+        })
         this.filterText=''
         this.spmc = true;
         this.yq = false;
         this.txm = false
         this.lpmc=false;
       },
-      search1(){       //条形码查询方法
-        getCommodityPriceFormByIndexCodigoWeb(this.filterText).then(response => {
+      clear(){
+        this.codigoEntreno = ''
+        this.codigo = ''
+        this.price = ''
+        this.descripcion=''
+        this.priceId = ''
+        this.commodityId= ''
+        this.orderNum = ''
+        this.options1 = []
+        this.options2 = []
+        this.options3 = []
+        this.category= '',
+        this.brand='',
+        this.typ= '',
+        this.volume=''
+      },
+      search(res){       //条形码查询方法
+        getCommodityPriceFormByIndexCodigoWeb(res).then(response => {
               this.codigoEntreno = response.data.codigoEntreno
               this.codigo = response.data.codigo
               this.price = response.data.price
@@ -787,21 +967,56 @@
 
             })
       },
+      search1(){     //商品名称查询方法
+        var  i = 0
+        for (i ;i < this.searchList.length;i++){
+          if (this.filterText===this.searchList[i].codigo){
+            this.search(this.filterText)
+          }
+        }
+        // if (i===this.searchList.length) {
+        //   insertSupnuevoVentasCommodityPrice().then(response => {
+        //     alert(1111)
+            // this.msg =  response.re
+            // if (this.msg === 1) {
+            //   this.$message({
+            //     message: '删除成功',
+            //     type: 'success'
+            //   })
+            //   this.fetchData()
+            // } else {
+            //   this.$message.error('删除失败')
+            // }
+        //   })
+        // }
+      },
       search2(){     //商品名称查询方法
-        getDescripcionListByDescripcionPrefix(this.filterText).then(response => {
-          // this.codigoEntreno = response.tmpList.filterKey
-          // this.codigo = response.tmpList.filterKey
-          // this.price = response.tmpList.price
-          this.descripcion=response.tmpList[0].label
-        })
+        // getDescripcionListByDescripcionPrefix(this.filterText).then(response => {
+        //   // this.codigoEntreno = response.tmpList.filterKey
+        //   // this.codigo = response.tmpList.filterKey
+        //   // this.price = response.tmpList.price
+        //   this.descripcion=response.tmpList[0].label
+        // })
+        var  i = 0
+        for (i ;i < this.searchList.length;i++){
+            if (this.filterText===this.searchList[i].descripcion){
+              this.search(this.searchList[i].codigo)
+            }
+        }
       },
       search3(){     //引擎查询方法
-        getCommodityBySearchEngineOld(this.filterText).then(response => {
-          this.codigoEntreno = response.object.codigoEntreno
-          this.codigo = response.object.codigo
-          this.price = response.object.price
-          this.descripcion=response.object.descripcion
-        })
+        // getCommodityBySearchEngineOld(this.filterText).then(response => {
+        //   this.codigoEntreno = response.object.codigoEntreno
+        //   this.codigo = response.object.codigo
+        //   this.price = response.object.price
+        //   this.descripcion=response.object.descripcion
+        // })
+          var  i = 0
+          for (i ;i < this.searchList.length;i++){
+            if (this.filterText===this.searchList[i].codigoAndDescripcion){
+              this.search(this.searchList[i].codigo)
+            }
+          }
       },
       search4(){      //类型品牌描述尺寸查询方法
 
