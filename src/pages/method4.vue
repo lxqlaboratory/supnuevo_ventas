@@ -240,6 +240,7 @@
                     :data="{commodityId : commodityId ,index : 1}"
                     :on-success="handleAvatarSuccess1"
                     :before-upload="beforeAvatarUpload"
+                    style="float:left;margin: 20px;"
                   >
                     <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -250,8 +251,48 @@
                       action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 1}"
+                      :on-success="handleAvatarSuccess1"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 1}"
+                      :on-success="handleAvatarSuccess1"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 1}"
+                      :on-success="handleAvatarSuccess1"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 1}"
                       :on-success="handleAvatarSuccess2"
                       :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
                     >
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -1218,14 +1259,14 @@
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 120px;
-    height: 120px;
-    line-height: 120px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
     text-align: center;
   }
   .avatar {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     display: block;
   }
 </style>
