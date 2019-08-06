@@ -35,8 +35,8 @@
           </el-form-item>
 <!--照片上传-->
           <div>
-            <el-form-item label="图片">
-           <!--<el-upload
+            <el-form-item label="图片：">
+           <el-upload
               class="avatar-uploader"
               action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb"
               :show-file-list="false"
@@ -44,14 +44,7 @@
               :before-upload="beforeAvatarUpload">
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>-->
-            <fileupload url="/ventas/uploadSupnuevoVentasPhotoImageWeb"
-                        accepttype=".jpg,.jpeg,.png"
-                        @successcallback="onSuccess"
-                        @preview="onPreview"
-                        remarks="只能上传.pdf文件"
-            >上传文件
-            </fileupload>
+            </el-upload>
             </el-form-item>
           </div>
 
@@ -266,7 +259,7 @@
             <!--修改-->
             <div>
               <el-dialog title="编辑修改" :visible.sync="dialogEditFormVisible" width="500px">
-                <el-form ref="createList" :model="createList" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
+                <el-form ref="editlist" :model="editlist" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
                   <el-form-item label="送货地区(省):" prop="cardId">
                     <el-select v-model="editlist.provinceName" placeholder="请选择省份" style="width: 80%;" @change="getEditValue">
                       <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
@@ -375,9 +368,9 @@
           deliverFee:''
         },
         razon: '',
-        provinceList:'',
+        provinceList:[],
         provinceList1:[],
-        cityList:'',
+        cityList:[],
         cityList1:[],
         rubroIdList:[],
         commodityCount:'',
@@ -433,7 +426,6 @@
           telefono: '',
           principalContactos: '',
           ropietario: ' ',
-          provinceId: '',
           cityId: ''
         },
 
@@ -510,7 +502,7 @@
           this.$message.error('上传头像图片只能是 JPG 格式!');
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('上传图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
       },
@@ -524,8 +516,8 @@
         //   alert('-------')
         //   if (valid) {
             this.dialogEditFormVisible = false
-            editDeliverGoodWeb(this.editlist.deliverId, this.editlist.provinceName,
-              this.editlist.cityName, this.editlist.minAmount
+            editDeliverGoodWeb(this.editlist.deliverId, this.editlist.provinceId+'',
+              this.editlist.cityId+'', this.editlist.minAmount
               , this.editlist.deliverFee).then(res => {
               if (res.re === 1) {
                 this.$message({
@@ -609,10 +601,10 @@
           this.planStartEndDate = response.data.form.planStartEndDate
           this.planNum = response.data.form.planNum
           this.planName = response.data.form.planName
-          this.provinceId = response.data.form.provinceName
-          this.cityId = response.data.form.cityName
+          // this.provinceId = response.data.form.provinceName
+          // this.cityId = response.data.form.cityName
           this.principalContactos = response.data.form.principalContactos
-          this.itemList = response.data.form.itemList
+          this.itemList = response.data.form.itemList //送货列表
           this.nickName = response.data.form.nickName
           this.longitude = response.data.form.longitude
           this.latitude = response.data.form.latitude
@@ -627,6 +619,19 @@
           for (i;i<response.data.form.rubroIdList.length;i++){
             this.rubroIdList[i]=response.data.form.rubroIdList[i]+''
           }
+          for (i = 0; i < this.provinceList.length; i++) {
+            if ((response.data.form.provinceId) == this.provinceList[i].value) {
+              this.provinceId = this.provinceList[i].value
+            }
+          }
+          getCityInfoListOfProvinceWeb((response.data.form.provinceId)+"").then(response1 => {
+            this.cityList = response1.data
+            for (i = 0; i < this.cityList.length; i++) {
+              if (((response.data.form.cityId) == this.cityList[i].value) ){
+                this.cityId = this.cityList[i].value
+              }
+            }
+          })
         })
         // this.listLoading = false
       },
@@ -727,7 +732,7 @@
         this.currentPage = currentPage
       },
       onSubmit() {
-        updateSupnuevoVentasInfoAndRubroList(this.ventasId,this.rubroIdList,this.nombre,this.email,this.pagina,this.cityId,this.direccion,this.telefono,this.principalContactos,this.observaciones,this.nota).then(response => {
+        updateSupnuevoVentasInfoAndRubroList(this.ventasId+'',this.rubroIdList,this.nombre+'',this.email+'',this.pagina+'',this.cityId+'',this.direccion+'',this.telefono+'',this.principalContactos+'',this.observaciones+'',this.nota).then(response => {
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
