@@ -33,6 +33,21 @@
               <br>
             </el-checkbox-group>
           </el-form-item>
+<!--照片上传-->
+          <div>
+            <el-form-item label="图片：">
+           <el-upload
+              class="avatar-uploader"
+              action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+            </el-form-item>
+          </div>
+
         </el-aside >
         <el-main >
           <el-row>
@@ -169,7 +184,7 @@
             </el-col>
           </el-row>
           <el-form-item label="备注">
-            <el-input v-model="form.name" type="textarea" />
+            <el-input v-model="nota" type="textarea" />
           </el-form-item>
           <el-form-item label="公司送货范围">
 <!--            <el-input v-model="deliverDes" disabled="disabled" />-->
@@ -242,38 +257,9 @@
               </el-table-column>
             </el-table>
             <!--修改-->
-           <!-- <div>
-              <el-dialog title="保存" :visible.sync="dialogSaveFormVisible" width="500px">
-                <el-form ref="savelist" :model="savelist" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
-                  <el-form-item label="送货地区(省):" prop="cardId">
-                    <el-select v-model="provinceId1" placeholder="请选择省份" style="width: 80%;" @change="getValue1">
-                      <el-option v-for="item in provinceList1" :key="item.value" :label="item.label" :value="item.value" />
-                    </el-select>
-                  </el-form-item>
-                  <br>
-                  <el-form-item label="送货地区(市):" prop="alarmContent">
-                    <el-select v-model="cityId1" placeholder="请选择市" style="width: 80%;">
-                      <el-option v-for="item in cityList1" :key="item.value" :label="item.label" :value="item.value" />
-                    </el-select>
-                  </el-form-item>
-                  <br>
-                  <el-form-item label="最小订单量:" prop="X">
-                    <el-input v-model="savelist.X" style="width: 80%" />
-                  </el-form-item>
-                  <br>
-                  <el-form-item label="送货费:" prop="X">
-                    <el-input v-model="savelist.X" style="width: 80%" />
-                  </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="dialogSaveFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="saveAlarmList('savelist')">确 定</el-button>
-                </div>
-              </el-dialog>
-            </div>-->
             <div>
               <el-dialog title="编辑修改" :visible.sync="dialogEditFormVisible" width="500px">
-                <el-form ref="editList" :model="editlist" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
+                <el-form ref="editlist" :model="editlist" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
                   <el-form-item label="送货地区(省):" prop="cardId">
                     <el-select v-model="editlist.provinceName" placeholder="请选择省份" style="width: 80%;" @change="getEditValue">
                       <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
@@ -281,7 +267,7 @@
                   </el-form-item>
                   <br>
                   <el-form-item label="送货地区(市):" prop="alarmContent">
-                    <el-select v-model="editlist.cityName" placeholder="请选择市" style="width: 80%;">
+                    <el-select v-model="editlist.cityName" placeholder="请选择市" style="width: 80%;" @click="getEditValue1">
                       <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
@@ -295,7 +281,7 @@
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                  <el-button @click="dialogEditFormVisible = false">取 消</el-button>
+                  <el-button @click="editCancel">取 消</el-button>
                   <el-button type="primary" @click="editRouterList('editlist')">确 定</el-button>
                 </div>
               </el-dialog>
@@ -304,30 +290,30 @@
             <!--新建-->
             <div>
               <el-dialog title="新建" :visible.sync="dialogCreateFormVisible" width="500px">
-                <el-form ref="editList" :model="editList" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
+                <el-form ref="createList" :model="createList" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
                   <el-form-item label="送货地区(省):" prop="cardId">
-                    <el-select v-model="provinceId1" placeholder="请选择省份" style="width: 80%;" @change="getValue1">
-                      <el-option v-for="item in provinceList1" :key="item.value" :label="item.label" :value="item.value" />
+                    <el-select v-model="createList.provinceName" placeholder="请选择省份" style="width: 80%;" @change="getCreateValue">
+                      <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
                   <br>
                   <el-form-item label="送货地区(市):" prop="alarmContent">
-                    <el-select v-model="cityId1" placeholder="请选择市" style="width: 80%;">
-                      <el-option v-for="item in cityList1" :key="item.value" :label="item.label" :value="item.value" />
+                    <el-select v-model="createList.cityName" placeholder="请选择市" style="width: 80%;">
+                      <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
                   <br>
                   <el-form-item label="最小订单量:" prop="X">
-                    <el-input v-model="savelist.X" style="width: 80%" />
+                    <el-input v-model="createList.minAmount" style="width: 80%" />
                   </el-form-item>
                   <br>
                   <el-form-item label="送货费:" prop="X">
-                    <el-input v-model="savelist.X" style="width: 80%" />
+                    <el-input v-model="createList.deliverFee" style="width: 80%" />
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="editRouterList('editlist')">确 定</el-button>
+                  <el-button type="primary" @click="createRouterList('createList')">确 定</el-button>
                 </div>
               </el-dialog>
             </div>
@@ -352,14 +338,17 @@
       </el-container>
     </el-form>
   </div>
+
 </template>
 
 <script>
-  import  {getSupnuevoVentasInfoFormByVentasIdWeb,getCityInfoListOfProvinceWeb,editDeliverGoodWeb } from '../api/api'
+  import  {getSupnuevoVentasInfoFormByVentasIdWeb,getCityInfoListOfProvinceWeb,editDeliverGoodWeb,createDeliverGoodWeb,deleteDeliverGoodWeb,updateSupnuevoVentasInfoAndRubroList,uploadSupnuevoVentasPhotoImageWeb } from '../api/api'
+  import  fileupload  from '../api/fileupload.vue'
   export default {
 
     data() {
       return {
+        imageUrl: '',
         editlist: {
           deliverId:'',
           provinceId100:'',
@@ -369,10 +358,19 @@
           minAmount:'',
           deliverFee:''
         },
+        createList:{
+          deliverId:'',
+          provinceId100:'',
+          provinceName:'',
+          cityId:'',
+          cityName:'',
+          minAmount:'',
+          deliverFee:''
+        },
         razon: '',
-        provinceList:'',
+        provinceList:[],
         provinceList1:[],
-        cityList:'',
+        cityList:[],
         cityList1:[],
         rubroIdList:[],
         commodityCount:'',
@@ -392,6 +390,7 @@
         email: '',
         pagina: '',
         direccion:'',
+        nota:'',
         telefono: '',
         principalContactos: '',
         ropietario: ' ',
@@ -414,6 +413,7 @@
         form: {
           type: [],
           name: '',
+          nota:'',
           nickName: '',
           razon: '',
           nombre: '',
@@ -426,7 +426,6 @@
           telefono: '',
           principalContactos: '',
           ropietario: ' ',
-          provinceId: '',
           cityId: ''
         },
 
@@ -460,6 +459,10 @@
         })
       }
     },
+    components:{
+      fileupload
+    },
+
     created() {
       this.show = false
       // var test1 = '8'
@@ -472,11 +475,40 @@
       // this.getCity()
     },
     methods: {
-      // 加载省元数据
-      getProvince() {
-        /*getSystemRegions(0).then(response => {
-          this.provinceList = response.data.provinceName
-        })*/
+      onPreview:function(file){
+        console.log(file)
+        //window.location.href = file.response.url
+      },
+      onSuccess(res,file){
+        console.log(res)
+        console.log(file)
+        this.degreeAttachId =  res.data.degreeAttachId
+        this.showDownloadBtn = !this.showDownloadBtn;
+        /*if(res.code === 0){
+          alert(111)
+        }*/
+      },
+      handleAvatarSuccess(res, file) {
+        console.log(res)
+        console.log(file)
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        this.$emit('preview',file)
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+      editCancel(){
+        this.dialogEditFormVisible = false
+        this.fetchData()
       },
       editRouterList(formName) {
         //alert (this.editlist.cityName)
@@ -484,8 +516,8 @@
         //   alert('-------')
         //   if (valid) {
             this.dialogEditFormVisible = false
-            editDeliverGoodWeb(this.editlist.deliverId, this.editlist.provinceName,
-              this.editlist.cityName, this.editlist.minAmount
+            editDeliverGoodWeb(this.editlist.deliverId, this.editlist.provinceId+'',
+              this.editlist.cityId+'', this.editlist.minAmount
               , this.editlist.deliverFee).then(res => {
               if (res.re === 1) {
                 this.$message({
@@ -497,6 +529,26 @@
                 this.$message.error('更新失败')
               }
             })
+      },
+      createRouterList(formName) {
+        //alert (this.editlist.cityName)
+        // this.$refs[formName].validate((valid) => {
+        //   alert('-------')
+        //   if (valid) {
+        this.dialogCreateFormVisible = false
+        createDeliverGoodWeb(this.createList.deliverId, this.createList.provinceName,
+          this.createList.cityName, this.createList.minAmount
+          , this.createList.deliverFee).then(res => {
+          if (res.re === 1) {
+            this.$message({
+              message: '添加成功',
+              type: 'success'
+            })
+            this.fetchData()
+          } else {
+            this.$message.error('添加失败')
+          }
+        })
       },
       openEdit(item) {
         this.editlist = item
@@ -534,6 +586,7 @@
       fetchData() {
         getSupnuevoVentasInfoFormByVentasIdWeb().then(response => {
           this.razon = response.data.form.razon
+          this.nota = response.data.form.nota
           this.nombre = response.data.form.nombre
           this.cuit = response.data.form.cuit
           this.contrato = response.data.form.contrato
@@ -548,8 +601,10 @@
           this.planStartEndDate = response.data.form.planStartEndDate
           this.planNum = response.data.form.planNum
           this.planName = response.data.form.planName
+          // this.provinceId = response.data.form.provinceName
+          // this.cityId = response.data.form.cityName
           this.principalContactos = response.data.form.principalContactos
-          this.itemList = response.data.form.itemList
+          this.itemList = response.data.form.itemList //送货列表
           this.nickName = response.data.form.nickName
           this.longitude = response.data.form.longitude
           this.latitude = response.data.form.latitude
@@ -564,9 +619,23 @@
           for (i;i<response.data.form.rubroIdList.length;i++){
             this.rubroIdList[i]=response.data.form.rubroIdList[i]+''
           }
+          for (i = 0; i < this.provinceList.length; i++) {
+            if ((response.data.form.provinceId) == this.provinceList[i].value) {
+              this.provinceId = this.provinceList[i].value
+            }
+          }
+          getCityInfoListOfProvinceWeb((response.data.form.provinceId)+"").then(response1 => {
+            this.cityList = response1.data
+            for (i = 0; i < this.cityList.length; i++) {
+              if (((response.data.form.cityId) == this.cityList[i].value) ){
+                this.cityId = this.cityList[i].value
+              }
+            }
+          })
         })
         // this.listLoading = false
       },
+
       getEditValue: function(vId) {
         this.editlist.cityName = ''
         let obj = {};
@@ -577,7 +646,28 @@
         getCityInfoListOfProvinceWeb(obj.value).then(response => {
           this.cityList = response.data
         })
-       },
+      },
+      getEditValue1: function(vId) {
+        let obj = {};
+        obj = this.provinceList.find((item)=>{
+          return item.value === vId;
+        })
+        this.province = obj.value
+        getCityInfoListOfProvinceWeb(obj.value).then(response => {
+          this.cityList = response.data
+        })
+      },
+      getCreateValue: function(vId) {
+        this.createList.cityName = ''
+        let obj = {};
+        obj = this.provinceList.find((item)=>{
+          return item.value === vId;
+        })
+        this.province = obj.value
+        getCityInfoListOfProvinceWeb(obj.value).then(response => {
+          this.cityList = response.data
+        })
+      },
       getValue: function(vId) {
         this.cityList = ''
         this.cityId=''
@@ -602,14 +692,14 @@
           this.cityList1 = response.data
         })
       },
-     /* deleteContent(item) {
+     deleteContent(item) {
         this.editlist = item
         this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteRouter(this.editlist.routerId).then(res => {
+          deleteDeliverGoodWeb(this.editlist.deliverId).then(res => {
             if (res.re === 1) {
               this.$message({
                 message: '删除成功',
@@ -628,7 +718,7 @@
             message: '已取消删除'
           })
         })
-      },*/
+      },
       tableRowClassName({ row, rowIndex }) {
         if (rowIndex === 0) {
           return 'th'
@@ -642,6 +732,18 @@
         this.currentPage = currentPage
       },
       onSubmit() {
+        updateSupnuevoVentasInfoAndRubroList(this.ventasId+'',this.rubroIdList,this.nombre+'',this.email+'',this.pagina+'',this.cityId+'',this.direccion+'',this.telefono+'',this.principalContactos+'',this.observaciones+'',this.nota).then(response => {
+          this.msg =  response.re
+          if (this.msg === 1) {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+            this.fetchData()
+          } else {
+            this.$message.error('保存失败')
+          }
+        })
       },
       handleCheckedCitiesChange(value) {
         console.log(value)
@@ -650,4 +752,27 @@
   }
 </script>
 <style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>
