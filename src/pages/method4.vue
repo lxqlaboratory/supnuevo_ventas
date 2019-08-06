@@ -230,9 +230,35 @@
                 <el-form-item label="商品条码">
                   <el-input style="width: 80% " disabled v-model="codigo"/>
                 </el-form-item>
-                <el-form-item label="">
-                  <img :src="src" style="width: 200px; height: 200px;text-align: center;"/>
-                </el-form-item>
+                <div>
+                  <el-form-item label="图片：">
+                    <el-upload
+                    :headers="headers"
+                    class="avatar-uploader"
+                    action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                    :show-file-list="false"
+                    :data="{commodityId : commodityId ,index : 1}"
+                    :on-success="handleAvatarSuccess1"
+                    :before-upload="beforeAvatarUpload"
+                  >
+                    <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 1}"
+                      :on-success="handleAvatarSuccess2"
+                      :before-upload="beforeAvatarUpload"
+                    >
+                      <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                  </el-form-item>
+                </div>
+
               </el-main>
             </el-container>
           </el-container>
@@ -257,6 +283,16 @@
   export default {
     data() {
       return {
+        headers: {
+          // "Content-Type": "application/json;charset=UTF-8",
+          // "Accept": "application/json"
+        },
+        imageUrl: '',
+        imageUrl1: '',
+        imageUrl2: '',
+        imageUrl3: '',
+        imageUrl4: '',
+        imageUrl5: '',
         isCommodity:false,  //删除时
         rulelist:{
           hanliangdialog:'',
@@ -364,6 +400,32 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
+      test1(){
+          alert(111)
+      },
+      handleAvatarSuccess1(res, file) {
+        console.log(res)
+        console.log(file)
+        this.imageUrl1 = URL.createObjectURL(file.raw);
+      },
+      handleAvatarSuccess2(res, file) {
+        console.log(res)
+        console.log(file)
+        this.imageUrl2 = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        this.$emit('preview',file)
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
       querySearch(queryString, cb) { //用于搜索建议
         var resultList = this.result
         var results = queryString ? resultList.filter(item => {
@@ -1142,6 +1204,29 @@
   .el-table--enable-row-hover .el-table__body tr:hover>td {
     background-color: #def1ee;
     /* color: #f19944; */ /* 设置文字颜色，可以选择不设置 */
+  }
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+  }
+  .avatar {
+    width: 120px;
+    height: 120px;
+    display: block;
   }
 </style>
 
