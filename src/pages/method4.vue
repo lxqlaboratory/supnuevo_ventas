@@ -83,10 +83,8 @@
       <el-container style="height: 700px;margin-left: 3%">
         <el-aside width="20%">
           <el-table
-
             :data="tableData"
-            style="width: 100%"
-            height="500"
+            height="600"
             row-key="value"
             @row-click="sraa"
             highlight-current-row
@@ -95,14 +93,23 @@
                              :key="`col_${index}`"
                              :prop="dropCol[index].prop"
                              :label="item.label"
-
+                             min-width="70%"
               >
+            </el-table-column>
+            <el-table-column label="操作" min-width="15%" align="center">
+              <template slot-scope="scope">
+                <i class="el-icon-close" @click="deleteContent(scope.row)" ></i>
+                <!--<el-button size="mini" @click="deleteContent(scope.row)">X</el-button>-->
+              </template>
             </el-table-column>
           </el-table>
         </el-aside>
         <el-form label-width="200px">
           <el-container>
             <el-aside style="width: 45%;">
+              <el-form-item  style="width: 100% " label="当前商品" >
+                <el-input disabled v-model="dangqianshangpin" />
+              </el-form-item>
               <el-form-item  style="width: 100% " label="商品内码" >
                 <el-input v-model="codigoEntreno" />
               </el-form-item>
@@ -227,9 +234,6 @@
                 <el-form-item label="商品名称">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                <el-form-item label="商品条码">
-                  <el-input style="width: 80% " disabled v-model="codigo"/>
-                </el-form-item>
                 <div>
                   <el-form-item label="图片：">
                     <el-upload
@@ -250,51 +254,51 @@
                       class="avatar-uploader"
                       action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
                       :show-file-list="false"
-                      :data="{commodityId : commodityId ,index : 1}"
-                      :on-success="handleAvatarSuccess1"
-                      :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
-                    >
-                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                    <el-upload
-                      :headers="headers"
-                      class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
-                      :show-file-list="false"
-                      :data="{commodityId : commodityId ,index : 1}"
-                      :on-success="handleAvatarSuccess1"
-                      :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
-                    >
-                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                    <el-upload
-                      :headers="headers"
-                      class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
-                      :show-file-list="false"
-                      :data="{commodityId : commodityId ,index : 1}"
-                      :on-success="handleAvatarSuccess1"
-                      :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
-                    >
-                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                    <el-upload
-                      :headers="headers"
-                      class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
-                      :show-file-list="false"
-                      :data="{commodityId : commodityId ,index : 1}"
+                      :data="{commodityId : commodityId ,index : 2}"
                       :on-success="handleAvatarSuccess2"
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 20px;"
                     >
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 3}"
+                      :on-success="handleAvatarSuccess3"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 4}"
+                      :on-success="handleAvatarSuccess4"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 5}"
+                      :on-success="handleAvatarSuccess5"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                   </el-form-item>
@@ -324,6 +328,7 @@
   export default {
     data() {
       return {
+        dangqianshangpin:'',
         headers: {
           // "Content-Type": "application/json;charset=UTF-8",
           // "Accept": "application/json"
@@ -441,18 +446,57 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
-      test1(){
-          alert(111)
+      deleteContent(item) {
+        alert(item.value)
+        this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteSupnuevoVentasCommodityPriceWeb(item.value).then(res => {
+            if (res.re === 1) {
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              })
+              this.fetchData()
+            } else {
+              this.$message.error('删除失败')
+            }
+          }).catch(e => {
+
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       },
       handleAvatarSuccess1(res, file) {
-        console.log(res)
-        console.log(file)
+        // console.log(res)
+        // console.log(file)
         this.imageUrl1 = URL.createObjectURL(file.raw);
       },
       handleAvatarSuccess2(res, file) {
-        console.log(res)
-        console.log(file)
+        // console.log(res)
+        // console.log(file)
         this.imageUrl2 = URL.createObjectURL(file.raw);
+      },
+      handleAvatarSuccess3(res, file) {
+        // console.log(res)
+        // console.log(file)
+        this.imageUrl3 = URL.createObjectURL(file.raw);
+      },
+      handleAvatarSuccess4(res, file) {
+        // console.log(res)
+        // console.log(file)
+        this.imageUrl4 = URL.createObjectURL(file.raw);
+      },
+      handleAvatarSuccess5(res, file) {
+        // console.log(res)
+        // console.log(file)
+        this.imageUrl5 = URL.createObjectURL(file.raw);
       },
       beforeAvatarUpload(file) {
         this.$emit('preview',file)
@@ -510,6 +554,12 @@
         this.typ=''
         this.volume=''
         getCommodityPriceFormByPriceId(row.value).then(response => {      //点击左侧序列取得数据
+          var i =0
+          for (i;i<this.tableData.length;i++){
+            if(row.value==this.tableData[i].value){
+              this.dangqianshangpin = this.tableData[i].numName
+            }
+          }
           this.codigoEntreno = response.codigoEntreno
           this.codigo = response.codigo
           this.price = response.price
