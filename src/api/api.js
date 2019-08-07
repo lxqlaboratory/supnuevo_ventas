@@ -368,37 +368,12 @@ export function getCommodityPriceFormByOrderNumWeb(orderNum) {
     }
   })
 }
-export function getCommodityPriceFormByCodigoEntrenoWeb(codigoEntreno) {
+export function getQueryDataListByCodigoLastFourWeb(codigo) {
   return request({
-    url: '/ventas/getCommodityPriceFormByCodigoEntrenoWeb',
+    url: '/ventas/getQueryDataListByCodigoLastFourWeb',
     method: 'post',
     data: {
-      codigoEntreno
-    }
-  })
-}
-export function getFirstCommodityPriceFormOfVentasWeb() {
-  return request({
-    url: '/ventas/getFirstCommodityPriceFormOfVentasWeb',
-    method: 'post',
-    data: {
-    }
-  })
-}
-export function getLastSavedCommodityPriceFormOfVentasWeb() {
-  return request({
-    url: '/ventas/getLastSavedCommodityPriceFormOfVentasWeb',
-    method: 'post',
-    data: {
-    }
-  })
-}
-export function getLastOrderNumCommodityPriceFormOfVentasWeb(orderNum) {
-  return request({
-    url: '/ventas/getLastOrderNumCommodityPriceFormOfVentasWeb',
-    method: 'post',
-    data: {
-      orderNum
+      codigo
     }
   })
 }
