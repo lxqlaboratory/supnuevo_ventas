@@ -39,23 +39,6 @@
             <el-autocomplete
               class="inline-input"
               v-model="filterText"
-              :fetch-suggestions="querySearch"
-              placeholder="请输入条形码"
-            >
-              <el-button slot="append" icon="el-icon-search" @click=" search1" />
-            </el-autocomplete>
-          </div>
-          <!--条形码尾位查询法-->
-          <div style="width:350px; padding-bottom: 10px; float: left;" v-show="txm" >
-            <!--<el-input-->
-            <!--v-model="filterText"-->
-            <!--placeholder="请输入条形码尾位"-->
-            <!--class="filterText"-->
-            <!--clearable-->
-            <!--&gt;</el-input>-->
-            <el-autocomplete
-              class="inline-input"
-              v-model="filterText"
               :fetch-suggestions="querySearch1"
               :trigger-on-focus="true"
               @select="search1"
