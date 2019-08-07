@@ -1,108 +1,120 @@
 <template>
   <div>
     <el-container>
-      <el-header height="150px" style="text-align: center">
-        <br><br>
-        <!--条形码尾位查询法-->
-        <div style="width:350px; padding-bottom: 10px; float: left;" v-show="txm" >
-          <!--<el-input-->
+      <el-aside width="20%" style="margin-top: 20px;" >
+        <el-table
+          :data="tableData"
+          height="700"
+          row-key="value"
+          @row-click="sraa"
+          highlight-current-row
+        >
+          <el-table-column v-for="(item, index) in col"
+                           :key="`col_${index}`"
+                           :prop="dropCol[index].prop"
+                           :label="item.label"
+                           min-width="70%"
+          >
+          </el-table-column>
+          <el-table-column label="操作" min-width="15%" align="center">
+            <template slot-scope="scope">
+              <i class="el-icon-close" @click="deleteContent(scope.row)" ></i>
+              <!--<el-button size="mini" @click="deleteContent(scope.row)">X</el-button>-->
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-button style="margin-left: 30%;margin-top: 10px" @click="test1" ref="click1">导入价格</el-button>
+      </el-aside>
+      <el-container style="height: 700px;margin-left: 3%">
+        <el-header height="150px" style="text-align: center">
+          <br><br>
+          <!--条形码尾位查询法-->
+          <div style="width:350px; padding-bottom: 10px; float: left;" v-show="txm" >
+            <!--<el-input-->
             <!--v-model="filterText"-->
             <!--placeholder="请输入条形码尾位"-->
             <!--class="filterText"-->
             <!--clearable-->
-          <!--&gt;</el-input>-->
-              <el-autocomplete
-                class="inline-input"
-                v-model="filterText"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入条形码"
-              >
-            <el-button slot="append" icon="el-icon-search" @click=" search1" />
-              </el-autocomplete>
-        </div>
-        <!--商品名称查询法-->
-        <div style="width:350px; padding-bottom: 10px; float: left;" v-show="spmc" >
-          <!--<el-input-->
-          <!--v-model="filterText"-->
-          <!--placeholder="请输入条形码尾位"-->
-          <!--class="filterText"-->
-          <!--clearable-->
-          <!--&gt;</el-input>-->
-          <el-autocomplete
-            class="inline-input"
-            v-model="filterText"
-            :fetch-suggestions="querySearch"
-            placeholder="请输入商品名称"
-          >
-            <el-button slot="append" icon="el-icon-search" @click=" search2" />
-          </el-autocomplete>
-        </div>
-        <!--引擎查询法-->
-        <div style="width:250px; padding-bottom: 10px; float: left;" v-show="yq" >
-          <el-autocomplete
-            class="inline-input"
-            v-model="filterText"
-            :fetch-suggestions="querySearch"
-            placeholder="请输入"
-          >
-            <el-button slot="append" icon="el-icon-search" @click=" search3" />
-          </el-autocomplete>
-        </div>
-        <!--类型-品牌-描述-尺寸查询法-->
-        <div style="width:500px; padding-bottom: 10px; float: left;" v-show="lpmc" >
-          <!--<el-input-->
+            <!--&gt;</el-input>-->
+            <el-autocomplete
+              class="inline-input"
+              v-model="filterText"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入条形码"
+            >
+              <el-button slot="append" icon="el-icon-search" @click=" search1" />
+            </el-autocomplete>
+          </div>
+          <!--条形码尾位查询法-->
+          <div style="width:350px; padding-bottom: 10px; float: left;" v-show="txm" >
+            <!--<el-input-->
+            <!--v-model="filterText"-->
+            <!--placeholder="请输入条形码尾位"-->
+            <!--class="filterText"-->
+            <!--clearable-->
+            <!--&gt;</el-input>-->
+            <el-autocomplete
+              class="inline-input"
+              v-model="filterText"
+              :fetch-suggestions="querySearch1"
+              :trigger-on-focus="true"
+              @select="search1"
+              @keyup.native="search1"
+              placeholder="请输入条形码"
+            >
+              <el-button slot="append" icon="el-icon-search" @click=" search1" />
+            </el-autocomplete>
+          </div>
+          <!--引擎查询法-->
+          <div style="width:250px; padding-bottom: 10px; float: left;" v-show="yq" >
+            <el-autocomplete
+              class="inline-input"
+              v-model="filterText"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入"
+            >
+              <el-button slot="append" icon="el-icon-search" @click=" search3" />
+            </el-autocomplete>
+          </div>
+          <!--类型-品牌-描述-尺寸查询法-->
+          <div style="width:500px; padding-bottom: 10px; float: left;" v-show="lpmc" >
+            <!--<el-input-->
             <!--v-model="filterText"-->
             <!--placeholder="lexingpinpai"-->
             <!--class="filterText"-->
             <!--clearable-->
-          <!--&gt;-->
+            <!--&gt;-->
             <!--<el-button slot="append" icon="el-icon-search" @click=" search4" />-->
-          <!--</el-input>-->
-          <el-select v-model="searchshangpinlei" placeholder="请选择..." @change="getSearchValue"  style="width: 120px ">
-            <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
-          </el-select>
-          <el-select  v-model="searchshangpinpinpai"  placeholder="请选择..." @change="getSearchValue1" style="width: 120px ">
-            <el-option v-for="item in searchOptions1" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
-          </el-select>
-          <el-select  v-model="searchxinghao"  placeholder="请选择..." @change="getSearchValue2" style="width: 120px ">
-            <el-option v-for="item in searchOptions2" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
-          </el-select>
-          <el-select v-model="searchhanliang"   placeholder="请选择..." @change="getSearchValue3" style="width: 120px ">
-            <el-option v-for="item in searchOptions3" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
-          </el-select>
-        </div>
-        <div>
-          <el-radio-group v-model="radio">
-            <el-radio :label="1" @change="showtxm">条形码尾位查询法</el-radio>
-            <el-radio :label="2" @change="showlpmc">类型-品牌-描述-尺寸查询法</el-radio>
-            <el-radio :label="3" @change="showspmc">商品名称查询法</el-radio>
-            <el-radio :label="4" @change="showyq">引擎查询法</el-radio>
-          </el-radio-group>
-        </div>
-      </el-header>
-      <el-container style="height: 700px;margin-left: 3%">
-        <el-aside width="20%">
-          <el-table
+            <!--</el-input>-->
+            <el-select v-model="searchshangpinlei" placeholder="请选择..." @change="getSearchValue"  style="width: 120px ">
+              <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
+            </el-select>
+            <el-select  v-model="searchshangpinpinpai"  placeholder="请选择..." @change="getSearchValue1" style="width: 120px ">
+              <el-option v-for="item in searchOptions1" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
+            </el-select>
+            <el-select  v-model="searchxinghao"  placeholder="请选择..." @change="getSearchValue2" style="width: 120px ">
+              <el-option v-for="item in searchOptions2" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
+            </el-select>
+            <el-select v-model="searchhanliang"   placeholder="请选择..." @change="getSearchValue3" style="width: 120px ">
+              <el-option v-for="item in searchOptions3" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
+            </el-select>
+          </div>
+          <div>
+            <el-radio-group v-model="radio">
+              <el-radio :label="1" @change="showtxm">条形码尾位查询法</el-radio>
+              <el-radio :label="2" @change="showlpmc">类型-品牌-描述-尺寸查询法</el-radio>
+              <el-radio :label="3" @change="showspmc">商品名称查询法</el-radio>
+              <el-radio :label="4" @change="showyq">引擎查询法</el-radio>
+            </el-radio-group>
+          </div>
+        </el-header>
 
-            :data="tableData"
-            style="width: 100%"
-            height="500"
-            row-key="value"
-            @row-click="sraa"
-            highlight-current-row
-          >
-            <el-table-column v-for="(item, index) in col"
-                             :key="`col_${index}`"
-                             :prop="dropCol[index].prop"
-                             :label="item.label"
-
-              >
-            </el-table-column>
-          </el-table>
-        </el-aside>
         <el-form label-width="200px">
           <el-container>
-            <el-aside style="width: 45%;">
+            <el-aside style="width: 45%;margin-top: -30px;">
+              <el-form-item  style="width: 100% " label="当前商品" >
+                <el-input disabled v-model="dangqianshangpin" />
+              </el-form-item>
               <el-form-item  style="width: 100% " label="商品内码" >
                 <el-input v-model="codigoEntreno" />
               </el-form-item>
@@ -115,9 +127,10 @@
               <el-form-item label="">
                 <img :src="src" style="width: 280px; height: 280px;float: right"/>
               </el-form-item>
+              <el-button style="margin-left: 55%" @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>
             </el-aside>
             <el-container>
-              <el-main width="40%">
+              <el-main width="40%" style="margin-top: -60px">
                 <el-form-item label="商品类">
                   <el-select v-model="category" placeholder="请选择..." @change="getValue"  style="width: 80% ">
                     <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
@@ -227,9 +240,6 @@
                 <el-form-item label="商品名称">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                <el-form-item label="商品条码">
-                  <el-input style="width: 80% " disabled v-model="codigo"/>
-                </el-form-item>
                 <div>
                   <el-form-item label="图片：">
                     <el-upload
@@ -250,46 +260,7 @@
                       class="avatar-uploader"
                       action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
                       :show-file-list="false"
-                      :data="{commodityId : commodityId ,index : 1}"
-                      :on-success="handleAvatarSuccess1"
-                      :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
-                    >
-                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                    <el-upload
-                      :headers="headers"
-                      class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
-                      :show-file-list="false"
-                      :data="{commodityId : commodityId ,index : 1}"
-                      :on-success="handleAvatarSuccess1"
-                      :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
-                    >
-                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                    <el-upload
-                      :headers="headers"
-                      class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
-                      :show-file-list="false"
-                      :data="{commodityId : commodityId ,index : 1}"
-                      :on-success="handleAvatarSuccess1"
-                      :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
-                    >
-                      <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                    <el-upload
-                      :headers="headers"
-                      class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
-                      :show-file-list="false"
-                      :data="{commodityId : commodityId ,index : 1}"
+                      :data="{commodityId : commodityId ,index : 2}"
                       :on-success="handleAvatarSuccess2"
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 20px;"
@@ -297,19 +268,60 @@
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 3}"
+                      :on-success="handleAvatarSuccess3"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 4}"
+                      :on-success="handleAvatarSuccess4"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-upload
+                      :headers="headers"
+                      class="avatar-uploader"
+                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :show-file-list="false"
+                      :data="{commodityId : commodityId ,index : 5}"
+                      :on-success="handleAvatarSuccess5"
+                      :before-upload="beforeAvatarUpload"
+                      style="float:left;margin: 20px;"
+                    >
+                      <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
                   </el-form-item>
+
                 </div>
+                <el-button style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>
 
               </el-main>
             </el-container>
           </el-container>
-          <el-footer style="margin-left: 100px;">
-            <el-row>
-              <el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>
+          <el-footer style="margin-left: 100px;margin-top: -70px;">
+            <el-row >
+              <!--<el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>-->
               <el-button @click="clearSupnuevoVentasCommodityPrice">清除</el-button>
               <el-button @click="deleteSupnuevoVentasCommodityPrice">删除</el-button>
-              <el-button @click="test1" ref="click1">导入价格</el-button>
-              <el-button @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>
+              <!--<el-button @click="test1" ref="click1">导入价格</el-button>-->
+              <!--<el-button @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>-->
             </el-row>
           </el-footer>
         </el-form>
@@ -318,12 +330,13 @@
   </div>
 </template>
 <script>
-  import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
-  , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId} from '../api/api'
+    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb} from '../api/api'
   export default {
+
     data() {
       return {
+        dangqianshangpin:'',
         headers: {
           // "Content-Type": "application/json;charset=UTF-8",
           // "Accept": "application/json"
@@ -429,6 +442,8 @@
         searchshangpinpinpai:'',
         searchxinghao:'',
         searchhanliang:'',
+        lastFourList:[],// 搜索条形码后四位时用的数据
+        lastFour:[]
 
       }
     },
@@ -441,18 +456,57 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
-      test1(){
-          alert(111)
+      deleteContent(item) {
+        alert(item.value)
+        this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteSupnuevoVentasCommodityPriceWeb(item.value).then(res => {
+            if (res.re === 1) {
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              })
+              this.fetchData()
+            } else {
+              this.$message.error('删除失败')
+            }
+          }).catch(e => {
+
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       },
       handleAvatarSuccess1(res, file) {
-        console.log(res)
-        console.log(file)
+        // console.log(res)
+        // console.log(file)
         this.imageUrl1 = URL.createObjectURL(file.raw);
       },
       handleAvatarSuccess2(res, file) {
-        console.log(res)
-        console.log(file)
+        // console.log(res)
+        // console.log(file)
         this.imageUrl2 = URL.createObjectURL(file.raw);
+      },
+      handleAvatarSuccess3(res, file) {
+        // console.log(res)
+        // console.log(file)
+        this.imageUrl3 = URL.createObjectURL(file.raw);
+      },
+      handleAvatarSuccess4(res, file) {
+        // console.log(res)
+        // console.log(file)
+        this.imageUrl4 = URL.createObjectURL(file.raw);
+      },
+      handleAvatarSuccess5(res, file) {
+        // console.log(res)
+        // console.log(file)
+        this.imageUrl5 = URL.createObjectURL(file.raw);
       },
       beforeAvatarUpload(file) {
         this.$emit('preview',file)
@@ -473,6 +527,14 @@
           const isValue = item.value && ((item.value.toLowerCase().indexOf(queryString) >= 0)||(item.value.indexOf(queryString) >= 0))
           return (isValue)
         }) : resultList
+        cb(results)
+      },
+      querySearch1(queryString, cb) { //用于搜索建议
+        var resultList1 = this.lastFour
+        var results = queryString ? resultList1.filter(item => {
+          const isValue = item.value
+          return (isValue)
+        }) : resultList1
         cb(results)
       },
       rowDrop() {    // 行拖拽
@@ -510,6 +572,12 @@
         this.typ=''
         this.volume=''
         getCommodityPriceFormByPriceId(row.value).then(response => {      //点击左侧序列取得数据
+          var i =0
+          for (i;i<this.tableData.length;i++){
+            if(row.value==this.tableData[i].value){
+              this.dangqianshangpin = this.tableData[i].numName
+            }
+          }
           this.codigoEntreno = response.codigoEntreno
           this.codigo = response.codigo
           this.price = response.price
@@ -1071,27 +1139,29 @@
             })
       },
       search1(){     //商品名称查询方法
-        var  i = 0
-        for (i ;i < this.searchList.length;i++){
-          if (this.filterText===this.searchList[i].codigo){
-            this.search(this.filterText)
-          }
-        }
-        // if (i===this.searchList.length) {
-        //   insertSupnuevoVentasCommodityPrice().then(response => {
-        //     alert(1111)
-            // this.msg =  response.re
-            // if (this.msg === 1) {
-            //   this.$message({
-            //     message: '删除成功',
-            //     type: 'success'
-            //   })
-            //   this.fetchData()
-            // } else {
-            //   this.$message.error('删除失败')
-            // }
-        //   })
+        // var  i = 0
+        // for (i ;i < this.searchList.length;i++){
+        //   if (this.filterText===this.searchList[i].codigo){
+        //     this.search(this.filterText)
+        //   }
         // }
+        // if (this.filterText.length==0){
+        //   this.lastFour = [{}]
+        // }
+        if (this.filterText.length==4) {
+          getQueryDataListByCodigoLastFourWeb((this.filterText) + "").then(response => {
+              this.lastFourList = response.data
+              this.lastFour = [{}]
+              for (let item of response.data) {
+                this.lastFour.push({"value": item.codigo})
+              }
+            }
+          )
+        } else if (this.filterText=='Código no incluido') {
+          // 新增方法
+        } else if (this.filterText.length > 4) {
+          this.search(this.filterText)
+        }
       },
       search2(){     //商品名称查询方法
         // getDescripcionListByDescripcionPrefix(this.filterText).then(response => {
