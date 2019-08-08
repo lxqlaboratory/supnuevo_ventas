@@ -113,7 +113,7 @@
               <el-button style="margin-left: 55%" @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>
             </el-aside>
             <el-container>
-              <el-main width="40%" style="margin-top: -60px">
+              <el-main width="60%" style="margin-top: -60px">
                 <el-form-item label="商品类">
                   <el-select v-model="category" placeholder="请选择..." @change="getValue"  style="width: 80% ">
                     <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
@@ -223,8 +223,6 @@
                 <el-form-item label="商品名称">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                <div>
-                  <el-form-item label="图片：">
                     <el-upload
                     :headers="headers"
                     class="avatar-uploader"
@@ -233,7 +231,7 @@
                     :data="{commodityId : commodityId ,index : 1}"
                     :on-success="handleAvatarSuccess1"
                     :before-upload="beforeAvatarUpload"
-                    style="float:left;margin: 20px;"
+                    style="float:left;margin: 3px;"
                   >
                     <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -246,7 +244,7 @@
                       :data="{commodityId : commodityId ,index : 2}"
                       :on-success="handleAvatarSuccess2"
                       :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
+                      style="float:left;margin: 3px;"
                     >
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -259,7 +257,7 @@
                       :data="{commodityId : commodityId ,index : 3}"
                       :on-success="handleAvatarSuccess3"
                       :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
+                      style="float:left;margin: 3px;"
                     >
                       <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -272,7 +270,7 @@
                       :data="{commodityId : commodityId ,index : 4}"
                       :on-success="handleAvatarSuccess4"
                       :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
+                      style="float:left;margin: 3px;"
                     >
                       <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -285,14 +283,11 @@
                       :data="{commodityId : commodityId ,index : 5}"
                       :on-success="handleAvatarSuccess5"
                       :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 20px;"
+                      style="float:left;margin: 3px;"
                     >
                       <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                  </el-form-item>
-
-                </div>
                 <el-button style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>
 
               </el-main>
@@ -301,8 +296,8 @@
           <el-footer style="margin-left: 100px;margin-top: -70px;">
             <el-row >
               <!--<el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>-->
-              <el-button @click="clearSupnuevoVentasCommodityPrice">清除</el-button>
-              <el-button @click="deleteSupnuevoVentasCommodityPrice">删除</el-button>
+              <!--<el-button @click="clearSupnuevoVentasCommodityPrice">清除</el-button>-->
+              <!--<el-button @click="deleteSupnuevoVentasCommodityPrice">删除</el-button>-->
               <!--<el-button @click="test1" ref="click1">导入价格</el-button>-->
               <!--<el-button @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>-->
             </el-row>
