@@ -1,7 +1,7 @@
 <template>
-  <div style="padding:30px;">
+  <div style="padding:0px;">
     <el-container>
-      <el-aside style="height: 80%" >
+      <el-aside style="height: 60%" >
         <el-form label-width="80px"><br>
           <el-form-item label="计划标志" prop="planNum">
             <el-select v-model="planNum" placeholder="请选择..." @change="getValue" style="width: 100% ">
@@ -18,7 +18,6 @@
             <el-input v-model="nowTime" disabled/>
           </el-form-item>
           <el-form-item label="结束时间" prop="endDate">
-            <!--            <el-date-picker v-model="endTime" type="date" placeholder="结束日期" style="width: 100%;" disabled />-->
             <el-input v-model="endTime" disabled/>
           </el-form-item>
           <el-form-item label="租用费用" prop="rentFee">
@@ -33,9 +32,6 @@
           <el-form-item label="空间大小">
             <el-input v-model="commodityCount_size" disabled/>
           </el-form-item>
-<!--          <el-form-item label="天数大小">-->
-<!--            <el-input v-model="dayCount" disabled/>-->
-<!--          </el-form-item>-->
           <el-form-item>
             <el-button type="primary" @click="buyPlanOfVentas">购买</el-button>
           </el-form-item>
@@ -94,7 +90,7 @@
           </el-dialog>
         </el-form>
       </el-aside>
-      <el-main style="margin-left: 50px;width: 1000px;">
+      <el-main style="margin-left: 30px;width: 1000px;">
         <el-table
           style="overflow:visible"
           id="out-table"
@@ -222,7 +218,7 @@
   </div>
 </template>
 <script>
-  import {allRentPlanListOfVentas, getSupnuevoVentasPlanFeeInfoWeb,addOneMergeRentPlanToVentas,getSupnuevoVentasLogMapByPlanIdWeb,addSupnuevoVentasRentPlanToVentasWeb} from '../api/api'
+  import {allRentPlanListOfVentas, getSupnuevoVentasPlanFeeInfoWeb,getSupnuevoVentasLogMapByPlanIdWeb,addSupnuevoVentasRentPlanToVentasWeb} from '../api/api'
 
   export default {
     data() {
@@ -292,17 +288,6 @@
         console.log(time)
         this.endTime = time;
       },
-      /*dateFormat:function(time) {
-        var date=new Date(time);
-        var year=date.getFullYear();
-        /!* 在日期格式中，月份是从0开始的，因此要加0
-         * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
-         * *!/
-        var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
-        var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
-        // 拼接
-        return year+"-"+month+"-"+day+" "
-      },*/
       getValue: function (vId) {
 
         let obj = {};
