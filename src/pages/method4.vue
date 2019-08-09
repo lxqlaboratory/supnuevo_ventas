@@ -607,7 +607,7 @@
                 message: '删除成功',
                 type: 'success'
               })
-              this.fetchData()
+             // this.fetchData()
             } else {
               this.$message.error('删除失败')
             }
@@ -1387,7 +1387,7 @@
               message: '保存成功',
               type: 'success'
             })
-            this.fetchData()
+          //  this.fetchData()
           } else {
             this.$message.error('保存失败')
           }
@@ -1420,7 +1420,7 @@
                       message: '保存失败',
                       type: 'success'
                     })
-                    this.fetchData()
+                   // this.fetchData()
                   } else {
                     this.$message.error('删除失败')
                   }
@@ -1450,7 +1450,7 @@
             this.save1=true
             this.save2= false
             this.isSave = false
-            this.fetchData()
+            // this.fetchData()
           } else {
             // this.$message.error('保存失败')
             deleteSupnuevoVentasCommodityPriceWeb(this.newPriceId).then(response => {
@@ -1460,7 +1460,7 @@
                   message: '保存失败',
                   type: 'success'
                 })
-                this.fetchData()
+               // this.fetchData()
               } else {
                 this.$message.error('删除失败')
               }
@@ -1476,7 +1476,7 @@
               message: '保存成功',
               type: 'success'
             })
-            this.fetchData()
+            // this.fetchData()
           } else {
             this.$message.error('保存失败')
           }
