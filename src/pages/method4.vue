@@ -7,8 +7,8 @@
           height="700"
           row-key="value"
           @row-click="sraa"
-          highlight-current-row
         >
+          <!--highlight-current-row-->
           <el-table-column v-for="(item, index) in col"
                            :key="`col_${index}`"
                            :prop="dropCol[index].prop"
@@ -59,16 +59,18 @@
               <el-button slot="append" icon="el-icon-search" @click=" search3" />
             </el-autocomplete>
           </div>
+          <div style="width:250px; padding-bottom: 10px; float: left;" v-show="spmc" >
+            <el-autocomplete
+              class="inline-input"
+              v-model="filterText"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入"
+            >
+              <el-button slot="append" icon="el-icon-search" @click=" search2" />
+            </el-autocomplete>
+          </div>
           <!--类型-品牌-描述-尺寸查询法-->
           <div style="width:500px; padding-bottom: 10px; float: left;" v-show="lpmc" >
-            <!--<el-input-->
-            <!--v-model="filterText"-->
-            <!--placeholder="lexingpinpai"-->
-            <!--class="filterText"-->
-            <!--clearable-->
-            <!--&gt;-->
-            <!--<el-button slot="append" icon="el-icon-search" @click=" search4" />-->
-            <!--</el-input>-->
             <el-select v-model="searchshangpinlei" placeholder="请选择..." @change="getSearchValue"  style="width: 120px ">
               <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
             </el-select>
@@ -110,7 +112,8 @@
               <el-form-item label="">
                 <img :src="src" style="width: 280px; height: 280px;float: right"/>
               </el-form-item>
-              <el-button style="margin-left: 55%" @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>
+              <el-button style="margin-left: 55%" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>
+              <el-button style="margin-left: 55%" v-show="submit2" @click="choose">提交</el-button>
             </el-aside>
             <el-container>
               <el-main width="60%" style="margin-top: -60px">
@@ -214,12 +217,54 @@
                   </el-form>
 
                   <span slot="footer" class="dialog-footer">
-                    <el-button @click="xinzenghanliangmethod">添加</el-button>
-                    <el-button @click="xiugaihanliangmethod" v-show="xiugaihanliangbutton">修改</el-button>
-                    <el-button @click="shanchuhanliangmethod" v-show="shanchuhanliangbutton">删除</el-button>
-                    <el-button @click="dialogVisible3 = false">取 消</el-button>
+                      <el-button @click="xinzenghanliangmethod">添加</el-button>
+                      <el-button @click="xiugaihanliangmethod" v-show="xiugaihanliangbutton">修改</el-button>
+                      <el-button @click="shanchuhanliangmethod" v-show="shanchuhanliangbutton">删除</el-button>
+                      <el-button @click="dialogVisible3 = false">取 消</el-button>
                   </span>
                 </el-dialog>
+
+                <el-dialog
+                  title="请输入商品条码"
+                  :visible.sync="codigodialog"
+                  width="40%"
+                  style="margin-left: 50px">
+                  <!--<el-row>-->
+                  <!--分类：<el-input v-model="fenlei" disabled="disable" style="width: 60%"></el-input>-->
+                  <!--</el-row>-->
+                  <!--<br>-->
+                  <!--<el-row>-->
+                  <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
+                  <!--</el-row>-->
+                  <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
+                    <el-form-item label="名称:" prop="newCodigo">
+                      <el-input v-model="rulelist.newCodigodialog" style="width: 90%" autocomplete="off" ></el-input>
+                    </el-form-item>
+                  </el-form>
+
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="getNewCodigo">确定</el-button>
+                    <el-button @click="codigodialog=false">取消</el-button>
+                  </span>
+                </el-dialog>
+                <el-dialog
+                  title="请选择插入还是删除"
+                  :visible.sync="choosedialog"
+                  width="40%"
+                  style="margin-left: 50px">
+                  <!--<el-row>-->
+                  <!--分类：<el-input v-model="fenlei" disabled="disable" style="width: 60%"></el-input>-->
+                  <!--</el-row>-->
+                  <!--<br>-->
+                  <!--<el-row>-->
+                  <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
+                  <!--</el-row>-->
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="insert">插入</el-button>
+                    <el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice2">覆盖</el-button>
+                  </span>
+                </el-dialog>
+
                 <el-form-item label="商品名称">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
@@ -288,7 +333,8 @@
                       <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <el-button style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>
+                <el-button v-show="save1" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>
+                <el-button v-show="save2" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">保存</el-button>
 
               </el-main>
             </el-container>
@@ -308,16 +354,23 @@
   </div>
 </template>
 <script>
+  import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
-    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb} from '../api/api'
+    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb1, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb, insertSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb2} from '../api/api'
   export default {
 
     data() {
       return {
+        isSave:false,
+        newPriceId:'',
+        choosedialog:false,
+        save1:true,
+        save2:false,
+        submit1:true,
+        submit2:false,
+        newCodigo:'', // 新的条码
         dangqianshangpin:'',
         headers: {
-          // "Content-Type": "application/json;charset=UTF-8",
-          // "Accept": "application/json"
         },
         imageUrl: '',
         imageUrl1: '',
@@ -330,6 +383,8 @@
           hanliangdialog:'',
           shangpinpinpaidialog:'' ,
           xinghaodialog:'',
+          newCodigodialog:''
+
         },
         rules: {
           hanliangdialog: [
@@ -339,6 +394,9 @@
             { required: true, message: '请输入', trigger: 'blur' }
           ],
           xinghaodialog: [
+            { required: true, message: '请输入', trigger: 'blur' }
+          ],
+          newCodigodialog: [
             { required: true, message: '请输入', trigger: 'blur' }
           ],
         },
@@ -360,6 +418,7 @@
         txm:true, // 条形码尾位查询法
         spmc:false, //   商品名称查询法
         yq:false,//     引擎查询法
+        codigodialog:false, // 以上都不是时的对话框
         radio:1,
 
         // hanliangdialog:'',     // 弹出框中的输入
@@ -421,8 +480,9 @@
         searchxinghao:'',
         searchhanliang:'',
         lastFourList:[],// 搜索条形码后四位时用的数据
-        lastFour:[]
+        lastFour:[],
 
+        firstPriceId:''
       }
     },
     computed: {
@@ -434,6 +494,106 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
+      choose(){
+        this.choosedialog = true
+      },
+      getNewCodigo(){
+        this.codigodialog = false
+        this.newCodigo =this.rulelist.newCodigodialog
+        this.new()
+        this.submit1=false
+        this.submit2= true
+        this.save1=false
+        this.save2= true
+      },
+      showFirst(){
+         // alert(this.firstPriceId)
+        getCommodityPriceFormByPriceId(this.firstPriceId).then(response => {      //点击左侧序列取得数据
+          var i =0
+          for (i;i<this.tableData.length;i++){
+            if(this.firstPriceId==this.tableData[i].value){
+              this.dangqianshangpin = this.tableData[i].numName
+            }
+          }
+          this.codigoEntreno = response.codigoEntreno
+          this.codigo = response.codigo
+          this.price = response.price
+          this.descripcion=response.descripcion
+          this.priceId = response.priceId
+          this.commodityId= response.commodityId
+          this.orderNum = response.orderNum
+          // alert(this.orderNum)
+          // this.getCommodityPriceFormByOrderNumWeb()
+          if (response.rubroId != null) {
+            this.showshangpinpinpai =false
+            this.showxinghao=true
+            this.showhanliang =true
+            var i = 0;
+            // (response.rubroId)
+            for (i; i < this.options.length; i++) {
+              if ((response.rubroId) == this.options[i].catalogId) {
+                this.category = this.options[i].catalogName
+                this.shangpinlei = this.options[i].catalogName;//记录选择的商品类
+                this.shangpinleiParentId = this.options[i].catalogId
+
+              }
+            }
+            // alert((response.rubroId)+"")
+            getCommodityCatalogListOptionInfoList1((response.rubroId) + "").then(response1 => {
+              this.options1 = response1.arrayList
+              for (i = 0; i < this.options1.length; i++) {
+                if ((response.marcaId) == this.options1[i].catalogId) {
+                  this.brand = this.options1[i].catalogName
+                  this.shangpinpinpai = this.options1[i].catalogName;//记录选择的商品品牌
+                  this.shangpinpinpaiParentId = this.options1[i].catalogId
+                  this.rulelist.shangpinpinpaidialog = this.shangpinpinpai
+                }
+              }
+            })
+
+            getCommodityCatalogListOptionInfoList1((response.marcaId) + "").then(response1 => {
+              this.options2 = response1.arrayList
+              for (i = 0; i < this.options2.length; i++) {
+                if ((response.presentacionId) == this.options2[i].catalogId) {
+                  this.typ = this.options2[i].catalogName
+                  this.xinghaoParentId = this.options2[i].catalogId
+                  this.xinghao = this.options2[i].catalogName;//记录选择的型号
+                }
+              }
+            })
+            getCommodityCatalogListOptionInfoList1((response.presentacionId) + "").then(response1 => {
+              this.options3 = response1.arrayList
+              for (i = 0; i < this.options3.length; i++) {
+                if ((response.tamanoId) == this.options3[i].catalogId) {
+                  this.volume = this.options3[i].catalogName
+                  this.hanliangParentId = this.options3[i].catalogId
+                  this.hanliang = this.options3[i].catalogName
+                }
+              }
+            })
+          }
+        })
+      },
+      insert(){
+        //  alert("orderNum"+this.orderNum)
+        // this.priceId = ''
+        // this.codigo = this.newCodigo
+        // this.commodityId = ''
+        // alert(this.priceId)
+        // alert(this.commodityId)
+        // alert(this.codigo)
+        getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
+          var i = this.orderNum;
+          for (i;i<response.ArrayList.length;i++){
+            if(response.ArrayList[i].label == ''){
+              this.newPriceId = response.ArrayList[i].value
+              i=response.ArrayList.length
+              this.choosedialog = false
+              this.saveOrUpdateSupnuevoVentasCommodityPrice1()
+            }
+          }
+        })
+      },
       deleteContent(item) {
         alert(item.value)
         this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
@@ -447,12 +607,11 @@
                 message: '删除成功',
                 type: 'success'
               })
-              this.fetchData()
+             // this.fetchData()
             } else {
               this.$message.error('删除失败')
             }
           }).catch(e => {
-
           })
         }).catch(() => {
           this.$message({
@@ -531,18 +690,19 @@
         getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
           this.tableData = response.ArrayList
           this.searchList = response.resultList
+          this.firstPriceId = response.ArrayList[0].value
           this.result=[{}]
           for (let item of response.resultList) {
             this.result.push({"value": item.codigo})
           }
           this.rowDrop()
+          this.showFirst()
         })
         getCommodityCatalogListOptionInfoList(this.parentId).then(response => {  //获取商品类
           this.options = response.arrayList
         })
-        // getCommodityPriceFormByCatalogId(521).then(response => {  //获取商品类
-        //
-        // })
+        // 自动获取第一行的商品信息
+
       },
       sraa(row) {
         this.category=''
@@ -563,6 +723,7 @@
           this.priceId = response.priceId
           this.commodityId= response.commodityId
           this.orderNum = response.orderNum
+          // alert(this.orderNum)
           // this.getCommodityPriceFormByOrderNumWeb()
           if (response.rubroId != null) {
             this.showshangpinpinpai =false
@@ -612,7 +773,6 @@
               }
             })
           }
-
         })
       },
       getCommodityPriceFormByOrderNumWeb() {
@@ -1126,6 +1286,7 @@
         // if (this.filterText.length==0){
         //   this.lastFour = [{}]
         // }
+        this.lastFour = [{}]
         if (this.filterText.length==4) {
           getQueryDataListByCodigoLastFourWeb((this.filterText) + "").then(response => {
               this.lastFourList = response.data
@@ -1136,18 +1297,15 @@
             }
           )
         } else if (this.filterText=='Código no incluido') {
+          this.filterText = null
+         this.codigodialog = true
           // 新增方法
+         // alert(this.newCodigo)
         } else if (this.filterText.length > 4) {
           this.search(this.filterText)
         }
       },
       search2(){     //商品名称查询方法
-        // getDescripcionListByDescripcionPrefix(this.filterText).then(response => {
-        //   // this.codigoEntreno = response.tmpList.filterKey
-        //   // this.codigo = response.tmpList.filterKey
-        //   // this.price = response.tmpList.price
-        //   this.descripcion=response.tmpList[0].label
-        // })
         var  i = 0
         for (i ;i < this.searchList.length;i++){
             if (this.filterText===this.searchList[i].descripcion){
@@ -1156,12 +1314,6 @@
         }
       },
       search3(){     //引擎查询方法
-        // getCommodityBySearchEngineOld(this.filterText).then(response => {
-        //   this.codigoEntreno = response.object.codigoEntreno
-        //   this.codigo = response.object.codigo
-        //   this.price = response.object.price
-        //   this.descripcion=response.object.descripcion
-        // })
           var  i = 0
           for (i ;i < this.searchList.length;i++){
             if (this.filterText===this.searchList[i].codigoAndDescripcion){
@@ -1169,8 +1321,18 @@
             }
           }
       },
-      search4(){      //类型品牌描述尺寸查询方法
-
+      new(){
+        this.dangqianshangpin = ''
+        this.codigoEntreno = ''
+        this.price = ''
+        this.descripcion=''
+        this.codigo = this.newCodigo
+        // alert(this.orderNum)
+        // this.getCommodityPriceFormByOrderNumWeb()
+        this.category = ''
+        this.brand = ''
+        this.typ = ''
+        this.volume = ''
       },
       judge1(){   //判断商品品牌弹出框能否打开
         this.xiugaishangpinfenleibutton = true;
@@ -1217,83 +1379,142 @@
           this.dialogVisible3 = true
        // }
       },
-      deleteSupnuevoVentasCommodityPrice(){
-        deleteSupnuevoVentasCommodityPriceWeb(this.priceId).then(response => {
-          this.msg =  response.re
-          if (this.msg === 1) {
-            this.$message({
-              message: '删除成功',
-              type: 'success'
-            })
-            this.fetchData()
-          } else {
-            this.$message.error('删除失败')
-          }
-        })
-      },
-      clearSupnuevoVentasCommodityPrice(){
-        clearSupnuevoVentasCommodityPriceWeb(this.priceId).then(response => {
-          this.msg =  response.re
-          if (this.msg === 1) {
-            this.$message({
-              message: '清除成功',
-              type: 'success'
-            })
-            this.fetchData()
-          } else {
-            this.$message.error('清除失败')
-          }
-        })
-      },
       saveOrUpdateSupnuevoVentasCommodityPrice(){
-        saveOrUpdateSupnuevoVentasCommodityPriceWeb(this.priceId,this.commodityId,this.codigoEntreno+'',this.codigo,this.price+'').then(response => {
+        saveOrUpdateSupnuevoVentasCommodityPriceWeb1(this.priceId+'',this.commodityId,this.codigoEntreno+'',this.codigo,this.price+'').then(response => {
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
               message: '保存成功',
               type: 'success'
             })
-            this.fetchData()
+          //  this.fetchData()
           } else {
             this.$message.error('保存失败')
+          }
+        })
+      },
+
+      saveOrUpdateSupnuevoVentasCommodityPrice1(){
+        // alert(this.newCodigo)
+        alert(this.newPriceId)
+        if (this.isSave){
+          insertSupnuevoVentasCommodityPriceWeb((this.priceId) + "").then(response1 => {
+            saveOrUpdateSupnuevoVentasCommodityPriceWeb2(this.newPriceId+'',this.commodityId,this.codigoEntreno+'',this.newCodigo,this.price+'').then(response => {
+              this.msg =  response.re
+              if (this.msg === 1) {
+                this.$message({
+                  message: '保存成功',
+                  type: 'success'
+                })
+                this.submit1=true
+                this.submit2= false
+                this.save1=true
+                this.save2= false
+                this.isSave = false
+              } else {
+                // this.$message.error('保存失败')
+                deleteSupnuevoVentasCommodityPriceWeb(this.newPriceId).then(response => {
+                  this.msg =  response.re
+                  if (this.msg === 1) {
+                    this.$message({
+                      message: '保存失败',
+                      type: 'success'
+                    })
+                   // this.fetchData()
+                  } else {
+                    this.$message.error('删除失败')
+                  }
+                })
+              }
+            })
+
+          })
+        }else{
+          this.$message.error('公共库未保存')
+        }
+      },
+      saveOrUpdateSupnuevoVentasCommodityPrice2(){
+        // alert(this.newCodigo)
+        if (!this.isSave){
+          this.$message.error('公共库未保存')
+        }
+        saveOrUpdateSupnuevoVentasCommodityPriceWeb2(this.priceId+'',this.commodityId,this.codigoEntreno+'',this.newCodigo,this.price+'').then(response => {
+          this.msg =  response.re
+          if (this.msg === 1) {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+            this.submit1=true
+            this.submit2= false
+            this.save1=true
+            this.save2= false
+            this.isSave = false
+            // this.fetchData()
+          } else {
+            // this.$message.error('保存失败')
+            deleteSupnuevoVentasCommodityPriceWeb(this.newPriceId).then(response => {
+              this.msg =  response.re
+              if (this.msg === 1) {
+                this.$message({
+                  message: '保存失败',
+                  type: 'success'
+                })
+               // this.fetchData()
+              } else {
+                this.$message.error('删除失败')
+              }
+            })
           }
         })
       },
       saveOrUpdateSupnuevoVentasCommodity(){
-        saveOrUpdateSupnuevoVentasCommodityWeb(this.priceId,this.commodityId,this.hanliangParentId,this.codigo,this.descripcion).then(response => {
+        saveOrUpdateSupnuevoVentasCommodityWeb(this.priceId+'',this.commodityId+'',this.hanliangParentId,this.codigo,this.descripcion).then(response => {
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
               message: '保存成功',
               type: 'success'
             })
-            this.fetchData()
+            // this.fetchData()
           } else {
             this.$message.error('保存失败')
           }
         })
       },
-         handdle(event) {
-         console.log(event)
-     }
+      saveOrUpdateSupnuevoVentasCommodity1(){
+        saveOrUpdateSupnuevoVentasCommodityWeb('','',this.hanliangParentId,this.codigo,this.descripcion).then(response => {
+          this.msg =  response.re
+          if (this.msg === 1) {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+            this.commodityId = response.data.commodityId
+            this.isSave = true
+          } else {
+            this.$message.error('保存失败')
+          }
+        })
+      }
     }
   }
 </script>
 <style>
-  /* 用来设置当前页面element全局table的内间距 */
-  .el-table__row td{
-    padding: 0;
-  }
-  /* 用来设置当前页面element全局table 选中某行时的背景色*/
-  .el-table__body tr.current-row>td{
-    background-color: #e3f1e9 !important;
-    /* color: #f19944; */  /* 设置文字颜色，可以选择不设置 */
-  }
-  /* 用来设置当前页面element全局table 鼠标移入某行时的背景色*/
-  .el-table--enable-row-hover .el-table__body tr:hover>td {
-    background-color: #def1ee;
-    /* color: #f19944; */ /* 设置文字颜色，可以选择不设置 */
-  }
+  /*!* 用来设置当前页面element全局table的内间距 *!*/
+  /*.el-table__row td{*/
+    /*padding: 0;*/
+  /*}*/
+  /*!* 用来设置当前页面element全局table 选中某行时的背景色*!*/
+  /*.el-table__body tr.current-row>td{*/
+    /*background-color: #e3f1e9 !important;*/
+    /*!* color: #f19944; *!  !* 设置文字颜色，可以选择不设置 *!*/
+  /*}*/
+  /*!* 用来设置当前页面element全局table 鼠标移入某行时的背景色*!*/
+  /*.el-table--enable-row-hover .el-table__body tr:hover>td {*/
+    /*background-color: #def1ee;*/
+    /*!* color: #f19944; *! !* 设置文字颜色，可以选择不设置 *!*/
+  /*}*/
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
