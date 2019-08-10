@@ -16,14 +16,14 @@
                            min-width="70%"
           >
           </el-table-column>
-          <el-table-column label="操作" min-width="15%" align="center">
+          <el-table-column label="" min-width="15%" align="center">
             <template slot-scope="scope">
               <i class="el-icon-close" @click="deleteContent(scope.row)" ></i>
               <!--<el-button size="mini" @click="deleteContent(scope.row)">X</el-button>-->
             </template>
           </el-table-column>
         </el-table>
-        <el-button style="margin-left: 30%;margin-top: 10px" @click="test1" ref="click1">导入价格</el-button>
+        <el-button style="margin-left: 30%;margin-top: 10px" @click="test1" ref="click1">{{$t('operation.importPrice')}}</el-button>
       </el-aside>
       <el-container style="height: 700px;margin-left: 3%">
         <el-header height="150px" style="text-align: center">
@@ -43,7 +43,7 @@
               :trigger-on-focus="true"
               @select="search1"
               @keyup.native="search1"
-              placeholder="请输入条形码"
+              :placeholder="$t('PRODUCTO.lastFour')"
             >
               <el-button slot="append" icon="el-icon-search" @click=" search1" />
             </el-autocomplete>
@@ -54,7 +54,7 @@
               class="inline-input"
               v-model="filterText"
               :fetch-suggestions="querySearch"
-              placeholder="请输入"
+              :placeholder="$t('PRODUCTO.searchCommodityLabel')"
             >
               <el-button slot="append" icon="el-icon-search" @click=" search3" />
             </el-autocomplete>
@@ -64,32 +64,32 @@
               class="inline-input"
               v-model="filterText"
               :fetch-suggestions="querySearch"
-              placeholder="请输入"
+              :placeholder="$t('PRODUCTO.inputDescripcion')"
             >
               <el-button slot="append" icon="el-icon-search" @click=" search2" />
             </el-autocomplete>
           </div>
           <!--类型-品牌-描述-尺寸查询法-->
           <div style="width:500px; padding-bottom: 10px; float: left;" v-show="lpmc" >
-            <el-select v-model="searchshangpinlei" placeholder="请选择..." @change="getSearchValue"  style="width: 120px ">
+            <el-select v-model="searchshangpinlei"  @change="getSearchValue"  style="width: 120px " :placeholder="$t('PRODUCTO.select')">
               <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
             </el-select>
-            <el-select  v-model="searchshangpinpinpai"  placeholder="请选择..." @change="getSearchValue1" style="width: 120px ">
+            <el-select  v-model="searchshangpinpinpai" @change="getSearchValue1" style="width: 120px " :placeholder="$t('PRODUCTO.select')">
               <el-option v-for="item in searchOptions1" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
             </el-select>
-            <el-select  v-model="searchxinghao"  placeholder="请选择..." @change="getSearchValue2" style="width: 120px ">
+            <el-select  v-model="searchxinghao"  @change="getSearchValue2" style="width: 120px " :placeholder="$t('PRODUCTO.select')">
               <el-option v-for="item in searchOptions2" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
             </el-select>
-            <el-select v-model="searchhanliang"   placeholder="请选择..." @change="getSearchValue3" style="width: 120px ">
+            <el-select v-model="searchhanliang" @change="getSearchValue3" style="width: 120px " :placeholder="$t('PRODUCTO.select')">
               <el-option v-for="item in searchOptions3" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
             </el-select>
           </div>
           <div>
             <el-radio-group v-model="radio">
-              <el-radio :label="1" @change="showtxm">条形码尾位查询法</el-radio>
-              <el-radio :label="2" @change="showlpmc">类型-品牌-描述-尺寸查询法</el-radio>
-              <el-radio :label="3" @change="showspmc">商品名称查询法</el-radio>
-              <el-radio :label="4" @change="showyq">引擎查询法</el-radio>
+              <el-radio :label="1" @change="showtxm">{{$t('PRODUCTO.txm')}} </el-radio>
+              <el-radio :label="2" @change="showlpmc">{{$t('PRODUCTO.lpmc')}} </el-radio>
+              <el-radio :label="3" @change="showspmc">{{$t('PRODUCTO.spmc')}} </el-radio>
+              <el-radio :label="4" @change="showyq">{{$t('PRODUCTO.yq')}} </el-radio>
             </el-radio-group>
           </div>
         </el-header>
@@ -100,33 +100,33 @@
               <el-form-item  style="width: 100% " label="当前商品" >
                 <el-input disabled v-model="dangqianshangpin" />
               </el-form-item>
-              <el-form-item  style="width: 100% " label="商品内码" >
+              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.codigoEntreno')">
                 <el-input v-model="codigoEntreno" />
               </el-form-item>
-              <el-form-item  style="width: 100% " label="商品条码" >
+              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.codigo')">
                 <el-input disabled v-model="codigo"/>
               </el-form-item>
-              <el-form-item  style="width: 100% " label="商品价格">
+              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.price')">
                 <el-input  v-model="price"/>
               </el-form-item>
               <el-form-item label="">
                 <img :src="src" style="width: 280px; height: 280px;float: right"/>
               </el-form-item>
-              <el-button style="margin-left: 55%" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">提交</el-button>
-              <el-button style="margin-left: 55%" v-show="submit2" @click="choose">提交</el-button>
+              <el-button style="margin-left: 55%" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 55%" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
             </el-aside>
             <el-container>
               <el-main width="60%" style="margin-top: -60px">
-                <el-form-item label="商品类">
-                  <el-select v-model="category" placeholder="请选择..." @change="getValue"  style="width: 80% ">
+                <el-form-item :label="$t('PRODUCTO.category')">
+                  <el-select v-model="category"  @change="getValue"  style="width: 80% " :placeholder="$t('PRODUCTO.select')">
                     <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="商品品牌">
-                  <el-select v-model="brand" value="" placeholder="请选择..." @change="getValue1" style="width: 80% ">
+                <el-form-item :label="$t('PRODUCTO.brand')">
+                  <el-select v-model="brand" value="" @change="getValue1" style="width: 80% " :placeholder="$t('PRODUCTO.select')">
                     <el-option v-for="item in options1" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
                   </el-select>
-                  <el-button type="text" @click="judge1" v-show="showshangpinpinpai">编辑</el-button>
+                  <el-button type="text" @click="judge1" v-show="showshangpinpinpai">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
                   title="请输入商品品牌"
@@ -141,25 +141,25 @@
                     <!--名称：<el-input v-model="shangpinpinpaidialog" style="width: 60%"></el-input>-->
                   <!--</el-row>-->
                   <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
-                    <el-form-item label="分类:" prop="name">
+                    <el-form-item prop="name" :label="$t('PRODUCTO.catalogPrefixLabel')">
                       <el-input v-model="fenlei" disabled="disable" style="width: 90%"></el-input>
                     </el-form-item>
-                    <el-form-item label="名称:" prop="shangpinpinpaidialog">
+                    <el-form-item prop="shangpinpinpaidialog" :label="$t('PRODUCTO.catalogNameLabel')">
                       <el-input v-model="rulelist.shangpinpinpaidialog" style="width: 90%" autocomplete="off" ></el-input>
                     </el-form-item>
                   </el-form>
                   <span slot="footer" class="dialog-footer">
-                    <el-button @click="xinzengshangpinpinpaimethod">添加</el-button>
-                    <el-button @click="xiugaishangpinpinpaimethod" v-show="xiugaishangpinfenleibutton">修改</el-button>
-                    <el-button @click="shanchushangpinpinpaimethod" v-show="shanchushangpinfenleibutton">删除</el-button>
-                    <el-button @click="dialogVisible1 = false">取 消</el-button>
+                    <el-button @click="xinzengshangpinpinpaimethod">{{$t('operation.add')}}</el-button>
+                    <el-button @click="xiugaishangpinpinpaimethod" v-show="xiugaishangpinfenleibutton">{{$t('operation.modify')}}</el-button>
+                    <el-button @click="shanchushangpinpinpaimethod" v-show="shanchushangpinfenleibutton">{{$t('operation.delete')}}</el-button>
+                    <el-button @click="dialogVisible1 = false">{{$t('operation.cancel')}}</el-button>
                   </span>
                 </el-dialog>
-                <el-form-item label="型号">
-                  <el-select v-model="typ"  placeholder="请选择..." @change="getValue2" style="width: 80% ">
+                <el-form-item :label="$t('PRODUCTO.tye')">
+                  <el-select v-model="typ"  @change="getValue2" style="width: 80% " :placeholder="$t('PRODUCTO.select')">
                     <el-option v-for="item in options2" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
                   </el-select>
-                  <el-button type="text" @click="judge2" v-show="showxinghao">编辑</el-button>
+                  <el-button type="text" @click="judge2" v-show="showxinghao">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
                   title="请输入型号"
@@ -175,25 +175,25 @@
                   <!--</el-row>-->
 
                   <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
-                    <el-form-item label="分类:">
+                    <el-form-item :label="$t('PRODUCTO.catalogPrefixLabel')">
                       <el-input v-model="fenlei" disabled="disable" style="width: 90%"></el-input>
                     </el-form-item>
-                    <el-form-item label="名称:" prop="xinghaodialog">
+                    <el-form-item  prop="xinghaodialog" :label="$t('PRODUCTO.catalogNameLabel')">
                       <el-input v-model="rulelist.xinghaodialog" style="width: 90%" autocomplete="off" ></el-input>
                     </el-form-item>
                   </el-form>
                   <span slot="footer" class="dialog-footer">
-                    <el-button @click="xinzengxinghaomethod">添加</el-button>
-                    <el-button @click="xiugaixinghaomethod" v-show="xiugaixinghaobutton">修改</el-button>
-                    <el-button @click="shanchuxinghaomethod" v-show="shanchuxinghaobutton">删除</el-button>
-                    <el-button @click="dialogVisible2 = false">取 消</el-button>
+                    <el-button @click="xinzengxinghaomethod">{{$t('operation.add')}}</el-button>
+                    <el-button @click="xiugaixinghaomethod" v-show="xiugaixinghaobutton">{{$t('operation.modify')}}</el-button>
+                    <el-button @click="shanchuxinghaomethod" v-show="shanchuxinghaobutton">{{$t('operation.delete')}}</el-button>
+                    <el-button @click="dialogVisible2 = false">{{$t('operation.cancel')}}</el-button>
                   </span>
                 </el-dialog>
-                <el-form-item label="含量">
-                  <el-select v-model="volume"  placeholder="请选择..." @change="getValue3" style="width: 80% ">
+                <el-form-item :label="$t('PRODUCTO.volume')">
+                  <el-select v-model="volume"  @change="getValue3" style="width: 80% " :placeholder="$t('PRODUCTO.select')">
                     <el-option v-for="item in options3" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
                   </el-select>
-                  <el-button type="text" @click="judge3" v-show="showhanliang">编辑</el-button>
+                  <el-button type="text" @click="judge3" v-show="showhanliang">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
                   title="请输入含量"
@@ -208,19 +208,19 @@
                     <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
                   <!--</el-row>-->
                   <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
-                    <el-form-item label="分类:">
+                    <el-form-item :label="$t('PRODUCTO.catalogPrefixLabel')">
                       <el-input v-model="fenlei" disabled="disable" style="width: 90%"></el-input>
                     </el-form-item>
-                    <el-form-item label="名称:" prop="hanliangdialog">
+                    <el-form-item prop="hanliangdialog" :label="$t('PRODUCTO.catalogNameLabel')">
                       <el-input v-model="rulelist.hanliangdialog" style="width: 90%" autocomplete="off" ></el-input>
                     </el-form-item>
                   </el-form>
 
                   <span slot="footer" class="dialog-footer">
-                      <el-button @click="xinzenghanliangmethod">添加</el-button>
-                      <el-button @click="xiugaihanliangmethod" v-show="xiugaihanliangbutton">修改</el-button>
-                      <el-button @click="shanchuhanliangmethod" v-show="shanchuhanliangbutton">删除</el-button>
-                      <el-button @click="dialogVisible3 = false">取 消</el-button>
+                      <el-button @click="xinzenghanliangmethod">{{$t('operation.add')}}</el-button>
+                      <el-button @click="xiugaihanliangmethod" v-show="xiugaihanliangbutton">{{$t('operation.modify')}}</el-button>
+                      <el-button @click="shanchuhanliangmethod" v-show="shanchuhanliangbutton">{{$t('operation.delete')}}</el-button>
+                      <el-button @click="dialogVisible3 = false">{{$t('operation.cancel')}}</el-button>
                   </span>
                 </el-dialog>
 
@@ -237,18 +237,18 @@
                   <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
                   <!--</el-row>-->
                   <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
-                    <el-form-item label="名称:" prop="newCodigo">
+                    <el-form-item prop="newCodigo" :label="$t('PRODUCTO.catalogNameLabel')">
                       <el-input v-model="rulelist.newCodigodialog" style="width: 90%" autocomplete="off" ></el-input>
                     </el-form-item>
                   </el-form>
 
                   <span slot="footer" class="dialog-footer">
-                    <el-button @click="getNewCodigo">确定</el-button>
-                    <el-button @click="codigodialog=false">取消</el-button>
+                    <el-button @click="getNewCodigo">{{$t('operation.ok')}}</el-button>
+                    <el-button @click="codigodialog=false">{{$t('operation.cancel')}}</el-button>
                   </span>
                 </el-dialog>
                 <el-dialog
-                  title="请选择插入还是删除"
+                  title="请选择插入还是覆盖"
                   :visible.sync="choosedialog"
                   width="40%"
                   style="margin-left: 50px">
@@ -260,12 +260,12 @@
                   <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
                   <!--</el-row>-->
                   <span slot="footer" class="dialog-footer">
-                    <el-button @click="insert">插入</el-button>
-                    <el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice2">覆盖</el-button>
+                    <el-button @click="insert">{{$t('operation.insert')}}</el-button>
+                    <el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice2">{{$t('operation.cover')}}</el-button>
                   </span>
                 </el-dialog>
 
-                <el-form-item label="商品名称">
+                <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
                   <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey1" height="120" align="middle" border="0" >
@@ -338,8 +338,8 @@
                       <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <el-button v-show="save1" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">保存</el-button>
-                <el-button v-show="save2" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">保存</el-button>
+                <el-button v-show="save1" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
+                <el-button v-show="save2" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
 
               </el-main>
             </el-container>
@@ -408,13 +408,13 @@
         },
         col: [
           {
-            label: '序列',
+            label: '',
             prop: 'numName'
           }
         ],
         dropCol: [
           {
-            label: '序列',
+            label: '',
             prop: 'numName'
           }
         ],
@@ -1452,6 +1452,8 @@
           } else {
             this.$message.error('保存失败')
           }
+        }).catch(e => {
+          this.$message.error('保存失败')
         })
       },
 
@@ -1482,7 +1484,7 @@
                       type: 'success'
                     })
                    // this.fetchData()
-                  } else {
+                  }else {
                     this.$message.error('删除失败')
                   }
                 })
