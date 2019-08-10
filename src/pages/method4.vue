@@ -268,7 +268,8 @@
                 <el-form-item label="商品名称">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                    <el-upload
+                  <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey1" height="120" align="middle" border="0" >
+                    <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
                     action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
@@ -281,7 +282,8 @@
                     <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
-                    <el-upload
+                <img v-if="show2" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey2" height="120" align="middle" border="0" >
+                <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
                       action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
@@ -294,7 +296,8 @@
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                    <el-upload
+                <img v-if="show3" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey3" height="120" align="middle" border="0" >
+                <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
                       action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
@@ -307,7 +310,8 @@
                       <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                    <el-upload
+                <img v-if="show4" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey4" height="120" align="middle" border="0" >
+                <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
                       action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
@@ -320,7 +324,8 @@
                       <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                    <el-upload
+                <img v-if="show5" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey5" height="120" align="middle" border="0" >
+                <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
                       action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
@@ -356,11 +361,12 @@
 <script>
   import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
-    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb1, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb, insertSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb2} from '../api/api'
+    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb1, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb, insertSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb2,getAttachImageDataByAttachIdWeb} from '../api/api'
   export default {
 
     data() {
       return {
+        show: 'false',
         isSave:false,
         newPriceId:'',
         choosedialog:false,
@@ -481,8 +487,12 @@
         searchhanliang:'',
         lastFourList:[],// 搜索条形码后四位时用的数据
         lastFour:[],
-
-        firstPriceId:''
+        firstPriceId:'',
+        dataKey1:'',
+        dataKey2:'',
+        dataKey3:'',
+        dataKey4:'',
+        dataKey5:'',
       }
     },
     computed: {
@@ -571,7 +581,58 @@
                 }
               }
             })
+            if(response.imageAttachId1 != null){
+            getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response2 => {
+              this.dataKey1 = response2.data
+              if(this.dataKey1 == null){
+                this.show = false
+              }else{
+                this.show = true
+              }
+            })}
+            if(response.imageAttachId2 != null){
+            getAttachImageDataByAttachIdWeb((response.imageAttachId2)+'').then(response2 => {
+              this.dataKey2 = response2.data
+              if(this.dataKey2== null){
+                this.show2 = false
+              }else{
+                this.show2 = true
+              }
+            })
+            }
+            if(response.imageAttachId3 != null) {
+              getAttachImageDataByAttachIdWeb((response.imageAttachId3) + '').then(response2 => {
+                this.dataKey3 = response2.data
+                if (this.dataKey3 == null) {
+                  this.show3 = false
+                } else {
+                  this.show3 = true
+                }
+              })
+            }
+            if(response.imageAttachId4 != null) {
+              getAttachImageDataByAttachIdWeb((response.imageAttachId4) + '').then(response2 => {
+                this.dataKey4 = response2.data
+                if (this.dataKey4 == null) {
+                  this.show4 = false
+                } else {
+                  this.show4 = true
+                }
+              })
+            }
+            if(response.imageAttachId5 != null) {
+              getAttachImageDataByAttachIdWeb((response.imageAttachId5) + '').then(response2 => {
+                this.dataKey5 = response2.data
+                if (this.dataKey5 == null) {
+                  this.show5 = false
+                } else {
+                  this.show5 = true
+                }
+              })
+            }
           }
+
+
         })
       },
       insert(){
