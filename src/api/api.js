@@ -111,6 +111,24 @@ export function uploadSupnuevoVentasPhotoImageWeb() {//上传照片
     }
   })
 }
+export function getAttachImageDataByAttachIdWeb(attachId) {//回显照片1
+  return request({
+    url: '/ventas/getAttachImageDataByAttachIdWeb',
+    method: 'POST',
+    data: {
+      attachId
+    }
+  })
+}
+export function getTempBuffedBytesDataWeb(dataKey) {//回显照片2
+  return request({
+    url: '/ventas/getTempBuffedBytesDataWeb',
+    method: 'POST',
+    data: {
+      dataKey
+    }
+  })
+}
 export function updateSupnuevoVentasInfoAndRubroList(ventasId,rubroIdList,nombre,email,pagina,cityId,direccion,telefono,principalContactos,observaciones,nota) {//保存供应商信息
   return request({
     url: '/ventas/updateSupnuevoVentasInfoAndRubroList',
@@ -387,6 +405,14 @@ export function getQueryDataListByCodigoLastFourWeb(codigo) {  // 查询最后�
     method: 'post',
     data: {
       codigo
+    }
+  })
+}
+export function getSupnuevoVentasPromptInfoObjectListWeb() {
+  return request({
+    url: '/ventas/getSupnuevoVentasPromptInfoObjectListWeb',
+    method: 'post',
+    data: {
     }
   })
 }

@@ -30,36 +30,36 @@
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;"  :span="10" offset="2">
-              <el-form-item label="与sos签订合同的合同号">
+              <el-form-item :label="$t('hh.contrato')">
                 <el-input v-model="contrato" disabled="disabled" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -12px;"  :span="10">
-              <el-form-item label="合同有效期之起始日期">
+              <el-form-item :label="$t('hh.desde')">
                 <el-date-picker style="width: 100%" v-model="desde" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;" :span="10" offset="2">
-              <el-form-item label="合同有效期之截止日期">
+              <el-form-item :label="$t('hh.hasta')">
                 <el-date-picker style="width: 100%" v-model="hasta" disabled="disabled" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -12px;"  :span="10">
-              <el-form-item label="电子邮箱地址">
+              <el-form-item :label="$t('hh.email')">
                 <el-input v-model="email" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;"  :span="10" offset="2">
-              <el-form-item label="网页地址">
+              <el-form-item :label="$t('hh.pagina')">
                 <el-input v-model="pagina" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -12px;" :span="10">
-              <el-form-item label="所在省" prop="pro">
+              <el-form-item :label="$t('hh.provinceId')" prop="pro">
                 <el-select v-model="provinceId" placeholder="请选择省份" style="width: 100%;" clearable @change="getValue">
                   <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
@@ -68,83 +68,83 @@
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;"  :span="10" offset="2">
-              <el-form-item label="所在市" prop="city">
+              <el-form-item :label="$t('hh.cityId')"  prop="city">
                 <el-select v-model="cityId" placeholder="请选择城市" style="width: 100%;"clearable>
                   <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -12px;"  :span="10">
-              <el-form-item label="公司地址">
+              <el-form-item :label="$t('hh.direccion')">
                 <el-input v-model="direccion" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;"  :span="10" offset="2">
-              <el-form-item label="经纬度">
+              <el-form-item :label="$t('hh.longitude')">
                 <!--longitude  latitude-->
                 <el-input v-model="longitude" disabled="disabled" style="width: 49%"/>
                 <el-input v-model="latitude" disabled="disabled" style="width: 48%"/>
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -12px;"  :span="10">
-              <el-form-item label="固定电话号码(含区号)">
+              <el-form-item :label="$t('hh.telefono')">
                 <el-input v-model="telefono" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;"  :span="10" offset="2">
-              <el-form-item label="公司主要联系人">
+              <el-form-item :label="$t('hh.principalContactos')">
                 <el-input v-model="principalContactos" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -12px;"  :span="10">
-              <el-form-item label="公司所有者">
+              <el-form-item :label="$t('hh.ropietario')">
                 <el-input v-model="ropietario" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;"  :span="10" offset="2">
-              <el-form-item label="其他注释">
+              <el-form-item :label="$t('hh.observaciones')">
                 <el-input v-model="observaciones" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -12px;"  :span="10">
-              <el-form-item label="计划标志">
+              <el-form-item :label="$t('hh.planNum')">
                 <el-input v-model="planNum" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;" :span="10" offset="2">
-              <el-form-item label="计划名称">
+              <el-form-item :label="$t('hh.planName')">
                 <el-input v-model="planName" disabled="disabled" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -12px;"  :span="10">
-              <el-form-item label="开始结束时间">
+              <el-form-item :label="$t('hh.planStartEndDate')">
                 <el-input v-model="planStartEndDate" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;" :span="10" offset="2">
-              <el-form-item label="空间大小">
+              <el-form-item :label="$t('hh.commodityCount')">
                 <el-input v-model="commodityCount" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -12px;" :span="22" offset="2">
-                <el-form-item label="备注" offset="2">
+                <el-form-item :label="$t('hh.nota')" offset="2">
                   <el-input v-model="nota" type="textarea" />
                 </el-form-item>
             </el-col>
           </el-row>
-          <el-form-item label="公司送货范围"  style="margin-top: 0px;">
+          <el-form-item :label="$t('hh.gsshfw')"  style="margin-top: 0px;">
 <!--            <el-input v-model="deliverDes" disabled="disabled" />-->
             <el-table
               v-loading="listLoading"
@@ -172,7 +172,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="送货地区(省)"
+                :label="$t('hh.provinceName')"
                 align="center"
                 min-width="160"
               >
@@ -181,7 +181,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="送货地区(市)"
+                :label="$t('hh.cityName')"
                 align="center"
                 min-width="160"
               >
@@ -190,7 +190,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="最小订单量"
+                :label="$t('hh.minAmount')"
                 align="center"
                 min-width="160"
               >
@@ -199,7 +199,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="送货费"
+                :label="$t('hh.deliverFee')"
                 align="center"
                 min-width="160"
               >
@@ -207,7 +207,7 @@
                   {{ scope.row.deliverFee }}
                 </template>
               </el-table-column>
-              <el-table-column label="操作" min-width="160" align="center">
+              <el-table-column :label="$t('hh.operation')" min-width="160" align="center">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="openEdit(scope.row)">编辑</el-button>
                   <el-button size="mini" @click="deleteContent(scope.row)">删除</el-button>
@@ -218,23 +218,23 @@
             <div>
               <el-dialog title="编辑修改" :visible.sync="dialogEditFormVisible" width="500px">
                 <el-form ref="editlist" :model="editlist" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
-                  <el-form-item label="送货地区(省):" prop="cardId">
+                  <el-form-item  :label="$t('hh.provinceName')" prop="cardId">
                     <el-select v-model="editlist.provinceName" placeholder="请选择省份" style="width: 80%;" @change="getEditValue">
                       <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
                   <br>
-                  <el-form-item label="送货地区(市):" prop="alarmContent">
+                  <el-form-item  :label="$t('hh.cityName')" prop="alarmContent">
                     <el-select v-model="editlist.cityName" placeholder="请选择市" style="width: 80%;" @click="getEditValue1">
                       <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
                   <br>
-                  <el-form-item label="最小订单量:" prop="X">
+                  <el-form-item  :label="$t('hh.minAmount')" prop="X">
                     <el-input v-model="editlist.minAmount" style="width: 80%" />
                   </el-form-item>
                   <br>
-                  <el-form-item label="送货费:" prop="X">
+                  <el-form-item :label="$t('hh.deliverFee')" prop="X">
                     <el-input v-model="editlist.deliverFee" style="width: 80%" />
                   </el-form-item>
                 </el-form>
@@ -249,23 +249,23 @@
             <div>
               <el-dialog title="新建" :visible.sync="dialogCreateFormVisible" width="500px">
                 <el-form ref="createList" :model="createList" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
-                  <el-form-item label="送货地区(省):" prop="cardId">
+                  <el-form-item :label="$t('hh.provinceName')" prop="cardId">
                     <el-select v-model="createList.provinceName" placeholder="请选择省份" style="width: 80%;" @change="getCreateValue">
                       <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
                   <br>
-                  <el-form-item label="送货地区(市):" prop="alarmContent">
+                  <el-form-item :label="$t('hh.cityName')" prop="alarmContent">
                     <el-select v-model="createList.cityName" placeholder="请选择市" style="width: 80%;">
                       <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
                   <br>
-                  <el-form-item label="最小订单量:" prop="X">
+                  <el-form-item :label="$t('hh.minAmount')" prop="X">
                     <el-input v-model="createList.minAmount" style="width: 80%" />
                   </el-form-item>
                   <br>
-                  <el-form-item label="送货费:" prop="X">
+                  <el-form-item :label="$t('hh.deliverFee')" prop="X">
                     <el-input v-model="createList.deliverFee" style="width: 80%" />
                   </el-form-item>
                 </el-form>
@@ -294,7 +294,7 @@
           </el-form-item>
         </el-main>
         <el-aside style="width: 30%">
-          <el-form-item label="公司经营范围" prop="type">
+          <el-form-item :label="$t('hh.rubro')" prop="type">
             <br>
             <el-checkbox-group v-model="rubroIdList" @change="handleCheckedCitiesChange">
               <!--              <el-checkbox v-for="item in systemRubroList" :key="item.filterKey" :label="item.label" >{{item.label}}</el-checkbox>-->
@@ -326,8 +326,9 @@
           </el-form-item>
           <!--照片上传-->
           <div style="margin-top: -40px;">
-            <el-form-item label="图片：">
-              <el-upload
+            <el-form-item :label="$t('hh.upload')">
+              <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey" height="120" align="middle" border="0" >
+              <el-upload v-else
                 class="avatar-uploader"
                 action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb"
                 :show-file-list="false"
@@ -336,9 +337,12 @@
                 <img v-if="imageUrl" :src="imageUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
+
+            </el-form-item>
+            <el-form-item>
             </el-form-item>
             <el-form-item style="margin-top: -30px;">
-              <el-button type="primary" @click="onSubmit">保存修改</el-button>
+              <el-button type="primary" @click="onSubmit">{{$t('operation.modify')}}</el-button>
             </el-form-item>
           </div>
         </el-aside >
@@ -349,12 +353,13 @@
 </template>
 
 <script>
-  import  {getSupnuevoVentasInfoFormByVentasIdWeb,getCityInfoListOfProvinceWeb,editDeliverGoodWeb,createDeliverGoodWeb,deleteDeliverGoodWeb,updateSupnuevoVentasInfoAndRubroList,uploadSupnuevoVentasPhotoImageWeb } from '../api/api'
+  import  {getSupnuevoVentasInfoFormByVentasIdWeb,getCityInfoListOfProvinceWeb,editDeliverGoodWeb,createDeliverGoodWeb,deleteDeliverGoodWeb,updateSupnuevoVentasInfoAndRubroList,uploadSupnuevoVentasPhotoImageWeb,getSupnuevoVentasPromptInfoObjectListWeb,getAttachImageDataByAttachIdWeb,getTempBuffedBytesDataWeb } from '../api/api'
   import  fileupload  from '../api/fileupload.vue'
   export default {
 
     data() {
       return {
+        show: 'false',
         imageUrl: '',
         editlist: {
           deliverId:'',
@@ -457,6 +462,10 @@
             { required: true, message: '请输入送货费', trigger: 'blur' }
           ]
         },
+        attachId:'',
+        attachIds:'',
+        dataKey:'',
+        fileload:''
       }
     },
     computed: {
@@ -569,7 +578,11 @@
         this.dialogCreateFormVisible = true
       },
       fetchData() {
+/*        getSupnuevoVentasPromptInfoObjectListWeb().then(response => {
+          this.province =  response.data
+        }),*/
         getSupnuevoVentasInfoFormByVentasIdWeb().then(response => {
+          this.attachId = response.data.form.attachId
           this.razon = response.data.form.razon
           this.nota = response.data.form.nota
           this.nombre = response.data.form.nombre
@@ -616,8 +629,24 @@
                 this.cityId = this.cityList[i].value
               }
             }
-          })
+          }),
+            getAttachImageDataByAttachIdWeb((response.data.form.attachIds)+'').then(response2 => {
+              this.dataKey =  response2.data
+              console.log(response.data.form.attachIds)
+              console.log(this.dataKey)
+              if(this.dataKey == null){
+                this.show = false
+              }else{
+                this.show = true
+              }
+        /*      console.log(response2.data+'--response2.data=')
+              getTempBuffedBytesDataWeb((this.dataKey)+'').then(response3 => {
+                this.fileload = response3.data
+              })*/
+            })
+
         })
+
         // this.listLoading = false
       },
 
