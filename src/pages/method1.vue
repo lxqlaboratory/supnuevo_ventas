@@ -544,6 +544,8 @@
               } else {
                 this.$message.error('NO SE HA PODIDO CAMBIAR (CAMBIO SIN EXITO)') // 更新失败  修改失败
               }
+            }).catch(e => {
+
             })
       },
       createRouterList(formName) {
@@ -564,6 +566,8 @@
           } else {
             this.$message.error('NO SE HA PODIDO AGREGAR') //添加失败
           }
+        }).catch(e => {
+
         })
       },
       openEdit(item) {
@@ -580,6 +584,8 @@
       fetchData() {
         getSupnuevoVentasPromptInfoObjectListWeb().then(response => {
           this.province =  response.data
+        }).catch(e => {
+
         }),
         getSupnuevoVentasInfoFormByVentasIdWeb().then(response => {
           this.attachId = response.data.form.attachId
@@ -629,6 +635,8 @@
                 this.cityId = this.cityList[i].value
               }
             }
+          }).catch(e => {
+
           }),
             getAttachImageDataByAttachIdWeb((response.data.form.attachIds)+'').then(response2 => {
               this.dataKey =  response2.data
@@ -643,7 +651,11 @@
               getTempBuffedBytesDataWeb((this.dataKey)+'').then(response3 => {
                 this.fileload = response3.data
               })*/
+            }).catch(e => {
+
             })
+
+        }).catch(e => {
 
         })
 
@@ -659,6 +671,8 @@
         this.province = obj.value
         getCityInfoListOfProvinceWeb(obj.value).then(response => {
           this.cityList = response.data
+        }).catch(e => {
+
         })
       },
       getEditValue1: function(vId) {
@@ -669,6 +683,8 @@
         this.province = obj.value
         getCityInfoListOfProvinceWeb(obj.value).then(response => {
           this.cityList = response.data
+        }).catch(e => {
+
         })
       },
       getCreateValue: function(vId) {
@@ -680,6 +696,8 @@
         this.province = obj.value
         getCityInfoListOfProvinceWeb(obj.value).then(response => {
           this.cityList = response.data
+        }).catch(e => {
+
         })
       },
       getValue: function(vId) {
@@ -692,6 +710,8 @@
         this.province = obj.value
         getCityInfoListOfProvinceWeb(obj.value).then(response => {
           this.cityList = response.data
+        }).catch(e => {
+
         })
       },
       getValue1: function(vId) {
@@ -704,6 +724,8 @@
         this.province1 = obj.value
         getCityInfoListOfProvinceWeb(obj.value).then(response => {
           this.cityList1 = response.data
+        }).catch(e => {
+
         })
       },
      deleteContent(item) {
@@ -757,6 +779,8 @@
           } else {
             this.$message.error('保存失败')
           }
+        }).catch(e => {
+
         })
       },
       handleCheckedCitiesChange(value) {

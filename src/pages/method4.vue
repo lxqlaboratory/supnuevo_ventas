@@ -23,7 +23,16 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-button style="margin-left: 30%;margin-top: 10px" @click="test1" ref="click1">{{$t('operation.importPrice')}}</el-button>
+        <el-upload
+                   :headers="headers"
+                   class="avatar-uploader"
+                   action="http://localhost/supnuevo_ventasventas/importCommodityPriceWeb"
+                   :show-file-list="true"
+                   style="float:right;margin: 3px;"
+        >
+          <div class="el-upload__text">{{$t('operation.importPrice')}}</div>
+        </el-upload>
+        <!--<el-button style="margin-left: 30%;margin-top: 10px" @click="test1">{{$t('operation.importPrice')}}</el-button>-->
       </el-aside>
       <el-container style="height: 700px;margin-left: 3%">
         <el-header height="150px" style="text-align: center">
@@ -679,6 +688,14 @@
           this.$message.error('上传图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
+      },
+      beforeAvatarUpload1(file) {
+        this.$emit('preview',file)
+        const isXLS = file.type === 'xls/xlsx';
+        if (!isXLS) {
+          this.$message.error('上传文件只能是 xls/xlsx 格式!');
+        }
+        return isXLS ;
       },
       querySearch(queryString, cb) { //用于搜索建议
         var resultList = this.result
