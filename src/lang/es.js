@@ -6,7 +6,8 @@ export default {
     xgmm:'MODIF.CONTRASENA',
     gys:'MI CUENTA',
     spjhgm:'MI PLAN',
-    spxxwh:'PRODUCTO'
+    spxxwh:'PRODUCTO',
+    help:'Ayuda'
   },
   modifyPasswordModal: {
     oldPassword: '旧密码',
@@ -88,7 +89,8 @@ export default {
     piaojuhao:"FACTURA",
     jiaofeishijian:"FECHA DE PAGO",
     shoufeiren:"COBRADOR",
-    beizhu:"NOTA"
+    beizhu:"NOTA",
+    buyError:'EL NOMBRE DEL PLAN ESTA VACIO,POR FAVOR ELIJA UN PLAN PARA CONTINUAR'
   },
   mm:{
     OldPwd:'CLAVE ANTERIOR',
