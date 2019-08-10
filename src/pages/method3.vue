@@ -2,7 +2,7 @@
   <div style="padding:0px;">
     <el-container>
       <el-aside style="height: 60%" >
-        <el-form label-width="80px"><br>
+        <el-form label-width="130px"><br>
           <el-form-item  prop="planNum" :label="$t('spgm.planNum')">
             <el-select v-model="planNum" @change="getValue" style="width: 100% " :placeholder="$t('PRODUCTO.select')">
               <el-option v-for="item in list2" :key="item.planId" :label="item.planNum" :value="item.planId"/>
