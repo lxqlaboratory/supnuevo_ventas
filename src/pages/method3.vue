@@ -3,37 +3,37 @@
     <el-container>
       <el-aside style="height: 60%" >
         <el-form label-width="80px"><br>
-          <el-form-item label="计划标志" prop="planNum">
-            <el-select v-model="planNum" placeholder="请选择..." @change="getValue" style="width: 100% ">
+          <el-form-item  prop="planNum" :label="$t('spgm.planNum')">
+            <el-select v-model="planNum" @change="getValue" style="width: 100% " :placeholder="$t('PRODUCTO.select')">
               <el-option v-for="item in list2" :key="item.planId" :label="item.planNum" :value="item.planId"/>
             </el-select>
           </el-form-item>
-          <el-form-item label="计划名称" prop="planName" v-model="planName">
+          <el-form-item prop="planName" v-model="planName" :label="$t('spgm.planName')">
             <el-input v-model="planName" disabled/>
           </el-form-item>
-          <el-form-item label="supnuevo空间" prop="commodityCount">
+          <el-form-item  prop="commodityCount" :label="$t('spgm.supnuevoZoom')">
             <el-input v-model="commodityCount" disabled/>
           </el-form-item>
-          <el-form-item label="开始时间" prop="startDate">
+          <el-form-item prop="startDate" :label="$t('spgm.startDate')">
             <el-input v-model="nowTime" disabled/>
           </el-form-item>
-          <el-form-item label="结束时间" prop="endDate">
+          <el-form-item prop="endDate" :label="$t('spgm.endDate')">
             <el-input v-model="endTime" disabled/>
           </el-form-item>
-          <el-form-item label="租用费用" prop="rentFee">
+          <el-form-item prop="rentFee" :label="$t('spgm.rentFee')">
             <el-input v-model="rentFee" disabled/>
           </el-form-item>
-          <el-form-item label="按天费用" prop="dayFee">
+          <el-form-item prop="dayFee" :label="$t('spgm.dayFee')">
             <el-input v-model="dayFee" disabled/>
           </el-form-item>
-          <el-form-item label="商户余额">
+          <el-form-item  :label="$t('spgm.rentFeeBalance')">
             <el-input v-model="rentFeeBalance" disabled/>
           </el-form-item>
-          <el-form-item label="空间大小">
+          <el-form-item  :label="$t('spgm.count')">
             <el-input v-model="commodityCount_size" disabled/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="buyPlanOfVentas">购买</el-button>
+            <el-button type="primary" @click="buyPlanOfVentas">{{$t('spgm.buy')}}}</el-button>
           </el-form-item>
           <el-dialog
             title="日志信息"
@@ -43,48 +43,48 @@
             style="margin-left: 0px;"
           >
             <el-form label-width="120px">
-              <el-form-item label="日志生成时间:" prop="logTimeStr">
+              <el-form-item  prop="logTimeStr" :label="$t('spgm.logTimeLabel')">
                 <el-input v-model="logTimeStr"  disabled/>
               </el-form-item>
-              <el-form-item label="日志客户ID:" prop="ventasId">
+              <el-form-item prop="ventasId" :label="$t('spgm.ventasIdLabel')">
                 <el-input v-model="ventasId" disabled/>
               </el-form-item>
-              <el-form-item label="日志种类名称:" prop="logType">
+              <el-form-item  prop="logType" :label="$t('spgm.logTypeLabel')">
                 <el-input v-model="logTypeStr" disabled/>
               </el-form-item>
-              <el-form-item label="新计划信息:" prop="planInfo">
+              <el-form-item  prop="planInfo" :label="$t('spgm.planInfoLabel')">
                 <el-input v-model="planInfo" disabled/>
               </el-form-item>
-              <el-form-item label="以前计划信息:" prop="oldPlanInfo">
+              <el-form-item prop="oldPlanInfo" :label="$t('spgm.oldPlanInfoLabel')">
                 <el-input v-model="oldPlanInfo" disabled/>
               </el-form-item>
-              <el-form-item label="新计划付款:" prop="rentFee">
+              <el-form-item prop="rentFee" :label="$t('spgm.addFeeLabel')">
                 <el-input v-model="total" disabled/>
               </el-form-item>
-              <el-form-item label="增加费用原因:" prop="dayFee">
+              <el-form-item prop="dayFee" :label="$t('spgm.addFeeTypeLabel')">
                 <el-input v-model="addFeeTypeStr" disabled/>
               </el-form-item>
-              <el-form-item label="以前计划退款:">
+              <el-form-item :label="$t('spgm.returnFeeLabel')">
                 <el-input v-model="oldBalance" disabled/>
               </el-form-item>
-              <el-form-item label="退回费用原因:">
+              <el-form-item :label="$t('spgm.returnFeeTypeLabel')">
                 <el-input v-model="returnFeeTypeStr" disabled/>
               </el-form-item>
               <div style="text-align: center">
-                <el-button @click="addPlanToVentas">确 认</el-button>
-                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button @click="addPlanToVentas">{{$t('operation.ok')}}</el-button>
+                <el-button @click="dialogVisible = false">{{$t('operation.cancel')}}</el-button>
               </div>
             </el-form>
           </el-dialog>
           <el-dialog
-            title="添加成功"
+            title="AGREGADO CON EXITO!"
             :visible.sync="innerVisible"
             width="30%"
             :before-close="handleClose"
           >
-            添加成功
+            AGREGADO CON EXITO!
             <span slot="footer" class="dialog-footer">
-              <el-button @click="innerVisible = false;dialogVisible = false">确认</el-button>
+              <el-button @click="innerVisible = false;dialogVisible = false">{{$t('operation.ok')}}</el-button>
               <el-button @click="innerVisible = false;dialogVisible = false">帮助</el-button>
             </span>
           </el-dialog>
@@ -103,9 +103,9 @@
           highlight-current-row
         >
           <el-table-column
-            label="序号"
             sortable
             align="center"
+            :label="$t('spgm.no')"
           >
             <template slot-scope="scope">
               {{ scope.$index+1 }}
@@ -113,20 +113,20 @@
           </el-table-column>
           <el-table-column
             prop="planNum"
-            label="计划标志"
+            :label="$t('spgm.planNum')"
             align="center"/>
           <el-table-column
             prop="planName"
-            label="计划名称"
+            :label="$t('spgm.planName')"
             align="center"/>
           <el-table-column
             prop="commodityModeStr"
-            label="计划类型"
+            :label="$t('spgm.planType')"
             align="center">
           </el-table-column>
           <el-table-column
             prop="createTime"
-            label="创建时间"
+            :label="$t('spgm.createTime')"
             align="center"
             min-width="100px">
             <template slot-scope="scope">
@@ -135,10 +135,10 @@
           </el-table-column>
           <el-table-column
             prop="commodityCount"
-            label="空间大小"
+            :label="$t('spgm.count')"
             align="center"/>
           <el-table-column
-            label="开始日期"
+            :label="$t('spgm.startDate1')"
             align="center"
             min-width="100px"
           >
@@ -147,7 +147,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="结束日期"
+            :label="$t('spgm.endDate1')"
             align="center"
             min-width="100px"
           >
@@ -157,7 +157,7 @@
           </el-table-column>
           <el-table-column
             prop="rentFee"
-            label="租用费用"
+            :label="$t('spgm.rentFee')"
             align="center"/>
         </el-table>
         <br>
@@ -168,7 +168,7 @@
           :data="feeList"
         >
           <el-table-column
-            label="序号"
+            :label="$t('spgm.no')"
             sortable
             align="center"
           >
@@ -178,37 +178,37 @@
           </el-table-column>
           <el-table-column
             prop="feeType"
-            label="费用类型"
+            :label="$t('spgm.feeType')"
             align="center"
           />
           <el-table-column
             prop="fee"
-            label="缴费金额"
+            :label="$t('spgm.jiafeijine')"
             align="center"
           />
           <el-table-column
             prop="feeMode"
-            label="缴费方式"
+            :label="$t('spgm.jiaofeifangshi')"
             align="center"
           />
           <el-table-column
             prop="invoice"
-            label="票据号"
+            :label="$t('spgm.piaojuhao')"
             align="center"
           />
           <el-table-column
             prop="feeTimeStr"
-            label="缴费时间"
+            :label="$t('spgm.jiaofeishijian')"
             align="center"
           />
           <el-table-column
             prop="feePerson"
-            label="收费人"
+            :label="$t('spgm.shoufeiren')"
             align="center"
           />
           <el-table-column
             prop="note"
-            label="备注"
+            :label="$t('spgm.beizhu')"
             align="center"
           />
         </el-table>
@@ -330,11 +330,11 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '购买成功',
+              message: '¡PLAN AGREGADO CON EXITO!',
               type: 'success'
             })
           } else {
-            this.$message.error('更新失败')
+            this.$message.error('PLAN NO SE HA PODIDO AGREGAR')
           }
           this.dialogVisible = false
         })
