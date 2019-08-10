@@ -7,6 +7,9 @@
              data-height-percentage="54" data-actual-width="216" data-actual-height="60">
         <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">-->
         <el-menu class="el-menu-demo" mode="horizontal">
+          <el-menu-item index="0">
+            <router-link :to="{'name':'method2'}">{{$t('menu.xgmm')}}</router-link>
+          </el-menu-item>
           <el-menu-item index="1">
             <router-link :to="{'name':'method1'}">{{$t('menu.gys')}}</router-link>
           </el-menu-item>

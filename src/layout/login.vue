@@ -1,13 +1,8 @@
 <template>
   <div class="prologin-container">
     <div class="header">
-      <img src="https://supnuevoweb.com.ar/wp-content/uploads/2019/02/logo.png" alt="SupNuevo" id="logo"
-           data-height-percentage="54" data-actual-width="216" data-actual-height="60">
-
-      <span
-        style="margin-left:15px;padding-left:15px;border-left: 1px solid gainsboro;font-size: 16px;font-weight: bold;color: dimgray">用户登录</span>
+      <img style="width: 263px;height: 82px;" src="https://supnuevoweb.com.ar/wp-content/uploads/2019/02/logo.png">
     </div>
-
     <div class="main-content">
       <div class="login-box">
         <div class="input-form">
@@ -15,15 +10,12 @@
             <div style="position: relative;width: 100%;margin-top: 15px;">
               <input placeholder="注册时填写的手机号" autocomplete="new-password" v-model="loginForm.loginName" maxlength="11"  class="login-form-input">
             </div>
-
             <div style="position: relative;width: 100%;margin-top: 30px;">
               <input v-if="isPasswordType" v-model="loginForm.password" maxlength="12" autocomplete="new-password" placeholder="请输入密码" :type="showPassword?'':'password'" class="login-form-input">
-
               <el-button v-if="isPasswordType" type="text" @click="showPassword=!showPassword"
                          style="position: absolute;top:0;right: 0px;padding-top: 5px;">{{!showPassword?'显示密码':'隐藏密码'}}
               </el-button>
             </div>
-
           </div>
 
           <div style="width: 100%;">
@@ -38,12 +30,13 @@
         </div>
 
       </div>
-
-      <el-image style="width: 20vw" src="https://supnuevoweb.com.ar/wp-content/uploads/2019/02/slider01.jpg" fit="scale-down">
-      </el-image>
-
+      <el-carousel indicator-position="none" class="bgflux">
+        <el-carousel-item class="bgflux" style="background: url('https://supnuevoweb.com.ar/wp-content/uploads/2019/02/slider01.jpg') repeat-x; background-size: 100% 100%;" />
+      </el-carousel>
     </div>
 
+    <div class="login-bottom"><span >Copyright © 2019 - S.O.S. SRL. / Todos los derechos reservados  |  +54 11 4857 0183  |  info@supnuevo.com.ar</span>
+      <span style="position: absolute;top: 2em;left:50%;transform: translateX(-50%)">Diseñado y Desarrollado por IntermediaSP</span></div>
   </div>
 </template>
 
@@ -67,17 +60,17 @@
     },
     methods:{
       toRegister(){
-       this.$message({
-         type:"success",
-         message:"跳转注册页"
-       })
+        this.$message({
+          type:"success",
+          message:"跳转注册页"
+        })
       },
       login:function() {
         this.loading=true;
         login({loginName: this.loginForm.loginName, password: this.loginForm.password}).then(response => {
           console.log(response)
           if (response.reCode == 0) {
-            this.$router.push({ path: this.redirect || '/home' })
+            this.$router.push({ path: this.redirect || '/home/method1' })
           } else {
             this.$message({
               type: 'error',
@@ -103,7 +96,13 @@
     background-color: white !important;
     margin-bottom: 15px !important;
   }
-
+  .tit {
+    font-size: 30px;
+    color: #42bded;
+    line-height: 1.3em;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+  }
   /* reset element-ui css */
   .login-container {
     .el-input {
@@ -174,112 +173,68 @@
     align-items: center;
 
     .header {
-      min-width: 60%;
+      min-width:100%;
       display: flex;
       flex-direction: row;
-      align-items: center;
-
+      align-items: flex-end;
       justify-content: flex-start;
       border-bottom: 1px solid gainsboro;
-      padding: 4vh 0 2vh 0;
+      box-shadow:  0px 0px 4px gainsboro;
+      padding: 2vh 0 2vh 15%;
+      margin-bottom: 2px;
+      background: #FFFFFF;
 
 
     }
 
+
+
     .main-content {
-
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-
-      width: 60%;
-      padding-top: 7vh;
-
-      .rightimg {
-        height: 40vh;
-        width: 60vh;
+      position: relative;
+      min-height: 30vw;
+      width: 100%;
+      .bgflux{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 33vw;
+        width: 100vw;
       }
-
       .login-box {
+        position: absolute;
+        right: 10%;
+        top: 5vh;
+        z-index: 99;
         padding: 20px;
-        position: relative;
-        width: 370px;
-        min-height: 340px;
+        width: 340px;
+        height: 340px;
         background-color: #fff;
         box-sizing: border-box;
         border-radius: 5px;
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
-
-        .type-login {
-          padding: 0;
-          color: gray;
-          font-size: 16px;
-          text-align: center;
-        }
-
-
-        .topcorner {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: flex-start;
-          position: absolute;
-          right: 10px;
-          top: 10px;
-          color: $topcicolor;
-
-          img {
-            height: 2.5em;
-            width: 2.5em;
-            border-radius: 3px;
-          }
-
-          .poptext {
-            font-size: 12px;
-            line-height: 12px;
-            display: inline-block;
-            background-color: rgba(51, 136, 255, .13);
-            color: #38f;
-            border: 1px solid #38f;
-            padding: 5px 8px;
-            white-space: nowrap;
-            position: absolute;
-            right: 100%;
-            top: 0;
-            margin-right: 6px;
-
-            &:before {
-              content: " ";
-              display: block;
-              position: absolute;
-              left: 100%;
-              top: 50%;
-              margin-top: -6px;
-
-              border: 6px solid transparent;
-              border-left-color: #38f;
-              z-index: 1;
-            }
-
-            &:after {
-              border: 6px solid transparent;
-              border-left-color: #e5f0ff;
-              transform: translateX(.5px);
-              margin-left: -2px;
-              z-index: 2;
-
-              content: " ";
-              display: block;
-              position: absolute;
-              left: 100%;
-              top: 50%;
-              margin-top: -6px;
-            }
-          }
-        }
       }
+      .loginBtn{
+        height: 32px;
+        /*line-height: 15px;*/
+        vertical-align: middle;
+        padding:  0px 0px !important;
+
+      }
+    }
 
 
+
+    .login-bottom{
+      color: white;
+      font-size: 13px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 8vh;
+      background-color: #676767;
+      text-align: center;
+      line-height: 6vh;
     }
   }
 

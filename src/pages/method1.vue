@@ -209,8 +209,8 @@
               </el-table-column>
               <el-table-column :label="$t('hh.operation')" min-width="160" align="center">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="openEdit(scope.row)">编辑</el-button>
-                  <el-button size="mini" @click="deleteContent(scope.row)">删除</el-button>
+                  <el-button size="mini" @click="openEdit(scope.row)">{{$t('operation.modify')}}</el-button>
+                  <el-button size="mini" @click="deleteContent(scope.row)">{{$t('operation.delete')}}</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -289,7 +289,7 @@
             </div>
           </el-form-item>
           <el-form-item style="margin-top: -40px;margin-left: 200px;">
-            <el-button type="primary" @click="createSave()">新增送货范围</el-button>
+            <el-button type="primary" @click="createSave()">{{$t('operation.add')}}</el-button>
 <!--            <el-button type="primary" @click="onSubmit">保存修改</el-button>-->
           </el-form-item>
         </el-main>
@@ -327,7 +327,7 @@
           <!--照片上传-->
           <div style="margin-top: -40px;">
             <el-form-item :label="$t('hh.upload')">
-              <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey" height="120" align="middle" border="0" >
+              <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey" height="120" align="middle" border="0"  alt="ERROR AL ABRIR EL ARCHIVO">
               <el-upload v-else
                 class="avatar-uploader"
                 action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb"
@@ -515,7 +515,7 @@
         const isLt2M = file.size / 1024 / 1024 < 2;
 
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('ERROR. SOLO FORMATO JPG');//上传头像图片只能是 JPG 格式
         }
         if (!isLt2M) {
           this.$message.error('上传图片大小不能超过 2MB!');
@@ -537,7 +537,7 @@
               , this.editlist.deliverFee).then(res => {
               if (res.re === 1) {
                 this.$message({
-                  message: '更新成功',
+                  message: '¡ENVIADO CON EXITO!',//更新成功 提交成功
                   type: 'success'
                 })
                 this.fetchData()
@@ -557,12 +557,12 @@
           , this.createList.deliverFee).then(res => {
           if (res.re === 1) {
             this.$message({
-              message: '添加成功',
+              message: 'AGREGADO CON EXITO!',//添加成功
               type: 'success'
             })
             this.fetchData()
           } else {
-            this.$message.error('添加失败')
+            this.$message.error('NO SE HA PODIDO AGREGAR') //添加失败
           }
         })
       },
@@ -578,9 +578,9 @@
         this.dialogCreateFormVisible = true
       },
       fetchData() {
-/*        getSupnuevoVentasPromptInfoObjectListWeb().then(response => {
+        getSupnuevoVentasPromptInfoObjectListWeb().then(response => {
           this.province =  response.data
-        }),*/
+        }),
         getSupnuevoVentasInfoFormByVentasIdWeb().then(response => {
           this.attachId = response.data.form.attachId
           this.razon = response.data.form.razon
@@ -708,7 +708,7 @@
       },
      deleteContent(item) {
         this.editlist = item
-        this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+        this.$confirm('UNA VEZ ELIMINADO EL PLAN NO PUEDE VOLVER ATRAS. ESTAS SEGURO?', '提示', { //删除后不能回复，确认要删除吗
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -716,7 +716,7 @@
           deleteDeliverGoodWeb(this.editlist.deliverId).then(res => {
             if (res.re === 1) {
               this.$message({
-                message: '删除成功',
+                message: 'ELIMINADO CON EXITO!',   //删除成功
                 type: 'success'
               })
               this.fetchData()
@@ -750,7 +750,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '保存成功',
+              message: '¡GUARDADO CON EXITO!',  //保存成功
               type: 'success'
             })
             this.fetchData()
