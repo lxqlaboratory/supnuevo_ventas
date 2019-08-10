@@ -38,7 +38,7 @@
         <el-header height="150px" style="text-align: center">
           <br><br>
           <!--条形码尾位查询法-->
-          <div style="width:350px; padding-bottom: 10px; float: left;" v-show="txm" >
+          <div style="width:500px; padding-bottom: 10px; float: left;" v-show="txm" >
             <!--<el-input-->
             <!--v-model="filterText"-->
             <!--placeholder="请输入条形码尾位"-->
@@ -58,7 +58,7 @@
             </el-autocomplete>
           </div>
           <!--引擎查询法-->
-          <div style="width:250px; padding-bottom: 10px; float: left;" v-show="yq" >
+          <div style="width:500px; padding-bottom: 10px; float: left;" v-show="yq" >
             <el-autocomplete
               class="inline-input"
               v-model="filterText"
@@ -68,7 +68,7 @@
               <el-button slot="append" icon="el-icon-search" @click=" search3" />
             </el-autocomplete>
           </div>
-          <div style="width:250px; padding-bottom: 10px; float: left;" v-show="spmc" >
+          <div style="width:500px; padding-bottom: 10px; float: left;" v-show="spmc" >
             <el-autocomplete
               class="inline-input"
               v-model="filterText"
@@ -129,7 +129,7 @@
                 <el-input  v-model="price"/>
               </el-form-item>
               <el-form-item label="">
-                <img :src="src" style="width: 280px; height: 280px;float: right"/>
+                <img :src="src" style="width: 280px; height: 280px;align-items: center"/>
               </el-form-item>
               <el-button style="margin-left: 55%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
               <el-button style="margin-left: 55%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
@@ -357,7 +357,7 @@
                       <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <div style="margin-top:27%">
+                <div style="margin-top:29.5%">
                 <el-button v-show="save1"  type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
                 <el-button v-show="save2" type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
                 </div>
@@ -400,7 +400,7 @@
           value: 'yq',
           label: 'POR PALABRA CLAVE'
         }],
-        value: '',
+        value: 'CODIGO DE BARRA',
         show: 'false',
         isSave:false,
         newPriceId:'',
@@ -489,7 +489,7 @@
         typ: '',  //型号绑定属性
         volume:'',  //含量绑定属性
         msg:'', // 添加后的返回消息
-        src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563291928298&di=b2134c49452c75f99403eb76f3cd55ab&imgtype=0&src=http%3A%2F%2Fimgqn.koudaitong.com%2Fupload_files%2F2015%2F04%2F15%2FFpx2zXgqBNAt2CBx1wSmT5oHe3Mf.jpg%2521280x280.jpg',
+        src: '',
         dialogVisible1: false, //商品品牌的弹出框
         dialogVisible2: false, //型号的弹出框
         dialogVisible3: false, //含量的弹出框
