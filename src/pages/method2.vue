@@ -46,9 +46,9 @@
         if (other) { count++ }
         if (value === '') {
           callback(new Error(this.$t('modifyPasswordModal.inputNewPassword')))
-        } else if (count < 2) {
+        } else if (count < 1) {
           callback(new Error(this.$t('modifyPasswordModal.passwordzf')))
-        } else if (value.length < 8) {
+        } else if (value.length < 4) {
           callback(new Error(this.$t('modifyPasswordModal.passwordminLength')))
         }
         setTimeout(() => {
@@ -95,8 +95,8 @@
     },
     methods: {
       submitForm() {
-        const newPass = Base64.encode(this.ruleForm.newPass)
-        const oldPass = Base64.encode(this.ruleForm.oldPass)
+        const newPass = this.ruleForm.newPass
+        const oldPass = this.ruleForm.oldPass
         const jsonForm = JSON.stringify({ oldPwd: oldPass, newPwd: newPass })
         editPassword(jsonForm).then(res => {
           this.msg = res.errMessage
