@@ -144,7 +144,7 @@
                 </el-form-item>
             </el-col>
           </el-row>
-          <el-form-item :label="$t('hh.gsshfw')"  style="margin-top: 0px;">
+          <el-form-item :label="$t('hh.gsshfw')"  style="margin-top: 0px;" >
             <el-table
               v-loading="listLoading"
               :data="itemList"
