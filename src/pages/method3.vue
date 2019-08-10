@@ -33,7 +33,7 @@
             <el-input v-model="commodityCount_size" disabled/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="buyPlanOfVentas">{{$t('spgm.buy')}}}</el-button>
+            <el-button type="primary" @click="buyPlanOfVentas">{{$t('spgm.buy')}}</el-button>
           </el-form-item>
           <el-dialog
             title="日志信息"

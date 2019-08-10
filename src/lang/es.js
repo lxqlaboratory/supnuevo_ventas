@@ -11,7 +11,7 @@ export default {
   hh: {
     nickName: 'APODO',
     razon:'RAZON SOCIAL',
-    nombre:'NOMBRECOMERCIAL',
+    nombre:'NOMBRE_COMERCIAL',
     cuit:'CUIT',
     contrato:'CONTRATO N°',
     desde: 'FECHA ALTA' ,
@@ -29,7 +29,7 @@ export default {
     planNum:'PLAN',
     planName:'DESCRIPCION',
     planStartEndDate:'VIGENCIA',
-    commodityCount: 'UNIDADADES CONTRAT' ,
+    commodityCount: 'UNIDADADES_CONTRAT' ,
     nota:'NOTA',
     rubro:'RUBROS',
     upload:'SUBIR FOTO',

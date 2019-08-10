@@ -528,46 +528,6 @@
                 this.show = true
               }
             })}
-          if(response.imageAttachId2 != null){
-            getAttachImageDataByAttachIdWeb((response.imageAttachId2)+'').then(response2 => {
-              this.dataKey2 = response2.data
-              if(this.dataKey2== null){
-                this.show2 = false
-              }else{
-                this.show2 = true
-              }
-            })
-          }
-          if(response.imageAttachId3 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId3) + '').then(response2 => {
-              this.dataKey3 = response2.data
-              if (this.dataKey3 == null) {
-                this.show3 = false
-              } else {
-                this.show3 = true
-              }
-            })
-          }
-          if(response.imageAttachId4 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId4) + '').then(response2 => {
-              this.dataKey4 = response2.data
-              if (this.dataKey4 == null) {
-                this.show4 = false
-              } else {
-                this.show4 = true
-              }
-            })
-          }
-          if(response.imageAttachId5 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId5) + '').then(response2 => {
-              this.dataKey5 = response2.data
-              if (this.dataKey5 == null) {
-                this.show5 = false
-              } else {
-                this.show5 = true
-              }
-            })
-          }
           var i =0
           for (i;i<this.tableData.length;i++){
             if(this.firstPriceId==this.tableData[i].value){
@@ -772,6 +732,55 @@
         this.typ=''
         this.volume=''
         getCommodityPriceFormByPriceId(row.value).then(response => {      //点击左侧序列取得数据
+          if(response.imageAttachId1 != null){
+            getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response2 => {
+              this.dataKey1 = response2.data
+              if(this.dataKey1 == null){
+                this.show = false
+              }else{
+                this.show = true
+              }
+            })}
+          if(response.imageAttachId2 != null){
+            getAttachImageDataByAttachIdWeb((response.imageAttachId2)+'').then(response2 => {
+              this.dataKey2 = response2.data
+              if(this.dataKey2== null){
+                this.show2 = false
+              }else{
+                this.show2 = true
+              }
+            })
+          }
+          if(response.imageAttachId3 != null) {
+            getAttachImageDataByAttachIdWeb((response.imageAttachId3) + '').then(response2 => {
+              this.dataKey3 = response2.data
+              if (this.dataKey3 == null) {
+                this.show3 = false
+              } else {
+                this.show3 = true
+              }
+            })
+          }
+          if(response.imageAttachId4 != null) {
+            getAttachImageDataByAttachIdWeb((response.imageAttachId4) + '').then(response2 => {
+              this.dataKey4 = response2.data
+              if (this.dataKey4 == null) {
+                this.show4 = false
+              } else {
+                this.show4 = true
+              }
+            })
+          }
+          if(response.imageAttachId5 != null) {
+            getAttachImageDataByAttachIdWeb((response.imageAttachId5) + '').then(response2 => {
+              this.dataKey5 = response2.data
+              if (this.dataKey5 == null) {
+                this.show5 = false
+              } else {
+                this.show5 = true
+              }
+            })
+          }
           var i =0
           for (i;i<this.tableData.length;i++){
             if(row.value==this.tableData[i].value){
