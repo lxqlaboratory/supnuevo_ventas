@@ -90,7 +90,7 @@
             </el-col>
             <el-col style="float: right;margin-top: -20px;"  :span="10">
               <el-form-item :label="$t('hh.telefono')">
-                <el-input v-model="telefono" />
+                <el-input v-model="telefono" @keyup.native="proving1" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -153,7 +153,7 @@
               border
               fit
               highlight-current-row
-              style="margin-top:-30px"
+              style="margin-top:3px"
               size="mini"
             >
    <!--           <el-table-column align="center" label="ID" min-width="160" v-if="show">
@@ -261,11 +261,11 @@
                   </el-form-item>
                   <br>
                   <el-form-item :label="$t('hh.minAmount')" prop="X">
-                    <el-input v-model="createList.minAmount" style="width: 80%" />
+                    <el-input v-model="createList.minAmount" style="width: 80%" @keyup.native="proving1"  />
                   </el-form-item>
                   <br>
                   <el-form-item :label="$t('hh.deliverFee')" prop="X">
-                    <el-input v-model="createList.deliverFee" style="width: 80%" />
+                    <el-input v-model="createList.deliverFee" style="width: 80%" @keyup.native="proving1" />
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -489,6 +489,14 @@
       // this.getCity()
     },
     methods: {
+      proving1(){
+        this.telefono=this.telefono.replace(/[^\.\d]/g,'');
+        this.telefono=this.telefono.replace('.','');
+        this.createList.minAmount=this.createList.minAmount.replace(/[^\.\d]/g,'');
+        this.createList.minAmount=this.createList.minAmount.replace('.','');
+        this.createList.deliverFee=this.createList.deliverFee.replace(/[^\.\d]/g,'');
+        this.createList.deliverFee=this.createList.deliverFee.replace('.','');
+      },
       onPreview:function(file){
         console.log(file)
         //window.location.href = file.response.url
