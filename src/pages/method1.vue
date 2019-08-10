@@ -60,7 +60,7 @@
             </el-col>
             <el-col style="float: right;margin-top: -12px;" :span="10">
               <el-form-item :label="$t('hh.provinceId')" prop="pro">
-                <el-select v-model="provinceId" placeholder="请选择省份" style="width: 100%;" clearable @change="getValue">
+                <el-select v-model="provinceId" style="width: 100%;" clearable @change="getValue" :placeholder="$t('PRODUCTO.select')">
                   <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
               </el-form-item>
@@ -69,7 +69,7 @@
           <el-row>
             <el-col style="margin-top: -12px;"  :span="10" offset="2">
               <el-form-item :label="$t('hh.cityId')"  prop="city">
-                <el-select v-model="cityId" placeholder="请选择城市" style="width: 100%;"clearable>
+                <el-select v-model="cityId" style="width: 100%;"clearable :placeholder="$t('PRODUCTO.select')">
                   <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
               </el-form-item>
@@ -219,13 +219,13 @@
               <el-dialog title="编辑修改" :visible.sync="dialogEditFormVisible" width="500px">
                 <el-form ref="editlist" :model="editlist" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
                   <el-form-item  :label="$t('hh.provinceName')" prop="cardId">
-                    <el-select v-model="editlist.provinceName" placeholder="请选择省份" style="width: 80%;" @change="getEditValue">
+                    <el-select v-model="editlist.provinceName" style="width: 80%;" @change="getEditValue" :placeholder="$t('PRODUCTO.select')">
                       <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
                   <br>
                   <el-form-item  :label="$t('hh.cityName')" prop="alarmContent">
-                    <el-select v-model="editlist.cityName" placeholder="请选择市" style="width: 80%;" @click="getEditValue1">
+                    <el-select v-model="editlist.cityName" style="width: 80%;" @click="getEditValue1" :placeholder="$t('PRODUCTO.select')">
                       <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
@@ -239,8 +239,8 @@
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                  <el-button @click="editCancel">取 消</el-button>
-                  <el-button type="primary" @click="editRouterList('editlist')">确 定</el-button>
+                  <el-button @click="editCancel">{{$t('operation.cancel')}}</el-button>
+                  <el-button type="primary" @click="editRouterList('editlist')">{{$t('operation.ok')}}</el-button>
                 </div>
               </el-dialog>
             </div>
@@ -250,13 +250,13 @@
               <el-dialog title="新建" :visible.sync="dialogCreateFormVisible" width="500px">
                 <el-form ref="createList" :model="createList" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
                   <el-form-item :label="$t('hh.provinceName')" prop="cardId">
-                    <el-select v-model="createList.provinceName" placeholder="请选择省份" style="width: 80%;" @change="getCreateValue">
+                    <el-select v-model="createList.provinceName"  style="width: 80%;" @change="getCreateValue" :placeholder="$t('PRODUCTO.select')">
                       <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
                   <br>
                   <el-form-item :label="$t('hh.cityName')" prop="alarmContent">
-                    <el-select v-model="createList.cityName" placeholder="请选择市" style="width: 80%;">
+                    <el-select v-model="createList.cityName" style="width: 80%;" :placeholder="$t('PRODUCTO.select')">
                       <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                   </el-form-item>
@@ -270,8 +270,8 @@
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                  <el-button @click="dialogCreateFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="createRouterList('createList')">确 定</el-button>
+                  <el-button @click="dialogCreateFormVisible = false">{{$t('operation.cancel')}}</el-button>
+                  <el-button type="primary" @click="createRouterList('createList')">{{$t('operation.ok')}}</el-button>
                 </div>
               </el-dialog>
             </div>
@@ -537,12 +537,12 @@
               , this.editlist.deliverFee).then(res => {
               if (res.re === 1) {
                 this.$message({
-                  message: '¡ENVIADO CON EXITO!',//更新成功 提交成功
+                  message: '¡CAMBIO EXITOSO!',//更新成功 修改成功
                   type: 'success'
                 })
                 this.fetchData()
               } else {
-                this.$message.error('更新失败')
+                this.$message.error('NO SE HA PODIDO CAMBIAR (CAMBIO SIN EXITO)') // 更新失败  修改失败
               }
             })
       },
@@ -709,8 +709,8 @@
      deleteContent(item) {
         this.editlist = item
         this.$confirm('UNA VEZ ELIMINADO EL PLAN NO PUEDE VOLVER ATRAS. ESTAS SEGURO?', '提示', { //删除后不能回复，确认要删除吗
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+          confirmButtonText: 'ACEPTAR',   //确定
+          cancelButtonText: 'CANCELAR',   // 取消
           type: 'warning'
         }).then(() => {
           deleteDeliverGoodWeb(this.editlist.deliverId).then(res => {
@@ -721,7 +721,7 @@
               })
               this.fetchData()
             } else {
-              this.$message.error('删除失败')
+              this.$message.error('ELIMINACION SIN EXITO') //删除失败
             }
           }).catch(e => {
 
