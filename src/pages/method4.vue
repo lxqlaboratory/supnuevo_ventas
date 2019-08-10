@@ -93,14 +93,24 @@
               <el-option v-for="item in searchOptions3" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
             </el-select>
           </div>
-          <div>
-            <el-radio-group v-model="radio">
-              <el-radio :label="1" @change="showtxm">{{$t('PRODUCTO.txm')}} </el-radio>
-              <el-radio :label="2" @change="showlpmc">{{$t('PRODUCTO.lpmc')}} </el-radio>
-              <el-radio :label="3" @change="showspmc">{{$t('PRODUCTO.spmc')}} </el-radio>
-              <el-radio :label="4" @change="showyq">{{$t('PRODUCTO.yq')}} </el-radio>
-            </el-radio-group>
-          </div>
+          <!--<div>-->
+            <!--<el-radio-group v-model="radio">-->
+              <!--<el-radio :label="1" @change="showtxm">{{$t('PRODUCTO.txm')}} </el-radio>-->
+              <!--<el-radio :label="2" @change="showlpmc">{{$t('PRODUCTO.lpmc')}} </el-radio>-->
+              <!--<el-radio :label="3" @change="showspmc">{{$t('PRODUCTO.spmc')}} </el-radio>-->
+              <!--<el-radio :label="4" @change="showyq">{{$t('PRODUCTO.yq')}} </el-radio>-->
+            <!--</el-radio-group>-->
+          <!--</div>-->
+
+          <el-select v-model="value" @change="selectMethod" :placeholder="$t('PRODUCTO.select')">
+            <el-option
+              v-for="item in selectOption"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+
         </el-header>
 
         <el-form label-width="200px">
@@ -109,13 +119,13 @@
               <el-form-item  style="width: 100% " label="当前商品" >
                 <el-input disabled v-model="dangqianshangpin" />
               </el-form-item>
-              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.codigoEntreno')">
+              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.codigoEntreno')" @keyup.native="proving1">
                 <el-input v-model="codigoEntreno" />
               </el-form-item>
               <el-form-item  style="width: 100% " :label="$t('PRODUCTO.codigo')">
                 <el-input disabled v-model="codigo"/>
               </el-form-item>
-              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.price')">
+              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.price')" @keyup.native="proving1">
                 <el-input  v-model="price"/>
               </el-form-item>
               <el-form-item label="">
@@ -375,6 +385,21 @@
 
     data() {
       return {
+
+        selectOption: [{
+          value: 'txm',
+          label:'CODIGO DE BARRAS'
+        }, {
+          value: 'lpmc',
+          label: 'RUBRO-MARCA-DESCRIPCION-TAMAÑO'
+        }, {
+          value: 'spmc',
+          label: 'POR DESCRIPCION DEL PRODUCTO'
+        }, {
+          value: 'yq',
+          label: 'POR PALABRA CLAVE'
+        }],
+        value: '',
         show: 'false',
         isSave:false,
         newPriceId:'',
@@ -513,6 +538,26 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
+      selectMethod(){
+        if (this.value == 'txm') {
+          this.showtxm()
+        }
+        if (this.value == 'lpmc') {
+          this.showlpmc()
+        }
+        if (this.value == 'spmc') {
+          this.showspmc()
+        }
+        if (this.value == 'yq') {
+          this.showyq()
+        }
+      },
+      proving1(){
+        this.codigoEntreno=this.codigoEntreno.replace(/[^\.\d]/g,'');
+        this.codigoEntreno=this.codigoEntreno.replace('.','');
+        this.price=this.price.replace(/[^\.\d]/g,'');
+        this.price=this.price.replace('.','');
+      },
       choose(){
         this.choosedialog = true
       },
