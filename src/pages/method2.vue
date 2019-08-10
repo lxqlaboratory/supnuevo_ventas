@@ -11,7 +11,7 @@
         <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" style="width: 25%;" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" class="submitBtn" @click="submitForm()">提交</el-button>
+        <el-button v-show="submit" type="primary" class="submitBtn" @click="submitForm()">提交</el-button>
         <el-button class="resetBtn" @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -46,9 +46,9 @@
         if (other) { count++ }
         if (value === '') {
           callback(new Error(this.$t('modifyPasswordModal.inputNewPassword')))
-        } else if (count < 1) {
+        } else if (count < 2) {
           callback(new Error(this.$t('modifyPasswordModal.passwordzf')))
-        } else if (value.length < 4) {
+        } else if (value.length < 8) {
           callback(new Error(this.$t('modifyPasswordModal.passwordminLength')))
         }
         setTimeout(() => {
@@ -62,8 +62,12 @@
       var validateNewPass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error(this.$t('modifyPasswordModal.passwordWrong1')))
+          this.submit = false
         } else if (value !== this.ruleForm.newPass) {
           callback(new Error(this.$t('modifyPasswordModal.passwordWrong')))
+          this.submit = false
+        }else{
+          this.submit = true
         }
         setTimeout(() => {
           if (value.length > 20) {
@@ -80,6 +84,7 @@
           checkPass: '',
           msg: ''
         },
+        submit: true,
         rules: {
           oldPass: [
             { validator: validateOldPass, trigger: 'blur' }
