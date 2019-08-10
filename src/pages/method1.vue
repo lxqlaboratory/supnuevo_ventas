@@ -138,14 +138,13 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col style="margin-top: -20px;" :span="22" offset="2">
+            <el-col style="margin-top: -20px;margin-bottom: -20px" :span="22" offset="2">
                 <el-form-item :label="$t('hh.nota')" offset="2">
                   <el-input v-model="nota" type="textarea" />
                 </el-form-item>
             </el-col>
           </el-row>
           <el-form-item :label="$t('hh.gsshfw')"  style="margin-top: 0px;">
-<!--            <el-input v-model="deliverDes" disabled="disabled" />-->
             <el-table
               v-loading="listLoading"
               :data="itemList"
@@ -154,10 +153,10 @@
               border
               fit
               highlight-current-row
-              style="margin-top:-15px"
+              style="margin-top:-30px"
               size="mini"
             >
-              <el-table-column align="center" label="ID" min-width="160" v-if="show">
+   <!--           <el-table-column align="center" label="ID" min-width="160" v-if="show">
                 <template slot-scope="scope">
                   {{ scope.$index+1 }}
                 </template>
@@ -170,7 +169,7 @@
                 <template slot-scope="scope">
                   {{ scope.row.deliverId }}
                 </template>
-              </el-table-column>
+              </el-table-column>-->
               <el-table-column
                 :label="$t('hh.provinceName')"
                 align="center"
@@ -298,7 +297,6 @@
             <br>
             <el-checkbox-group v-model="rubroIdList" @change="handleCheckedCitiesChange">
               <!--              <el-checkbox v-for="item in systemRubroList" :key="item.filterKey" :label="item.label" >{{item.label}}</el-checkbox>-->
-              <br>
               <el-checkbox label="1" name="type">ALMACEN</el-checkbox>
               <br>
               <el-checkbox label="2" name="type">BAZAR</el-checkbox>
