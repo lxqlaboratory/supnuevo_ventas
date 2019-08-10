@@ -361,7 +361,7 @@ export function getCommodityPriceFormByCatalogId(catalogId) {   //类型品牌�
   })
 }
 
-// export function getCommodityPriceFormBySearchFormWeb(searchMode,commodityId,codigo) {   //全部查询 没用
+// export function getCommodityPriceFormBySearchFormWeb(searchMode,commodityId,codigo) {   //全部查询
 //   return request({
 //     url: '/ventas/getCommodityPriceFormBySearchFormWeb',
 //     method: 'post',

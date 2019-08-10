@@ -1391,6 +1391,8 @@
           } else {
             this.$message.error('保存失败')
           }
+        }).catch(e => {
+          this.$message.error('保存失败')
         })
       },
 
