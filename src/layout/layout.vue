@@ -7,14 +7,17 @@
              data-height-percentage="54" data-actual-width="216" data-actual-height="60">
         <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">-->
         <el-menu class="el-menu-demo" mode="horizontal">
+          <el-menu-item index="0">
+            <router-link :to="{'name':'method2'}">{{$t('menu.xgmm')}}</router-link>
+          </el-menu-item>
           <el-menu-item index="1">
-            <router-link :to="{'name':'method1'}">供应商信息</router-link>
+            <router-link :to="{'name':'method1'}">{{$t('menu.gys')}}</router-link>
           </el-menu-item>
           <el-menu-item index="2">
-            <router-link :to="{'name':'method3'}">商品计划购买</router-link>
+            <router-link :to="{'name':'method3'}">{{$t('menu.spjhgm')}}</router-link>
           </el-menu-item>
           <el-menu-item index="3">
-            <router-link :to="{'name':'method4'}">商品信息维护</router-link>
+            <router-link :to="{'name':'method4'}">{{$t('menu.spxxwh')}}</router-link>
           </el-menu-item>
           <el-submenu index="4">
             <template slot="title">帮助</template>
@@ -28,6 +31,7 @@
               <el-menu-item index="2-4-3">b</el-menu-item>
             </el-submenu>
           </el-submenu>
+          <lang-select style="float: right;margin-top: 20px;" />
         </el-menu>
       </div>
 
@@ -44,6 +48,7 @@
 </template>
 
 <script>
+  import LangSelect from '@/components/LangSelect'
   export default {
     name: 'layout',
     data() {
@@ -53,7 +58,8 @@
       key() {
         return this.$route.fullPath
       }
-    }
+    },
+    components: { LangSelect }
   }
 </script>
 

@@ -7,6 +7,13 @@ export function login(jsonForm) {
     data: jsonForm
   })
 }
+export function editPassword(jsonForm) {
+  return request({
+    url: '/auth/webChangePassword',
+    method: 'post',
+    data: jsonForm
+  })
+}
 
 export function allRentPlanListOfVentas() {//获取计划列表
   return request({
@@ -108,6 +115,24 @@ export function uploadSupnuevoVentasPhotoImageWeb() {//上传照片
     url: '/ventas/uploadSupnuevoVentasPhotoImageWeb',
     method: 'POST',
     data: {
+    }
+  })
+}
+export function getAttachImageDataByAttachIdWeb(attachId) {//回显照片1
+  return request({
+    url: '/ventas/getAttachImageDataByAttachIdWeb',
+    method: 'POST',
+    data: {
+      attachId
+    }
+  })
+}
+export function getTempBuffedBytesDataWeb(dataKey) {//回显照片2
+  return request({
+    url: '/ventas/getTempBuffedBytesDataWeb',
+    method: 'POST',
+    data: {
+      dataKey
     }
   })
 }
@@ -361,7 +386,7 @@ export function getCommodityPriceFormByCatalogId(catalogId) {   //类型品牌�
   })
 }
 
-// export function getCommodityPriceFormBySearchFormWeb(searchMode,commodityId,codigo) {   //全部查询 没用
+// export function getCommodityPriceFormBySearchFormWeb(searchMode,commodityId,codigo) {   //全部查询
 //   return request({
 //     url: '/ventas/getCommodityPriceFormBySearchFormWeb',
 //     method: 'post',
@@ -387,6 +412,14 @@ export function getQueryDataListByCodigoLastFourWeb(codigo) {  // 查询最后�
     method: 'post',
     data: {
       codigo
+    }
+  })
+}
+export function getSupnuevoVentasPromptInfoObjectListWeb() {
+  return request({
+    url: '/ventas/getSupnuevoVentasPromptInfoObjectListWeb',
+    method: 'post',
+    data: {
     }
   })
 }
