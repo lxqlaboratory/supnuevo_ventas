@@ -67,7 +67,7 @@
 <style scoped>
   .page-content {
     width: 100%;
-    background-color: ghostwhite;
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

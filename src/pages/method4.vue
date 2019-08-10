@@ -131,8 +131,8 @@
               <el-form-item label="">
                 <img :src="src" style="width: 280px; height: 280px;float: right"/>
               </el-form-item>
-              <el-button style="margin-left: 55%" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
-              <el-button style="margin-left: 55%" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 55%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 55%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
             </el-aside>
             <el-container>
               <el-main width="60%" style="margin-top: -60px">
@@ -357,9 +357,10 @@
                       <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <el-button v-show="save1" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
-                <el-button v-show="save2" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
-
+                <div style="margin-top:27%">
+                <el-button v-show="save1"  type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
+                <el-button v-show="save2" type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
+                </div>
               </el-main>
             </el-container>
           </el-container>
