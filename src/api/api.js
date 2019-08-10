@@ -7,6 +7,13 @@ export function login(jsonForm) {
     data: jsonForm
   })
 }
+export function editPassword(jsonForm) {
+  return request({
+    url: '/auth/webChangePassword',
+    method: 'post',
+    data: jsonForm
+  })
+}
 
 export function allRentPlanListOfVentas() {//获取计划列表
   return request({

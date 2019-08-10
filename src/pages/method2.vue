@@ -11,13 +11,14 @@
         <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" style="width: 25%;" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" class="submitBtn" @click="submitForm()">提交</el-button>
+        <el-button v-show="submit" type="primary" class="submitBtn" @click="submitForm()">提交</el-button>
         <el-button class="resetBtn" @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
+  import  {editPassword} from '../api/api'
   const Base64 = require('js-base64').Base64
   export default {
 
@@ -61,8 +62,12 @@
       var validateNewPass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error(this.$t('modifyPasswordModal.passwordWrong1')))
+          this.submit = false
         } else if (value !== this.ruleForm.newPass) {
           callback(new Error(this.$t('modifyPasswordModal.passwordWrong')))
+          this.submit = false
+        }else{
+          this.submit = true
         }
         setTimeout(() => {
           if (value.length > 20) {
@@ -79,6 +84,7 @@
           checkPass: '',
           msg: ''
         },
+        submit: true,
         rules: {
           oldPass: [
             { validator: validateOldPass, trigger: 'blur' }
@@ -94,27 +100,29 @@
     },
     methods: {
       submitForm() {
-        const newPass = Base64.encode(this.ruleForm.newPass)
-        const oldPass = Base64.encode(this.ruleForm.oldPass)
+        const newPass = this.ruleForm.newPass
+        const oldPass = this.ruleForm.oldPass
         const jsonForm = JSON.stringify({ oldPwd: oldPass, newPwd: newPass })
         editPassword(jsonForm).then(res => {
-          this.msg = res.msg
-          // if (this.msg === 'passwordError') {
-          //   this.$message({
-          //     type: 'error',
-          //     message: 'The old password you entered is incorrect'
-          //   })
-          // } else if (this.msg === 'userError') {
-          //   this.$message({
-          //     type: 'error',
-          //     message: 'The user does not exist.'
-          //   })
-          // } else {
-          //   this.$message({
-          //     type: 'sucess',
-          //     message: 'modify successfully'
-          //   })
-          // }
+          this.msg = res.errMessage
+          if (this.msg === '此用户名不存在！') {
+            this.$message({
+              type: 'error',
+              message: '此用户名不存在！'
+            })
+          }
+            else if (this.msg === '旧密码输入错！') {
+            this.$message({
+              type: 'error',
+              message: '旧密码输入错！'
+            })
+          }
+            else {
+            this.$message({
+              type: 'success',
+              message: 'modify successfully'
+            })
+          }
         }).catch(e => {
         })
       },

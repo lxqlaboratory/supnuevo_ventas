@@ -8,6 +8,18 @@ export default {
     spjhgm:'MI PLAN',
     spxxwh:'PRODUCTO'
   },
+  modifyPasswordModal: {
+    oldPassword: '旧密码',
+    inputNewPassword: '输入新密码',
+    retypePassword: '重新输入密码',
+    passwordminLength: ' 密码长度必须大于等于8个字符，请重新输入！',
+    passwordLength: ' 密码长度最大为20位',
+    passwordWrong: '两次输入的密码不一致',
+    passwordWrong1: '请重新输入新密码',
+    oldpwdEmpty: '旧密码不能为空',
+    passwordzf: '密码至少包含大写字母、小写字母、数字和符号两种以上的类型，请重新输入！',
+    reset: '重置'
+  },
   hh: {
     nickName: 'APODO',
     razon:'RAZON SOCIAL',
