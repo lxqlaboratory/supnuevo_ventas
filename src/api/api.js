@@ -301,7 +301,7 @@ export function saveOrUpdateSupnuevoVentasCommodityWeb(priceId,commodityId,taman
   })
 }
 
-export function saveOrUpdateSupnuevoVentasCommodityPriceWeb1(priceId,commodityId,codigoEntreno,codigo,price) {  //左边的
+export function saveOrUpdateSupnuevoVentasCommodityPriceWeb1(priceId,commodityId,codigoEntreno,codigo,price,imageAttachId) {  //左边的
   return request({
     url: '/ventas/saveOrUpdateSupnuevoVentasCommodityPriceWeb1',
     method: 'post',
@@ -310,7 +310,8 @@ export function saveOrUpdateSupnuevoVentasCommodityPriceWeb1(priceId,commodityId
       commodityId,
       codigoEntreno,
       codigo,
-      price
+      price,
+      imageAttachId
     }
   })
 }
