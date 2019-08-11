@@ -325,10 +325,10 @@
           <!--照片上传-->
           <div style="margin-top: -40px;">
             <el-form-item :label="$t('hh.upload')">
-              <img v-if="show" :src=src1  height="120" align="middle" border="0"  alt="ERROR AL ABRIR EL ARCHIVO">
+              <img v-if="show" :src=src1  height="178" width="178" align="middle" border="0"  alt="ERROR AL ABRIR EL ARCHIVO">
               <el-upload v-else
                          class="avatar-uploader"
-                         action="/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb"
+                         :action=upload1
                          :show-file-list="false"
                          :on-success="handleAvatarSuccess"
                          :before-upload="beforeAvatarUpload">
@@ -465,7 +465,8 @@
         attachIds:'',
         dataKey:'',
         fileload:'',
-        src1:''
+        src1:'',
+        upload1:''
       }
     },
     computed: {
@@ -590,6 +591,8 @@
         this.dialogCreateFormVisible = true
       },
       fetchData() {
+        this.src1 = ''
+        this.upload1 = global.address+'ventas/uploadSupnuevoVentasPhotoImageWeb'
         getSupnuevoVentasPromptInfoObjectListWeb().then(response => {
           this.province =  response.data
         }).catch(e => {
@@ -648,9 +651,9 @@
             }),
               getAttachImageDataByAttachIdWeb((response.data.form.attachIds)+'').then(response2 => {
                 this.dataKey =  response2.data
-                console.log(response.data.form.attachIds)
-                console.log(this.dataKey)
+                // console.log(response.data.form.attachIds)
                 this.src1 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+                console.log(this.src1)
                 if(this.dataKey == null){
                   this.show = false
                 }else{

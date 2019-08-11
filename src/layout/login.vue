@@ -8,7 +8,7 @@
         <div class="input-form">
           <div style="width: 100%;">
             <div style="position: relative;width: 100%;margin-top: 15px;">
-              <input placeholder="注册时填写的手机号" autocomplete="new-password" v-model="loginForm.loginName" maxlength="11"  class="login-form-input" id="loginName">
+              <input placeholder="注册时填写的手机号" autocomplete="new-password" v-model="loginForm.loginName" maxlength="20"  class="login-form-input" id="loginName">
             </div>
             <div style="position: relative;width: 100%;margin-top: 30px;">
               <input v-if="isPasswordType" v-model="loginForm.password" maxlength="12" autocomplete="new-password" placeholder="请输入密码" :type="showPassword?'':'password'" class="login-form-input" id="password">
@@ -57,7 +57,7 @@
           password:'',
           remember:''
         },
-        checked:false,
+        checked:true,
         ydxy: true,
         isPasswordType: true
       }

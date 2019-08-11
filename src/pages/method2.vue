@@ -102,7 +102,7 @@
       submitForm() {
         const newPass = this.ruleForm.newPass
         const oldPass = this.ruleForm.oldPass
-        const jsonForm = JSON.stringify({ oldPwd: oldPass, newPwd: newPass })
+        const jsonForm = JSON.stringify({ oldPassword: oldPass, newPassword: newPass })
         editPassword(jsonForm).then(res => {
           this.msg = res.errMessage
           if (this.msg === '此用户名不存在！') {
@@ -120,7 +120,7 @@
             else {
             this.$message({
               type: 'success',
-              message: 'modify successfully'
+              message: this.$t('operation.modify_success')
             })
           }
         }).catch(e => {
