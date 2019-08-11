@@ -96,7 +96,9 @@ export default {
     OldPwd:'CLAVE ANTERIOR',
     newPwd:'CLAVE NUEVA',
     conPwd:'REPETIR CLAVE',
-    ok:"ACEPTAR"
+    ok:"ACEPTAR",
+    user: 'Número de teléfono al registrarse',
+    pwd:'Introduzca la contraseña.'
   },
   operation:{
     add:"AGREGAR",
