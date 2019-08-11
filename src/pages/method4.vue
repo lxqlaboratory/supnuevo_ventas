@@ -287,7 +287,7 @@
                 <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                  <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey1" height="120" align="middle" border="0" >
+                  <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey1" height="120"  width="90" align="middle" border="0" >
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
@@ -301,7 +301,7 @@
                     <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
-                <img v-if="show2" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey2" height="120" align="middle" border="0" >
+                <img v-if="show2" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey2" height="120"  width="90"  align="middle" border="0" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -315,7 +315,7 @@
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show3" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey3" height="120" align="middle" border="0" >
+                <img v-if="show3" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey3" height="120"  width="90" align="middle" border="0" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -329,7 +329,7 @@
                       <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show4" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey4" height="120" align="middle" border="0" >
+                <img v-if="show4" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey4" height="120"  width="90" align="middle" border="0" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -343,7 +343,7 @@
                       <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show5" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey5" height="120" align="middle" border="0" >
+                <img v-if="show5" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey5"height="120"  width="90" align="middle" border="0" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -793,11 +793,21 @@
         this.brand=''
         this.typ=''
         this.volume=''
+        this.dataKey1=''
+        this.dataKey2=''
+        this.dataKey3=''
+        this.dataKey4=''
+        this.dataKey5=''
+        this.imageUrl1 =''
+        this.imageUrl2 =''
+        this.imageUrl3 =''
+        this.imageUrl4 =''
+        this.imageUrl5 =''
         getCommodityPriceFormByPriceId(row.value).then(response => {      //点击左侧序列取得数据
           if(response.imageAttachId1 != null){
-            getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response2 => {
-              this.dataKey1 = response2.data
-              if(this.dataKey1 == null){
+            getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response1 => {
+              this.dataKey1 = response1.data
+              if(this.dataKey1 == ''){
                 this.show = false
               }else{
                 this.show = true
@@ -806,42 +816,50 @@
           if(response.imageAttachId2 != null){
             getAttachImageDataByAttachIdWeb((response.imageAttachId2)+'').then(response2 => {
               this.dataKey2 = response2.data
-              if(this.dataKey2== null){
+              if(this.dataKey2== ''){
                 this.show2 = false
               }else{
                 this.show2 = true
               }
             })
+          }else{
+            this.show2 = false
           }
           if(response.imageAttachId3 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId3) + '').then(response2 => {
-              this.dataKey3 = response2.data
-              if (this.dataKey3 == null) {
+            getAttachImageDataByAttachIdWeb((response.imageAttachId3) + '').then(response3 => {
+              this.dataKey3 = response3.data
+              if (this.dataKey3 == '') {
                 this.show3 = false
               } else {
                 this.show3 = true
               }
             })
+          }else{
+            this.show3 = false
           }
           if(response.imageAttachId4 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId4) + '').then(response2 => {
-              this.dataKey4 = response2.data
-              if (this.dataKey4 == null) {
+            getAttachImageDataByAttachIdWeb((response.imageAttachId4) + '').then(response4 => {
+              this.dataKey4 = response4.data
+              if (this.dataKey4 == '') {
                 this.show4 = false
               } else {
                 this.show4 = true
               }
             })
+          }else{
+            this.show4 = false
           }
           if(response.imageAttachId5 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId5) + '').then(response2 => {
-              this.dataKey5 = response2.data
-              if (this.dataKey5 == null) {
+            getAttachImageDataByAttachIdWeb((response.imageAttachId5) + '').then(response5 => {
+              this.dataKey5 = response5.data
+              if (this.dataKey5 == '') {
                 this.show5 = false
               } else {
                 this.show5 = true
               }
             })
+          }else{
+            this.show5 = false
           }
           var i =0
           for (i;i<this.tableData.length;i++){
@@ -1663,14 +1681,14 @@
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
+    width: 90px;
+    height: 120px;
+    line-height: 120px;
     text-align: center;
   }
   .avatar {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 120px;
     display: block;
   }
 </style>
