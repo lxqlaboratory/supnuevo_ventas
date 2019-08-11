@@ -26,7 +26,7 @@
         <el-upload
                    :headers="headers"
                    class="avatar-uploader"
-                   action="http://localhost/supnuevo_ventasventas/importCommodityPriceWeb"
+                   action="http://localhost/supnuevo_ventas/ventas/importCommodityPriceWeb"
                    :show-file-list="true"
                    style="float:right;margin: 3px;"
         >
@@ -317,7 +317,7 @@
                     <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
-                <img v-if="show2" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey2" height="120"  width="90"  align="middle" border="0" >
+                <img v-if="show2" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey2" height="120"  width="90"  align="middle" border="0" @click="handleRemove2" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -331,7 +331,7 @@
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show3" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey3" height="120"  width="90" align="middle" border="0" >
+                <img v-if="show3" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey3" height="120"  width="90" align="middle" border="0" @click="handleRemove3" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -345,7 +345,7 @@
                       <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show4" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey4" height="120"  width="90" align="middle" border="0" >
+                <img v-if="show4" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey4" height="120"  width="90" align="middle" border="0" @click="handleRemove4" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -359,7 +359,7 @@
                       <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show5" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey5"height="120"  width="90" align="middle" border="0" >
+                <img v-if="show5" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey5"height="120"  width="90" align="middle" border="0" @click="handleRemove5" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -398,6 +398,7 @@
   import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
     , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb1, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb, insertSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb2,getAttachImageDataByAttachIdWeb,deleteSupnuevoVentasCommodityImage} from '../api/api'
+  import global from '../components/Global'
   export default {
 
     data() {
@@ -745,26 +746,31 @@
         // console.log(res)
         // console.log(file)
         this.imageUrl1 = URL.createObjectURL(file.raw);
+        this.showData(this.priceId)
       },
       handleAvatarSuccess2(res, file) {
         // console.log(res)
         // console.log(file)
         this.imageUrl2 = URL.createObjectURL(file.raw);
+        this.showData(this.priceId)
       },
       handleAvatarSuccess3(res, file) {
         // console.log(res)
         // console.log(file)
         this.imageUrl3 = URL.createObjectURL(file.raw);
+        this.showData(this.priceId)
       },
       handleAvatarSuccess4(res, file) {
         // console.log(res)
         // console.log(file)
         this.imageUrl4 = URL.createObjectURL(file.raw);
+        this.showData(this.priceId)
       },
       handleAvatarSuccess5(res, file) {
         // console.log(res)
         // console.log(file)
         this.imageUrl5 = URL.createObjectURL(file.raw);
+        this.showData(this.priceId)
       },
       beforeAvatarUpload(file) {
         this.$emit('preview',file)
@@ -816,6 +822,7 @@
         })
       },
       fetchData() {
+
         getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
           this.tableData = response.ArrayList
           this.searchList = response.resultList
@@ -848,7 +855,10 @@
         this.imageUrl3 =''
         this.imageUrl4 =''
         this.imageUrl5 =''
-        getCommodityPriceFormByPriceId(row.value).then(response => {      //点击左侧序列取得数据
+        this.showData(row.value)
+      },
+      showData(value){
+        getCommodityPriceFormByPriceId(value+'').then(response => {      //点击左侧序列取得数据
           if(response.imageAttachId1 != null){
             getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response1 => {
               this.dataKey1 = response1.data
@@ -908,7 +918,7 @@
           }
           var i =0
           for (i;i<this.tableData.length;i++){
-            if(row.value==this.tableData[i].value){
+            if(value==this.tableData[i].value){
               this.dangqianshangpin = this.tableData[i].numName
             }
           }
@@ -971,6 +981,7 @@
           }
         })
       },
+
       getCommodityPriceFormByOrderNumWeb() {
         getCommodityPriceFormByOrderNumWeb(this.orderNum+'').then(response => {
           if (response.data.rubroId != null) {
