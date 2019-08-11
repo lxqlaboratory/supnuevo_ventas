@@ -2,7 +2,7 @@
     <div>
       <el-upload
         style="margin-left: 15px;" name="file"
-        :action='baseUrl+url'
+        :action='url'
         :multiple="false"
         :file-list="fileList"
         :data="formData"
@@ -30,7 +30,6 @@
       data() {
         return {
           fileList:[],
-          baseUrl: 'http://localhost/supnuevo_ventas',
           formData:{
             title:'uyjg',
             desc:'fjfj',
@@ -57,12 +56,6 @@
           type:String,
           default:function() {
             return ''
-          }
-        },
-        remarks:{
-          type:String,
-          default:function() {
-            return '只能上传.pdf文件'
           }
         }
       },
@@ -96,7 +89,7 @@
 
 <style scoped>
   .styleBtn{
-    background-color: #A50001;
+    background-color: #409EFF;
     border: none;
     color: #ffffff;
   }

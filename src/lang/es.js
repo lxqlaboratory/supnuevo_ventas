@@ -111,7 +111,8 @@ export default {
     insert:'INSERTAR',
     cover:'REEMPLAZAR',
     edit:"EDITAR",
-    ok:"ACEPTAR"
+    ok:"ACEPTAR",
+    modify_success:'¡CAMBIO EXITOSO!'
   },
   PRODUCTO:{
     codigoEntreno:"codigo interno",

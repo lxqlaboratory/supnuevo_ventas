@@ -112,7 +112,8 @@ export default {
     insert:'插入',
     cover:'覆盖',
     edit:"编辑",
-    ok:"确定"
+    ok:"确定",
+    modify_success:'修改成功'
   },
   PRODUCTO:{
     codigoEntreno:"商品内码",
