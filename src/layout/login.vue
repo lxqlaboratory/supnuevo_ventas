@@ -8,10 +8,10 @@
         <div class="input-form">
           <div style="width: 100%;">
             <div style="position: relative;width: 100%;margin-top: 15px;">
-              <input placeholder="注册时填写的手机号" autocomplete="new-password" v-model="loginForm.loginName" maxlength="11"  class="login-form-input">
+              <input placeholder="注册时填写的手机号" autocomplete="new-password" v-model="loginForm.loginName" maxlength="11"  class="login-form-input" id="loginName">
             </div>
             <div style="position: relative;width: 100%;margin-top: 30px;">
-              <input v-if="isPasswordType" v-model="loginForm.password" maxlength="12" autocomplete="new-password" placeholder="请输入密码" :type="showPassword?'':'password'" class="login-form-input">
+              <input v-if="isPasswordType" v-model="loginForm.password" maxlength="12" autocomplete="new-password" placeholder="请输入密码" :type="showPassword?'':'password'" class="login-form-input" id="password">
               <el-button v-if="isPasswordType" type="text" @click="showPassword=!showPassword"
                          style="position: absolute;top:0;right: 0px;padding-top: 5px;">{{!showPassword?'显示密码':'隐藏密码'}}
               </el-button>
@@ -22,9 +22,10 @@
             <el-button type="primary" style="width: 100%" @click="login" :loading="loading">登录</el-button>
             <div
               style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;width: 100%;margin-top: 25px;">
-              <el-checkbox v-model="ydxy"><span style="font-size: 13px;color: gray !important;">已阅读并同意</span><span
-                style="font-size: 13px;color: #409EFF">《用户使用协议》</span></el-checkbox>
-              <el-button type="text" style="padding: 0;" @click="toRegister">免费注册</el-button>
+              <el-checkbox v-model="checked" id=""><span style="font-size: 13px;color: gray !important;">记住账号密码</span>
+<!--                <span style="font-size: 13px;color: #409EFF">《用户使用协议》</span>-->
+              </el-checkbox>
+<!--              <el-button type="text" style="padding: 0;" @click="toRegister">免费注册</el-button>-->
             </div>
           </div>
         </div>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+  const Base64 = require('js-base64').Base64
   import {login} from '@/api/api'
 
   export default {
@@ -52,25 +54,35 @@
         loading:false,
         loginForm:{
           loginName:'',
-          password:''
+          password:'',
+          remember:''
         },
+        checked:false,
         ydxy: true,
         isPasswordType: true
       }
     },
+    mounted() {
+      this.getCookie();
+    },
     methods:{
-      toRegister(){
-        this.$message({
-          type:"success",
-          message:"跳转注册页"
-        })
-      },
       login:function() {
         this.loading=true;
         login({loginName: this.loginForm.loginName, password: this.loginForm.password}).then(response => {
           console.log(response)
+          const self = this;
+          //判断复选框是否被勾选 勾选则调用配置cookie方法
+          if (self.checked == true) {
+            console.log("checked == true");
+            //传入账号名，密码，和保存天数3个参数
+            self.setCookie(self.loginForm.loginName, self.loginForm.password, 7);
+          }else {
+            console.log("清空Cookie");
+            //清空Cookie
+            self.clearCookie();
+          }
           if (response.reCode == 0) {
-            this.$router.push({ path: this.redirect || '/home/method1' })
+            this.$router.push({ path: this.redirect || '/home/method4' })
           } else {
             this.$message({
               type: 'error',
@@ -81,6 +93,31 @@
         }).catch(error => {
           this.loading = false
         })
+      },
+      //设置cookie
+      setCookie(c_name, c_pwd, exdays) {
+        var exdate = new Date(); //获取时间
+        exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
+        //字符串拼接cookie
+        window.document.cookie = "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
+        window.document.cookie = "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
+      },
+      getCookie: function() {
+        if (document.cookie.length > 0) {
+          var arr = document.cookie.split('; ');
+          for (var i = 0; i < arr.length; i++) {
+            var arr2 = arr[i].split('='); //再次切割
+            //判断查找相对应的值
+            if (arr2[0] == 'userName') {
+              this.loginForm.loginName = arr2[1];
+            } else if (arr2[0] == 'userPwd') {
+              this.loginForm.password = arr2[1];
+            }
+          }
+        }
+      },
+      clearCookie: function() {
+        this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
       }
     }
 

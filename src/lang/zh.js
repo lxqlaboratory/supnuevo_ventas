@@ -97,7 +97,9 @@ export default {
     OldPwd:'旧密码',
     newPwd:'新密码',
     conPwd:'确认密码',
-    ok:'确认'
+    ok:'确认',
+    user:'注册时填写的手机号',
+    pwd:'请输入密码'
   },
   operation:{
     add:"添加",
