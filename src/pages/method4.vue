@@ -307,7 +307,7 @@
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
-                    action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                    :action= action
                     :show-file-list="false"
                     :data="{commodityId : commodityId ,index : 1}"
                     :on-success="handleAvatarSuccess1"
@@ -321,7 +321,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action= "http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :action= action
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 2}"
                       :on-success="handleAvatarSuccess2"
@@ -335,7 +335,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                       :action= action
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 3}"
                       :on-success="handleAvatarSuccess3"
@@ -349,7 +349,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :action= action
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 4}"
                       :on-success="handleAvatarSuccess4"
@@ -363,7 +363,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :action= action
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 5}"
                       :on-success="handleAvatarSuccess5"
@@ -559,6 +559,7 @@
         imageAttachId3:'',
         imageAttachId4:'' ,
         imageAttachId5:'',
+        action:global.address+"ventas/uploadSupnuevoCommodityPhotoImageWeb"
       }
     },
     computed: {
