@@ -38,7 +38,7 @@
         <el-header height="150px" style="text-align: center">
           <br><br>
           <!--条形码尾位查询法-->
-          <div style="width:350px; padding-bottom: 10px; float: left;" v-show="txm" >
+          <div style="width:500px; padding-bottom: 10px; float: left;" v-show="txm" >
             <!--<el-input-->
             <!--v-model="filterText"-->
             <!--placeholder="请输入条形码尾位"-->
@@ -58,7 +58,7 @@
             </el-autocomplete>
           </div>
           <!--引擎查询法-->
-          <div style="width:250px; padding-bottom: 10px; float: left;" v-show="yq" >
+          <div style="width:500px; padding-bottom: 10px; float: left;" v-show="yq" >
             <el-autocomplete
               class="inline-input"
               v-model="filterText"
@@ -68,7 +68,7 @@
               <el-button slot="append" icon="el-icon-search" @click=" search3" />
             </el-autocomplete>
           </div>
-          <div style="width:250px; padding-bottom: 10px; float: left;" v-show="spmc" >
+          <div style="width:500px; padding-bottom: 10px; float: left;" v-show="spmc" >
             <el-autocomplete
               class="inline-input"
               v-model="filterText"
@@ -129,10 +129,10 @@
                 <el-input  v-model="price"/>
               </el-form-item>
               <el-form-item label="">
-                <img :src="src" style="width: 280px; height: 280px;float: right"/>
+                <img :src="src" style="width: 280px; height: 280px;align-items: center"/>
               </el-form-item>
-              <el-button style="margin-left: 55%" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
-              <el-button style="margin-left: 55%" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 55%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 55%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
             </el-aside>
             <el-container>
               <el-main width="60%" style="margin-top: -60px">
@@ -283,11 +283,27 @@
                     <el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice2">{{$t('operation.cover')}}</el-button>
                   </span>
                 </el-dialog>
+                <el-dialog
+                  :visible.sync="imageDialog"
+                  width="40%"
+                  style="margin-left: 50px">
+                  <!--<el-row>-->
+                  <!--分类：<el-input v-model="fenlei" disabled="disable" style="width: 60%"></el-input>-->
+                  <!--</el-row>-->
+                  <!--<br>-->
+                  <!--<el-row>-->
+                  <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
+                  <!--</el-row>-->
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="deleteSupnuevoVentasCommodityImage">删除</el-button>
+                    <el-button @click="">设置为展示图片</el-button>
+                  </span>
+                </el-dialog>
 
                 <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                  <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey1" height="120"  width="90" align="middle" border="0" >
+                  <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey1" height="120"  width="90" align="middle" border="0" @click="handleRemove1" >
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
@@ -357,9 +373,10 @@
                       <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <el-button v-show="save1" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
-                <el-button v-show="save2" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
-
+                <div style="margin-top:29.5%">
+                <el-button v-show="save1"  type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
+                <el-button v-show="save2" type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
+                </div>
               </el-main>
             </el-container>
           </el-container>
@@ -380,7 +397,7 @@
 <script>
   import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
-    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb1, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb, insertSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb2,getAttachImageDataByAttachIdWeb} from '../api/api'
+    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb1, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb, insertSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb2,getAttachImageDataByAttachIdWeb,deleteSupnuevoVentasCommodityImage} from '../api/api'
   export default {
 
     data() {
@@ -399,7 +416,7 @@
           value: 'yq',
           label: 'POR PALABRA CLAVE'
         }],
-        value: '',
+        value: 'CODIGO DE BARRA',
         show: 'false',
         isSave:false,
         newPriceId:'',
@@ -488,7 +505,7 @@
         typ: '',  //型号绑定属性
         volume:'',  //含量绑定属性
         msg:'', // 添加后的返回消息
-        src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563291928298&di=b2134c49452c75f99403eb76f3cd55ab&imgtype=0&src=http%3A%2F%2Fimgqn.koudaitong.com%2Fupload_files%2F2015%2F04%2F15%2FFpx2zXgqBNAt2CBx1wSmT5oHe3Mf.jpg%2521280x280.jpg',
+        src: '',
         dialogVisible1: false, //商品品牌的弹出框
         dialogVisible2: false, //型号的弹出框
         dialogVisible3: false, //含量的弹出框
@@ -527,6 +544,8 @@
         dataKey3:'',
         dataKey4:'',
         dataKey5:'',
+        imageDialog:false,
+        index:''
       }
     },
     computed: {
@@ -538,6 +557,32 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
+
+      deleteSupnuevoVentasCommodityImage(){
+        deleteSupnuevoVentasCommodityImage(this.commodityId,this.index,this.priceId).then(response2 => {
+            alert(1111)
+        })
+      },
+      handleRemove1(){
+        this.imageDialog = true
+        this.index = 1
+      },
+      handleRemove2(){
+        this.imageDialog = true
+        this.index = 2
+      },
+      handleRemove3(){
+        this.imageDialog = true
+        this.index = 3
+      },
+      handleRemove4(){
+        this.imageDialog = true
+        this.index = 4
+      },
+      handleRemove5(){
+        this.imageDialog = true
+        this.index = 5
+      },
       selectMethod(){
         if (this.value == 'txm') {
           this.showtxm()
