@@ -42,32 +42,32 @@
             :before-close="handleClose"
             style="margin-left: 0px;"
           >
-            <el-form label-width="120px">
+            <el-form style="height: 500px;" label-width="220px" >
               <el-form-item  prop="logTimeStr" :label="$t('spgm.logTimeLabel')">
-                <el-input v-model="logTimeStr"  disabled/>
+                <el-input v-model="logTimeStr" disabled/>
               </el-form-item>
-              <el-form-item prop="ventasId" :label="$t('spgm.ventasIdLabel')">
-                <el-input v-model="ventasId" disabled/>
+              <el-form-item prop="ventasId" :label="$t('spgm.ventasIdLabel')" class="dialogStyle">
+                <el-input v-model="ventasId"  disabled/>
               </el-form-item>
-              <el-form-item  prop="logType" :label="$t('spgm.logTypeLabel')">
+              <el-form-item  prop="logType" :label="$t('spgm.logTypeLabel')"  class="dialogStyle">
                 <el-input v-model="logTypeStr" disabled/>
               </el-form-item>
-              <el-form-item  prop="planInfo" :label="$t('spgm.planInfoLabel')">
+              <el-form-item  prop="planInfo" :label="$t('spgm.planInfoLabel')"  class="dialogStyle">
                 <el-input v-model="planInfo" disabled/>
               </el-form-item>
-              <el-form-item prop="oldPlanInfo" :label="$t('spgm.oldPlanInfoLabel')">
+              <el-form-item prop="oldPlanInfo" :label="$t('spgm.oldPlanInfoLabel')" class="dialogStyle">
                 <el-input v-model="oldPlanInfo" disabled/>
               </el-form-item>
-              <el-form-item prop="rentFee" :label="$t('spgm.addFeeLabel')">
+              <el-form-item prop="rentFee" :label="$t('spgm.addFeeLabel')" class="dialogStyle">
                 <el-input v-model="total" disabled/>
               </el-form-item>
-              <el-form-item prop="dayFee" :label="$t('spgm.addFeeTypeLabel')">
+              <el-form-item prop="dayFee" :label="$t('spgm.addFeeTypeLabel')" class="dialogStyle">
                 <el-input v-model="addFeeTypeStr" disabled/>
               </el-form-item>
-              <el-form-item :label="$t('spgm.returnFeeLabel')">
+              <el-form-item :label="$t('spgm.returnFeeLabel')" class="dialogStyle">
                 <el-input v-model="oldBalance" disabled/>
               </el-form-item>
-              <el-form-item :label="$t('spgm.returnFeeTypeLabel')">
+              <el-form-item :label="$t('spgm.returnFeeTypeLabel')" class="dialogStyle">
                 <el-input v-model="returnFeeTypeStr" disabled/>
               </el-form-item>
               <div style="text-align: center">
@@ -311,7 +311,11 @@
 
       buyPlanOfVentas:function(){
         this.dialogVisible = true
-        getSupnuevoVentasLogMapByPlanIdWeb(this.planId).then(response => {
+        if(this.planId == ''){
+          this.dialogVisible = false
+          this.$message.error(this.$t('spgm.buyError'))
+        }
+        getSupnuevoVentasLogMapByPlanIdWeb(this.planId+'').then(response => {
          this.logForm = response.data
           this.logTimeStr = response.data.logTimeStr
           this.logTypeStr = response.data.logTypeStr
@@ -323,6 +327,7 @@
           this.addFeeTypeStr = response.data.addFeeTypeStr
           this.ventasId = response.data.ventasId
         })
+        this.fetchData()
         this.dialogVisible1=false
       },
       addPlanToVentas:function(){
@@ -330,11 +335,11 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '¡PLAN AGREGADO CON EXITO!',
+              message: '¡PLAN AGREGADO CON EXITO!', //购买成功
               type: 'success'
             })
           } else {
-            this.$message.error('PLAN NO SE HA PODIDO AGREGAR')
+            this.$message.error('PLAN NO SE HA PODIDO AGREGAR') //购买失败
           }
           this.dialogVisible = false
         })
@@ -393,4 +398,9 @@
     }
   }
 </script>
+<style>
+   .dialogStyle{
+    margin-top: -15px;
+  }
+</style>
 

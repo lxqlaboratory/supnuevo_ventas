@@ -6,7 +6,8 @@ export default {
     xgmm:'修改密码',
     gys:'供应商信息',
     spjhgm:'商品计划购买',
-    spxxwh:'商品信息维护'
+    spxxwh:'商品信息维护',
+    help:'帮助'
   },
   modifyPasswordModal: {
     oldPassword: '旧密码',
@@ -89,7 +90,8 @@ export default {
     piaojuhao:"票据号",
     jiaofeishijian:"缴费时间",
     shoufeiren:"收费人",
-    beizhu:"备注"
+    beizhu:"备注",
+    buyError:'计划标志为空，不可以添加'
   },
   mm:{
     OldPwd:'旧密码',
