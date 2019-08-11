@@ -824,7 +824,7 @@
       },
       fetchData() {
 
-        this.src1 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey1
+
 
         getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
           this.tableData = response.ArrayList
@@ -864,7 +864,9 @@
         getCommodityPriceFormByPriceId(value+'').then(response => {      //点击左侧序列取得数据
           if(response.imageAttachId1 != null){
             getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response1 => {
+              alert(1111)
               this.dataKey1 = response1.data
+              this.src1 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey1
               if(this.dataKey1 == ''){
                 this.show = false
               }else{
