@@ -129,7 +129,7 @@
                 <el-input  v-model="price"/>
               </el-form-item>
               <el-form-item label="">
-                <img :src="src" style="width: 280px; height: 280px;align-items: center"/>
+                <img v-show="show" :src="src" style="width: 280px; height: 280px;align-items: center"/>
               </el-form-item>
               <el-button style="margin-left: 55%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
               <el-button style="margin-left: 55%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
@@ -296,14 +296,14 @@
                   <!--</el-row>-->
                   <span slot="footer" class="dialog-footer">
                     <el-button @click="deleteSupnuevoVentasCommodityImage">删除</el-button>
-                    <el-button @click="">设置为展示图片</el-button>
+                    <el-button @click="showPicture">设置为展示图片</el-button>
                   </span>
                 </el-dialog>
 
                 <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                  <img v-if="show" :src=src1 height="120"  width="90" align="middle" border="0" @click="handleRemove1" >
+                  <img v-if="show1" :src=src1 height="120"  width="90" align="middle" border="0" @click="handleRemove1" >
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
@@ -317,7 +317,7 @@
                     <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
-                <img v-if="show2" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey2" height="120"  width="90"  align="middle" border="0" @click="handleRemove2" >
+                <img v-if="show2" :src=src2 height="120"  width="90"  align="middle" border="0" @click="handleRemove2" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -331,7 +331,7 @@
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show3" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey3" height="120"  width="90" align="middle" border="0" @click="handleRemove3" >
+                <img v-if="show3" :src=src3 height="120"  width="90" align="middle" border="0" @click="handleRemove3" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -345,7 +345,7 @@
                       <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show4" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey4" height="120"  width="90" align="middle" border="0" @click="handleRemove4" >
+                <img v-if="show4" :src=src4 height="120"  width="90" align="middle" border="0" @click="handleRemove4" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -359,7 +359,7 @@
                       <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show5" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey5"height="120"  width="90" align="middle" border="0" @click="handleRemove5" >
+                <img v-if="show5" :src=src5 height="120"  width="90" align="middle" border="0" @click="handleRemove5" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -373,7 +373,7 @@
                       <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <div style="margin-top:29.5%">
+                <div style="margin-top:15%">
                 <el-button v-show="save1"  type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
                 <el-button v-show="save2" type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
                 </div>
@@ -506,7 +506,6 @@
         typ: '',  //型号绑定属性
         volume:'',  //含量绑定属性
         msg:'', // 添加后的返回消息
-        src: '',
         dialogVisible1: false, //商品品牌的弹出框
         dialogVisible2: false, //型号的弹出框
         dialogVisible3: false, //含量的弹出框
@@ -540,6 +539,7 @@
         lastFourList:[],// 搜索条形码后四位时用的数据
         lastFour:[],
         firstPriceId:'',
+        dataKey:'', // 展示图
         dataKey1:'',
         dataKey2:'',
         dataKey3:'',
@@ -547,7 +547,18 @@
         dataKey5:'',
         imageDialog:false,
         index:'',
-        src1:''
+        src: '',  // 展示图
+        src1:'',  //五张图
+        src2:'',
+        src3:'',
+        src4:'',
+        src5:'',
+        clickImage:'',
+        imageAttachId1 :"",
+        imageAttachId2 :'',
+        imageAttachId3:'',
+        imageAttachId4:'' ,
+        imageAttachId5:'',
       }
     },
     computed: {
@@ -559,15 +570,89 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
+      showPicture(){
+          this.imageDialog = false
+          if (this.index===1){
+            getAttachImageDataByAttachIdWeb((this.imageAttachId1)+'').then(response1 => {
+              this.dataKey = response1.data
+              this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+              this.clickImage = this.imageAttachId1
+              if(this.dataKey == ''){
+                this.show = false
+              }else{
+                this.show= true
+              }
+            })
+          }
+        if (this.index===2){
+          getAttachImageDataByAttachIdWeb((this.imageAttachId2)+'').then(response1 => {
+            this.dataKey = response1.data
+            this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+            this.clickImage = this.imageAttachId2
+            if(this.dataKey == ''){
+              this.show = false
+            }else{
+              this.show= true
+            }
+          })
+        }
+        if (this.index===3){
+          getAttachImageDataByAttachIdWeb((this.imageAttachId3)+'').then(response1 => {
+            this.dataKey = response1.data
+            this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+            this.clickImage = this.imageAttachId3
+            if(this.dataKey == ''){
+              this.show = false
+            }else{
+              this.show= true
+            }
+          })
+        }
+        if (this.index===4){
+          getAttachImageDataByAttachIdWeb((this.imageAttachId4)+'').then(response1 => {
+            this.dataKey = response1.data
+            this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+            this.clickImage = this.imageAttachId4
+            if(this.dataKey == ''){
+              this.show = false
+            }else{
+              this.show= true
+            }
+          })
+        }
+        if (this.index===5){
+          getAttachImageDataByAttachIdWeb((this.imageAttachId5)+'').then(response1 => {
+            this.dataKey = response1.data
+            this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+            this.clickImage = this.imageAttachId5
+            if(this.dataKey == ''){
+              this.show = false
+            }else{
+              this.show= true
+            }
+          })
+        }
 
+      },
       deleteSupnuevoVentasCommodityImage(){
-        deleteSupnuevoVentasCommodityImage(this.commodityId,this.index,this.priceId).then(response2 => {
-            alert(1111)
+        this.imageDialog = false
+        deleteSupnuevoVentasCommodityImage(this.commodityId,this.index,this.priceId).then(res => {
+          if (res.message === "success") {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            // this.fetchData()
+          } else {
+            this.$message.error('删除失败')
+          }
         })
+        this.showData(this.priceId)
       },
       handleRemove1(){
         this.imageDialog = true
         this.index = 1
+        this.src = this.src1
       },
       handleRemove2(){
         this.imageDialog = true
@@ -618,93 +703,23 @@
         this.save2= true
       },
       showFirst(){
-         // alert(this.firstPriceId)
-        getCommodityPriceFormByPriceId(this.firstPriceId).then(response => {      //点击左侧序列取得数据
-          if(response.imageAttachId1 != null){
-            getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response2 => {
-              this.dataKey1 = response2.data
-              if(this.dataKey1 == null){
-                this.show = false
-              }else{
-                this.show = true
-              }
-            })}
-          var i =0
-          for (i;i<this.tableData.length;i++){
-            if(this.firstPriceId==this.tableData[i].value){
-              this.dangqianshangpin = this.tableData[i].numName
-            }
-          }
-          this.codigoEntreno = response.codigoEntreno
-          this.codigo = response.codigo
-          this.price = response.price
-          this.descripcion=response.descripcion
-          this.priceId = response.priceId
-          this.commodityId= response.commodityId
-          this.orderNum = response.orderNum
-          // alert(this.orderNum)
-          // this.getCommodityPriceFormByOrderNumWeb()
-          if (response.rubroId != null) {
-            this.showshangpinpinpai =false
-            this.showxinghao=true
-            this.showhanliang =true
-            var i = 0;
-            // (response.rubroId)
-            for (i; i < this.options.length; i++) {
-              if ((response.rubroId) == this.options[i].catalogId) {
-                this.category = this.options[i].catalogName
-                this.shangpinlei = this.options[i].catalogName;//记录选择的商品类
-                this.shangpinleiParentId = this.options[i].catalogId
-
-              }
-            }
-            // alert((response.rubroId)+"")
-            getCommodityCatalogListOptionInfoList1((response.rubroId) + "").then(response1 => {
-              this.options1 = response1.arrayList
-              for (i = 0; i < this.options1.length; i++) {
-                if ((response.marcaId) == this.options1[i].catalogId) {
-                  this.brand = this.options1[i].catalogName
-                  this.shangpinpinpai = this.options1[i].catalogName;//记录选择的商品品牌
-                  this.shangpinpinpaiParentId = this.options1[i].catalogId
-                  this.rulelist.shangpinpinpaidialog = this.shangpinpinpai
-                }
-              }
-            })
-
-            getCommodityCatalogListOptionInfoList1((response.marcaId) + "").then(response1 => {
-              this.options2 = response1.arrayList
-              for (i = 0; i < this.options2.length; i++) {
-                if ((response.presentacionId) == this.options2[i].catalogId) {
-                  this.typ = this.options2[i].catalogName
-                  this.xinghaoParentId = this.options2[i].catalogId
-                  this.xinghao = this.options2[i].catalogName;//记录选择的型号
-                }
-              }
-            })
-            getCommodityCatalogListOptionInfoList1((response.presentacionId) + "").then(response1 => {
-              this.options3 = response1.arrayList
-              for (i = 0; i < this.options3.length; i++) {
-                if ((response.tamanoId) == this.options3[i].catalogId) {
-                  this.volume = this.options3[i].catalogName
-                  this.hanliangParentId = this.options3[i].catalogId
-                  this.hanliang = this.options3[i].catalogName
-                }
-              }
-            })
-
-          }
-
-
-        })
+        this.category=''
+        this.brand=''
+        this.typ=''
+        this.volume=''
+        this.dataKey1=''
+        this.dataKey2=''
+        this.dataKey3=''
+        this.dataKey4=''
+        this.dataKey5=''
+        this.imageUrl1 =''
+        this.imageUrl2 =''
+        this.imageUrl3 =''
+        this.imageUrl4 =''
+        this.imageUrl5 =''
+        this.showData(this.firstPriceId)
       },
       insert(){
-        //  alert("orderNum"+this.orderNum)
-        // this.priceId = ''
-        // this.codigo = this.newCodigo
-        // this.commodityId = ''
-        // alert(this.priceId)
-        // alert(this.commodityId)
-        // alert(this.codigo)
         getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
           var i = this.orderNum;
           for (i;i<response.ArrayList.length;i++){
@@ -823,9 +838,6 @@
         })
       },
       fetchData() {
-
-
-
         getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
           this.tableData = response.ArrayList
           this.searchList = response.resultList
@@ -848,6 +860,13 @@
         this.brand=''
         this.typ=''
         this.volume=''
+        this.src = ''
+        this.src1 = ''
+        this.src2= ''
+        this.src3 = ''
+        this.src4 = ''
+        this.src5 = ''
+        this.dataKey=''
         this.dataKey1=''
         this.dataKey2=''
         this.dataKey3=''
@@ -862,20 +881,37 @@
       },
       showData(value){
         getCommodityPriceFormByPriceId(value+'').then(response => {      //点击左侧序列取得数据
+          this.imageAttachId1 = response.imageAttachId1
+          this.imageAttachId2 = response.imageAttachId2
+          this.imageAttachId3 = response.imageAttachId3
+          this.imageAttachId4 = response.imageAttachId4
+          this.imageAttachId5 = response.imageAttachId5
+          if(response.imageAttachId != null){
+            getAttachImageDataByAttachIdWeb((response.imageAttachId)+'').then(response1 => {
+              this.dataKey = response1.data
+              this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+              if(this.dataKey == ''){
+                this.show = false
+              }else{
+                this.show= true
+              }
+            })
+          }
           if(response.imageAttachId1 != null){
             getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response1 => {
-              alert(1111)
               this.dataKey1 = response1.data
               this.src1 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey1
               if(this.dataKey1 == ''){
-                this.show = false
+                this.show1 = false
               }else{
-                this.show = true
+                this.show1= true
               }
-            })}
+            })
+          }
           if(response.imageAttachId2 != null){
             getAttachImageDataByAttachIdWeb((response.imageAttachId2)+'').then(response2 => {
               this.dataKey2 = response2.data
+              this.src2 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey2
               if(this.dataKey2== ''){
                 this.show2 = false
               }else{
@@ -888,6 +924,8 @@
           if(response.imageAttachId3 != null) {
             getAttachImageDataByAttachIdWeb((response.imageAttachId3) + '').then(response3 => {
               this.dataKey3 = response3.data
+              this.src3 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey3
+
               if (this.dataKey3 == '') {
                 this.show3 = false
               } else {
@@ -900,6 +938,8 @@
           if(response.imageAttachId4 != null) {
             getAttachImageDataByAttachIdWeb((response.imageAttachId4) + '').then(response4 => {
               this.dataKey4 = response4.data
+              this.src4 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey4
+
               if (this.dataKey4 == '') {
                 this.show4 = false
               } else {
@@ -912,6 +952,7 @@
           if(response.imageAttachId5 != null) {
             getAttachImageDataByAttachIdWeb((response.imageAttachId5) + '').then(response5 => {
               this.dataKey5 = response5.data
+              this.src5 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey5
               if (this.dataKey5 == '') {
                 this.show5 = false
               } else {
@@ -1592,7 +1633,7 @@
        // }
       },
       saveOrUpdateSupnuevoVentasCommodityPrice(){
-        saveOrUpdateSupnuevoVentasCommodityPriceWeb1(this.priceId+'',this.commodityId,this.codigoEntreno+'',this.codigo,this.price+'').then(response => {
+        saveOrUpdateSupnuevoVentasCommodityPriceWeb1(this.priceId+'',this.commodityId,this.codigoEntreno+'',this.codigo,this.price+'',this.clickImage).then(response => {
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
