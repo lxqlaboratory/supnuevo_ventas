@@ -283,11 +283,27 @@
                     <el-button @click="saveOrUpdateSupnuevoVentasCommodityPrice2">{{$t('operation.cover')}}</el-button>
                   </span>
                 </el-dialog>
+                <el-dialog
+                  :visible.sync="imageDialog"
+                  width="40%"
+                  style="margin-left: 50px">
+                  <!--<el-row>-->
+                  <!--分类：<el-input v-model="fenlei" disabled="disable" style="width: 60%"></el-input>-->
+                  <!--</el-row>-->
+                  <!--<br>-->
+                  <!--<el-row>-->
+                  <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
+                  <!--</el-row>-->
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="deleteSupnuevoVentasCommodityImage">删除</el-button>
+                    <el-button @click="">设置为展示图片</el-button>
+                  </span>
+                </el-dialog>
 
                 <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                  <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey1" height="120"  width="90" align="middle" border="0" >
+                  <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey1" height="120"  width="90" align="middle" border="0" @click="handleRemove1" >
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
@@ -381,7 +397,7 @@
 <script>
   import Sortable from 'sortablejs'
   import { getCommodityPriceFormByPriceId, getVentasCommodityPriceOptionList, getCommodityCatalogListOptionInfoList,getCommodityCatalogListOptionInfoList1, insertSupnuevoVentasCommodityPrice, getQueryDataListByInputStringMobile, getDescripcionListByDescripcionPrefix, getCommodityBySearchEngineOld, changeTableStation
-    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb1, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb, insertSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb2,getAttachImageDataByAttachIdWeb} from '../api/api'
+    , getCommodityCatalogListOptionInfoListWeb, addNewCommodityCatalogWeb, modifyCommodityCatalogWeb, deleteCommodityCatalogWeb, getCommodityPriceFormByOrderNumWeb,saveOrUpdateSupnuevoVentasCommodityWeb, deleteSupnuevoVentasCommodityPriceWeb, clearSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb1, getCommodityPriceFormByIndexCodigoWeb, getCommodityPriceFormByCatalogId, getQueryDataListByCodigoLastFourWeb, insertSupnuevoVentasCommodityPriceWeb, saveOrUpdateSupnuevoVentasCommodityPriceWeb2,getAttachImageDataByAttachIdWeb,deleteSupnuevoVentasCommodityImage} from '../api/api'
   export default {
 
     data() {
@@ -528,6 +544,8 @@
         dataKey3:'',
         dataKey4:'',
         dataKey5:'',
+        imageDialog:false,
+        index:''
       }
     },
     computed: {
@@ -539,6 +557,32 @@
       // this.$refs.click1.$el.click();
     },
     methods: {
+
+      deleteSupnuevoVentasCommodityImage(){
+        deleteSupnuevoVentasCommodityImage(this.commodityId,this.index,this.priceId).then(response2 => {
+            alert(1111)
+        })
+      },
+      handleRemove1(){
+        this.imageDialog = true
+        this.index = 1
+      },
+      handleRemove2(){
+        this.imageDialog = true
+        this.index = 2
+      },
+      handleRemove3(){
+        this.imageDialog = true
+        this.index = 3
+      },
+      handleRemove4(){
+        this.imageDialog = true
+        this.index = 4
+      },
+      handleRemove5(){
+        this.imageDialog = true
+        this.index = 5
+      },
       selectMethod(){
         if (this.value == 'txm') {
           this.showtxm()

@@ -423,3 +423,14 @@ export function getSupnuevoVentasPromptInfoObjectListWeb() {
     }
   })
 }
+export function deleteSupnuevoVentasCommodityImage(commodityId,index,priceId) {
+  return request({
+    url: '/ventas/deleteSupnuevoVentasCommodityImage',
+    method: 'post',
+    data: {
+      commodityId,
+      index,
+      priceId
+    }
+  })
+}
