@@ -20,7 +20,7 @@
             <router-link :to="{'name':'method4'}">{{$t('menu.spxxwh')}}</router-link>
           </el-menu-item>
           <el-submenu index="4">
-            <template slot="title">帮助</template>
+            <template slot="title">{{$t('menu.help')}}</template>
             <el-menu-item index="2-1">p</el-menu-item>
             <el-menu-item index="2-2">p</el-menu-item>
             <el-menu-item index="2-3">a</el-menu-item>
@@ -67,7 +67,7 @@
 <style scoped>
   .page-content {
     width: 100%;
-    background-color: ghostwhite;
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
