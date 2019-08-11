@@ -303,7 +303,7 @@
                 <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                  <img v-if="show" :src="'http://localhost/supnuevo_ventas/ventas/getTempBuffedBytesDataWeb?dataKey='+dataKey1" height="120"  width="90" align="middle" border="0" @click="handleRemove1" >
+                  <img v-if="show" :src=src1 height="120"  width="90" align="middle" border="0" @click="handleRemove1" >
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
@@ -321,7 +321,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      action= "http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 2}"
                       :on-success="handleAvatarSuccess2"
@@ -546,7 +546,8 @@
         dataKey4:'',
         dataKey5:'',
         imageDialog:false,
-        index:''
+        index:'',
+        src1:''
       }
     },
     computed: {
@@ -822,6 +823,8 @@
         })
       },
       fetchData() {
+
+        this.src1 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey1
 
         getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
           this.tableData = response.ArrayList
