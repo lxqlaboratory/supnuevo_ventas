@@ -25,7 +25,7 @@
     data() {
       var validateOldPass = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('旧密码不能为空'))
+          return callback(new Error('CLAVE ANTERIOR INVALIDA'))
         }
         callback()
       }
@@ -108,13 +108,13 @@
           if (this.msg === '此用户名不存在！') {
             this.$message({
               type: 'error',
-              message: '此用户名不存在！'
+              message: 'USUARIO INCRRECTO！'  // 用户名不正确
             })
           }
             else if (this.msg === '旧密码输入错！') {
             this.$message({
               type: 'error',
-              message: '旧密码输入错！'
+              message: 'CLAVE ANTERIOR INVALIDA！'  //非法旧密码
             })
           }
             else {

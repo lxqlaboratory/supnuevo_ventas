@@ -437,16 +437,16 @@
         },
         rules: {
           provinceName: [
-            { required: true, message: '请选择送货省份', trigger: 'blur' }
+            { required: true, message: 'PROVINCIA', trigger: 'blur' }   // 送货地区（省）
           ],
           cityName: [
-            { required: true, message: '请选择送货地市', trigger: 'blur' }
+            { required: true, message: 'CIUDAD', trigger: 'blur' }        // 送货地区（市）
           ],
           minAmount: [
-            { required: true, message: '请输入最小订单量', trigger: 'blur' }
+            { required: true, message: 'IMPORTE MINIMO', trigger: 'blur' }   // 最小订单量
           ],
           deliverFee: [
-            { required: true, message: '请输入送货费', trigger: 'blur' }
+            { required: true, message: 'FLETE', trigger: 'blur' }   // 送货费
           ]
         },
         attachId:'',
