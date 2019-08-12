@@ -149,7 +149,7 @@
                   <el-button type="text" @click="judge1" v-show="showshangpinpinpai">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
-                  title="请输入商品品牌"
+                  :title="$t('operation.pleaseInput')"
                   :visible.sync="dialogVisible1"
                   width="40%"
                   style="margin-left: 50px">
@@ -182,7 +182,7 @@
                   <el-button type="text" @click="judge2" v-show="showxinghao">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
-                  title="请输入型号"
+                  :title="$t('operation.pleaseInput')"
                   :visible.sync="dialogVisible2"
                   width="40%"
                   style="margin-left: 50px">
@@ -216,7 +216,7 @@
                   <el-button type="text" @click="judge3" v-show="showhanliang">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
-                  title="请输入含量"
+                  :title="$t('operation.pleaseInput')"
                   :visible.sync="dialogVisible3"
                   width="40%"
                   style="margin-left: 50px">
@@ -704,6 +704,7 @@
         this.imageUrl3 =''
         this.imageUrl4 =''
         this.imageUrl5 =''
+        this.src = ''
         this.showData(this.firstPriceId)
       },
       insert(){
