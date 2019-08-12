@@ -112,7 +112,9 @@ export default {
     cover:'REEMPLAZAR',
     edit:"EDITAR",
     ok:"ACEPTAR",
-    modify_success:'¡CAMBIO EXITOSO!'
+    modify_success:'¡CAMBIO EXITOSO!',
+    clear:'borrar',
+    input:'Razón Social'
   },
   PRODUCTO:{
     codigoEntreno:"codigo interno",
