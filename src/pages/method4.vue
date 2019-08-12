@@ -245,7 +245,7 @@
                 </el-dialog>
 
                 <el-dialog
-                  :title=$t('operation.codigo')
+                  :title="$t('PRODUCTO.codigo')"
                   :visible.sync="codigodialog"
                   width="40%"
                   style="margin-left: 50px">
@@ -446,16 +446,16 @@
         },
         rules: {
           hanliangdialog: [
-            { required: true,message:'Razón Social' , trigger: 'blur' }
+            { required: true,message:'SELECCIONAR' , trigger: 'blur' }
           ],
           shangpinpinpaidialog: [
-            { required: true,message:'Razón Social', trigger: 'blur' }
+            { required: true,message:'SELECCIONAR', trigger: 'blur' }
           ],
           xinghaodialog: [
-            { required: true,message:'Razón Social', trigger: 'blur' }
+            { required: true,message:'SELECCIONAR', trigger: 'blur' }
           ],
           newCodigodialog: [
-            { required: true,message:'Razón Social', trigger: 'blur' }
+            { required: true,message:'SELECCIONAR', trigger: 'blur' }
           ],
         },
         col: [
@@ -576,10 +576,9 @@
           this.imageDialog = false
           if (this.index===1){
             getAttachImageDataByAttachIdWeb((this.imageAttachId1)+'').then(response1 => {
-              this.dataKey = response1.data
-              this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+              this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId1
               this.clickImage = this.imageAttachId1
-              if(this.dataKey == ''){
+              if(this.imageAttachId1 == ''){
                 this.show = false
               }else{
                 this.show= true
@@ -588,10 +587,9 @@
           }
         if (this.index===2){
           getAttachImageDataByAttachIdWeb((this.imageAttachId2)+'').then(response1 => {
-            this.dataKey = response1.data
-            this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId2
             this.clickImage = this.imageAttachId2
-            if(this.dataKey == ''){
+            if(this.imageAttachId2 == ''){
               this.show = false
             }else{
               this.show= true
@@ -600,10 +598,9 @@
         }
         if (this.index===3){
           getAttachImageDataByAttachIdWeb((this.imageAttachId3)+'').then(response1 => {
-            this.dataKey = response1.data
-            this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId3
             this.clickImage = this.imageAttachId3
-            if(this.dataKey == ''){
+            if(this.imageAttachId3 == ''){
               this.show = false
             }else{
               this.show= true
@@ -612,10 +609,9 @@
         }
         if (this.index===4){
           getAttachImageDataByAttachIdWeb((this.imageAttachId4)+'').then(response1 => {
-            this.dataKey = response1.data
-            this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId4
             this.clickImage = this.imageAttachId4
-            if(this.dataKey == ''){
+            if(this.imageAttachId4 == ''){
               this.show = false
             }else{
               this.show= true
@@ -624,10 +620,9 @@
         }
         if (this.index===5){
           getAttachImageDataByAttachIdWeb((this.imageAttachId5)+'').then(response1 => {
-            this.dataKey = response1.data
-            this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
+            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId5
             this.clickImage = this.imageAttachId5
-            if(this.dataKey == ''){
+            if(this.imageAttachId5 == ''){
               this.show = false
             }else{
               this.show= true
@@ -863,12 +858,6 @@
         this.src3 = ''
         this.src4 = ''
         this.src5 = ''
-        this.dataKey=''
-        this.dataKey1=''
-        this.dataKey2=''
-        this.dataKey3=''
-        this.dataKey4=''
-        this.dataKey5=''
         this.imageUrl1 =''
         this.imageUrl2 =''
         this.imageUrl3 =''
@@ -884,78 +873,36 @@
           this.imageAttachId4 = response.imageAttachId4
           this.imageAttachId5 = response.imageAttachId5
           if(response.imageAttachId != null){
-            getAttachImageDataByAttachIdWeb((response.imageAttachId)+'').then(response1 => {
-              this.dataKey = response1.data
-              this.src = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
-              if(this.dataKey == ''){
-                this.show = false
-              }else{
-                this.show= true
-              }
-            })
+            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId
+            this.show = true
           }
           if(response.imageAttachId1 != null){
-            getAttachImageDataByAttachIdWeb((response.imageAttachId1)+'').then(response1 => {
-              this.dataKey1 = response1.data
-              this.src1 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey1
-              if(this.dataKey1 == ''){
-                this.show1 = false
-              }else{
-                this.show1= true
-              }
-            })
+            this.src1 = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId1
+            this.show1 = true
+          }else{
+            this.show1 = false
           }
           if(response.imageAttachId2 != null){
-            getAttachImageDataByAttachIdWeb((response.imageAttachId2)+'').then(response2 => {
-              this.dataKey2 = response2.data
-              this.src2 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey2
-              if(this.dataKey2== ''){
-                this.show2 = false
-              }else{
-                this.show2 = true
-              }
-            })
+            this.src2 = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId2
+             this.show2 = true
           }else{
             this.show2 = false
           }
           if(response.imageAttachId3 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId3) + '').then(response3 => {
-              this.dataKey3 = response3.data
-              this.src3 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey3
-
-              if (this.dataKey3 == '') {
-                this.show3 = false
-              } else {
-                this.show3 = true
-              }
-            })
+            this.src3 = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId3
+           this.show3 = true
           }else{
             this.show3 = false
           }
           if(response.imageAttachId4 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId4) + '').then(response4 => {
-              this.dataKey4 = response4.data
-              this.src4 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey4
-
-              if (this.dataKey4 == '') {
-                this.show4 = false
-              } else {
-                this.show4 = true
-              }
-            })
+            this.src4 = global.address + 'ventas/getAttachImageDataByAttachIdWeb?attachId=' + this.imageAttachId4
+            this.show4 = true
           }else{
             this.show4 = false
           }
           if(response.imageAttachId5 != null) {
-            getAttachImageDataByAttachIdWeb((response.imageAttachId5) + '').then(response5 => {
-              this.dataKey5 = response5.data
-              this.src5 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey5
-              if (this.dataKey5 == '') {
-                this.show5 = false
-              } else {
-                this.show5 = true
-              }
-            })
+            this.src5 = global.address + 'ventas/getAttachImageDataByAttachIdWeb?attachId=' + this.imageAttachId5
+             this.show5 = true
           }else{
             this.show5 = false
           }
