@@ -215,7 +215,7 @@
             </el-table>
             <!--修改-->
             <div>
-              <el-dialog title="编辑修改" :visible.sync="dialogEditFormVisible" width="500px">
+              <el-dialog :label="$t('operation.modify')" :visible.sync="dialogEditFormVisible" width="500px">
                 <el-form ref="editlist" :model="editlist" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
                   <el-form-item  :label="$t('hh.provinceName')" prop="cardId">
                     <el-select v-model="editlist.provinceName" style="width: 80%;" @change="getEditValue" :placeholder="$t('PRODUCTO.select')">
@@ -246,7 +246,7 @@
 
             <!--新建-->
             <div>
-              <el-dialog title="新建" :visible.sync="dialogCreateFormVisible" width="500px">
+              <el-dialog :label="$t('operation.add')" :visible.sync="dialogCreateFormVisible" width="500px">
                 <el-form ref="createList" :model="createList" :rules="rules" label-position="left" label-width="140px" style="width: 400px">
                   <el-form-item :label="$t('hh.provinceName')" prop="cardId">
                     <el-select v-model="createList.provinceName"  style="width: 80%;" @change="getCreateValue" :placeholder="$t('PRODUCTO.select')">
@@ -273,18 +273,6 @@
                   <el-button type="primary" @click="createRouterList('createList')">{{$t('operation.ok')}}</el-button>
                 </div>
               </el-dialog>
-            </div>
-            <!--分页-->
-            <div class="block" style="float: right">
-              <el-pagination
-                :current-page="currentPage"
-                :page-sizes="[10, 20, 50, 100]"
-                :page-size="pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="tableList.length"
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-              />
             </div>
           </el-form-item>
           <el-form-item style="margin-top: -40px;margin-left: 200px;">
@@ -521,15 +509,11 @@
       beforeAvatarUpload(file) {
         this.$emit('preview',file)
         const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
 
         if (!isJPG) {
-          this.$message.error('ERROR. SOLO FORMATO JPG');//上传头像图片只能是 JPG 格式
+          // this.$message.error('ERROR. SOLO FORMATO JPG');//上传头像图片只能是 JPG 格式
         }
-        if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
+        return isJPG;
       },
       editCancel(){
         this.dialogEditFormVisible = false
@@ -763,7 +747,7 @@
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: 'CANCELAR'
           })
         })
       },
