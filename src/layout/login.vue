@@ -8,12 +8,12 @@
         <div class="input-form">
           <div style="width: 100%;">
             <div style="position: relative;width: 100%;margin-top: 15px;">
-              <input placeholder="注册时填写的手机号" autocomplete="new-password" v-model="loginForm.loginName" maxlength="20"  class="login-form-input" id="loginName">
+              <input  autocomplete="new-password" v-model="loginForm.loginName" maxlength="20"  class="login-form-input" id="loginName" :placeholder="$t('mm.user')">
             </div>
             <div style="position: relative;width: 100%;margin-top: 30px;">
-              <input v-if="isPasswordType" v-model="loginForm.password" maxlength="12" autocomplete="new-password" placeholder="请输入密码" :type="showPassword?'':'password'" class="login-form-input" id="password">
+              <input v-if="isPasswordType" v-model="loginForm.password" maxlength="12" autocomplete="new-password"  :type="showPassword?'':'password'" class="login-form-input" id="password" :placeholder="$t('mm.pwd')">
               <el-button v-if="isPasswordType" type="text" @click="showPassword=!showPassword"
-                         style="position: absolute;top:0;right: 0px;padding-top: 5px;">{{!showPassword?'显示密码':'隐藏密码'}}
+                         style="position: absolute;top:0;right: 0px;padding-top: 5px;">
               </el-button>
             </div>
           </div>

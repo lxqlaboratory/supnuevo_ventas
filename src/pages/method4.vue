@@ -26,11 +26,12 @@
         <el-upload
                    :headers="headers"
                    class="avatar-uploader"
-                   action="http://localhost/supnuevo_ventas/ventas/importCommodityPriceWeb"
+                   :action=importAction
                    :show-file-list="true"
-                   style="float:right;margin: 3px;"
+                   style="align-items: center;margin: 5px;margin-left: 17%"
         >
-          <div class="el-upload__text">{{$t('operation.importPrice')}}</div>
+          <el-button type="primary" class="el-upload__text" >{{$t('operation.importPrice')}}</el-button>
+          <!--<div class="el-upload__text">{{$t('operation.importPrice')}}</div>-->
         </el-upload>
         <!--<el-button style="margin-left: 30%;margin-top: 10px" @click="test1">{{$t('operation.importPrice')}}</el-button>-->
       </el-aside>
@@ -244,7 +245,7 @@
                 </el-dialog>
 
                 <el-dialog
-                  title="请输入商品条码"
+                  :title=$t('operation.codigo')
                   :visible.sync="codigodialog"
                   width="40%"
                   style="margin-left: 50px">
@@ -267,7 +268,6 @@
                   </span>
                 </el-dialog>
                 <el-dialog
-                  title="请选择插入还是覆盖"
                   :visible.sync="choosedialog"
                   width="40%"
                   style="margin-left: 50px">
@@ -295,7 +295,7 @@
                   <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
                   <!--</el-row>-->
                   <span slot="footer" class="dialog-footer">
-                    <el-button @click="deleteSupnuevoVentasCommodityImage">删除</el-button>
+                    <el-button @click="deleteSupnuevoVentasCommodityImage">{{$t('operation.delete')}}</el-button>
                     <el-button @click="showPicture">设置为展示图片</el-button>
                   </span>
                 </el-dialog>
@@ -307,7 +307,7 @@
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
-                    action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                    :action= action
                     :show-file-list="false"
                     :data="{commodityId : commodityId ,index : 1}"
                     :on-success="handleAvatarSuccess1"
@@ -321,7 +321,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action= "http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :action= action
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 2}"
                       :on-success="handleAvatarSuccess2"
@@ -335,7 +335,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                       :action= action
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 3}"
                       :on-success="handleAvatarSuccess3"
@@ -349,7 +349,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :action= action
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 4}"
                       :on-success="handleAvatarSuccess4"
@@ -363,7 +363,7 @@
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
-                      action="http://localhost/supnuevo_ventas/ventas/uploadSupnuevoVentasPhotoImageWeb1"
+                      :action= action
                       :show-file-list="false"
                       :data="{commodityId : commodityId ,index : 5}"
                       :on-success="handleAvatarSuccess5"
@@ -446,16 +446,16 @@
         },
         rules: {
           hanliangdialog: [
-            { required: true, message: '请输入', trigger: 'blur' }
+            { required: true,message:'Razón Social' , trigger: 'blur' }
           ],
           shangpinpinpaidialog: [
-            { required: true, message: '请输入', trigger: 'blur' }
+            { required: true,message:'Razón Social', trigger: 'blur' }
           ],
           xinghaodialog: [
-            { required: true, message: '请输入', trigger: 'blur' }
+            { required: true,message:'Razón Social', trigger: 'blur' }
           ],
           newCodigodialog: [
-            { required: true, message: '请输入', trigger: 'blur' }
+            { required: true,message:'Razón Social', trigger: 'blur' }
           ],
         },
         col: [
@@ -559,6 +559,8 @@
         imageAttachId3:'',
         imageAttachId4:'' ,
         imageAttachId5:'',
+        action:global.address+"ventas/uploadSupnuevoCommodityPhotoImageWeb",
+        importAction:global.address+'ventas/importCommodityPriceWeb'
       }
     },
     computed: {
@@ -639,12 +641,12 @@
         deleteSupnuevoVentasCommodityImage(this.commodityId,this.index,this.priceId).then(res => {
           if (res.message === "success") {
             this.$message({
-              message: '删除成功',
+              message: '¡ELIMINADO CON EXITO!',   //删除成功
               type: 'success'
             })
             // this.fetchData()
           } else {
-            this.$message.error('删除失败')
+            this.$message.error('ELIMINACION SIN EXITO') //删除失败
           }
         })
         this.showData(this.priceId)
@@ -734,27 +736,27 @@
       },
       deleteContent(item) {
         alert(item.value)
-        this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('¿ESTA SEGURO QUE DESEA ELIMINARLO?', {   //确定删除吗
+          confirmButtonText: 'ACEPTAR',   // 确定
+          cancelButtonText: 'CANCELAR',   // 取消
           type: 'warning'
         }).then(() => {
           deleteSupnuevoVentasCommodityPriceWeb(item.value).then(res => {
             if (res.re === 1) {
               this.$message({
-                message: '删除成功',
+                message: '¡ELIMINADO CON EXITO!',   //删除成功
                 type: 'success'
               })
-             // this.fetchData()
+              // this.fetchData()
             } else {
-              this.$message.error('删除失败')
+              this.$message.error('ELIMINACION SIN EXITO') //删除失败
             }
           }).catch(e => {
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: 'CANCELAR'   //取消
           })
         })
       },
@@ -791,21 +793,16 @@
       beforeAvatarUpload(file) {
         this.$emit('preview',file)
         const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
         if (!isJPG) {
-          this.$message.error('上传图片只能是 JPG 格式!');
+          // this.$message.error('上传图片只能是 JPG 格式!');
         }
-        if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
+        return isJPG ;
       },
       beforeAvatarUpload1(file) {
         this.$emit('preview',file)
         const isXLS = file.type === 'xls/xlsx';
         if (!isXLS) {
-          this.$message.error('上传文件只能是 xls/xlsx 格式!');
+          // this.$message.error('上传文件只能是 xls/xlsx 格式!');
         }
         return isXLS ;
       },
@@ -1245,14 +1242,14 @@
           this.msg =  response.data.cataLogId
           if (this.msg > 0) {
             this.$message({
-              message: '更新成功',
+              message: 'AGREGADO CON EXITO!',   //添加成功
               type: 'success'
             })
             getCommodityCatalogListOptionInfoList1(this.shangpinleiParentId).then(response => {
               this.options1 = response.arrayList
             })
           } else {
-            this.$message.error('更新失败')
+            this.$message.error('NO SE HA PODIDO AGREGAR')   //添加失败
           }
         })
         this.dialogVisible1=false
@@ -1262,14 +1259,14 @@
           this.msg =  response.data.cataLogId
           if (this.msg > 0) {
             this.$message({
-              message: '更新成功',
+              message: 'AGREGADO CON EXITO!',   //添加成功
               type: 'success'
             })
             getCommodityCatalogListOptionInfoList1(this.shangpinpinpaiParentId).then(response => {
               this.options2 = response.arrayList
             })
           } else {
-            this.$message.error('更新失败')
+            this.$message.error('NO SE HA PODIDO AGREGAR')   //添加失败
           }
         })
         this.dialogVisible2=false
@@ -1279,14 +1276,14 @@
           this.msg =  response.data.cataLogId
           if (this.msg > 0) {
             this.$message({
-              message: '新增成功',
+              message: 'AGREGADO CON EXITO!',   //添加成功
               type: 'success'
             })
             getCommodityCatalogListOptionInfoList1(this.xinghaoParentId).then(response => {
               this.options3 = response.arrayList
             })
           } else {
-            this.$message.error('新增失败')
+            this.$message.error('NO SE HA PODIDO AGREGAR')   //添加失败
           }
         })
         this.dialogVisible3=false
@@ -1296,7 +1293,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '修改成功',
+              message: '¡CAMBIO EXITOSO!',   //修改成功
               type: 'success'
             })
             this.brand=this.rulelist.shangpinpinpaidialog
@@ -1304,7 +1301,7 @@
               this.options1 = response.arrayList
             })
           } else {
-            this.$message.error('修改失败')
+            this.$message.error('NO SE HA PODIDO CAMBIAR (CAMBIO SIN EXITO)')  //修改失败
           }
         })
         this.dialogVisible1=false
@@ -1314,7 +1311,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '修改成功',
+              message: '¡CAMBIO EXITOSO!',   //修改成功
               type: 'success'
             })
             this.typ=this.rulelist.xinghaodialog
@@ -1322,7 +1319,7 @@
               this.options2 = response.arrayList
             })
           } else {
-            this.$message.error('修改失败')
+            this.$message.error('NO SE HA PODIDO CAMBIAR (CAMBIO SIN EXITO)')  //修改失败
           }
         })
         this.dialogVisible2=false
@@ -1332,7 +1329,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '修改成功',
+              message: '¡CAMBIO EXITOSO!',   //修改成功
               type: 'success'
             })
             this.volume=this.rulelist.hanliangdialog
@@ -1340,7 +1337,7 @@
               this.options3 = response.arrayList
             })
           } else {
-            this.$message.error('修改失败')
+            this.$message.error('NO SE HA PODIDO CAMBIAR (CAMBIO SIN EXITO)')  //修改失败
           }
         })
         this.dialogVisible3=false
@@ -1350,7 +1347,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '删除成功',
+              message: '¡ELIMINACION CON EXITO!',   //删除成功
               type: 'success'
             })
             this.brand=''
@@ -1358,7 +1355,7 @@
               this.options1 = response.arrayList
             })
           } else {
-            this.$message.error('删除失败')
+            this.$message.error('ELIMINACION SIN EXITO')   //删除失败
           }
         })
         this.dialogVisible1=false
@@ -1368,7 +1365,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '删除成功',
+              message: '¡ELIMINACION CON EXITO!',   //删除成功
               type: 'success'
             })
             this.typ=''
@@ -1376,7 +1373,7 @@
               this.options2 = response.arrayList
             })
           } else {
-            this.$message.error('删除失败')
+            this.$message.error('ELIMINACION SIN EXITO')   //删除失败
           }
         })
         this.dialogVisible2=false
@@ -1386,7 +1383,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '删除成功',
+              message: '¡ELIMINACION CON EXITO!',   //删除成功
               type: 'success'
             })
             this.volume=''
@@ -1394,7 +1391,7 @@
               this.options3 = response.arrayList
             })
           } else {
-            this.$message.error('删除失败')
+            this.$message.error('ELIMINACION SIN EXITO')   //删除失败
           }
         })
         this.dialogVisible3=false
@@ -1637,15 +1634,13 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '保存成功',
+              message: '¡GUARDADO CON EXITO!',  //保存成功
               type: 'success'
             })
           //  this.fetchData()
           } else {
             this.$message.error('保存失败')
           }
-        }).catch(e => {
-          this.$message.error('保存失败')
         })
       },
 
@@ -1658,7 +1653,7 @@
               this.msg =  response.re
               if (this.msg === 1) {
                 this.$message({
-                  message: '保存成功',
+                  message: '¡GUARDADO CON EXITO!',  //保存成功
                   type: 'success'
                 })
                 this.submit1=true
@@ -1677,7 +1672,7 @@
                     })
                    // this.fetchData()
                   }else {
-                    this.$message.error('删除失败')
+                    this.$message.error('ELIMINACION SIN EXITO')   //删除失败
                   }
                 })
               }
@@ -1697,7 +1692,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '保存成功',
+              message: '¡GUARDADO CON EXITO!',  //保存成功
               type: 'success'
             })
             this.submit1=true
@@ -1717,7 +1712,7 @@
                 })
                // this.fetchData()
               } else {
-                this.$message.error('删除失败')
+                this.$message.error('ELIMINACION SIN EXITO')   //删除失败
               }
             })
           }
@@ -1728,7 +1723,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '保存成功',
+              message: '¡GUARDADO CON EXITO!',  //保存成功
               type: 'success'
             })
             // this.fetchData()
@@ -1742,7 +1737,7 @@
           this.msg =  response.re
           if (this.msg === 1) {
             this.$message({
-              message: '保存成功',
+              message: '¡GUARDADO CON EXITO!',  //保存成功
               type: 'success'
             })
             this.commodityId = response.data.commodityId

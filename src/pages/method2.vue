@@ -11,8 +11,8 @@
         <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" style="width: 25%;" />
       </el-form-item>
       <el-form-item>
-        <el-button v-show="submit" type="primary" class="submitBtn" @click="submitForm()">提交</el-button>
-        <el-button class="resetBtn" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button v-show="submit" type="primary" class="submitBtn" @click="submitForm()">{{$t('operation.submit')}}</el-button>
+        <el-button class="resetBtn" @click="resetForm('ruleForm')">{{$t('operation.clear')}}</el-button>
       </el-form-item>
     </el-form>
   </div>
