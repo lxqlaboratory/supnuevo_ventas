@@ -1395,9 +1395,6 @@
         this.codigo = ''
         this.price = ''
         this.descripcion=''
-        this.priceId = ''
-        this.commodityId= ''
-        this.orderNum = ''
         this.options1 = []
         this.options2 = []
         this.options3 = []
