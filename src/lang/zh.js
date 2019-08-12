@@ -115,7 +115,9 @@ export default {
     ok:"确定",
     modify_success:'修改成功',
     clear:'清空',
-    input:'输入'
+    input:'输入',
+    pleaseInput:"请输入"
+
   },
   PRODUCTO:{
     codigoEntreno:"商品内码",
