@@ -26,7 +26,7 @@
         <el-upload
                    :headers="headers"
                    class="avatar-uploader"
-                   action="http://localhost/supnuevo_ventas/ventas/importCommodityPriceWeb"
+                   :action=importAction
                    :show-file-list="true"
                    style="float:right;margin: 3px;"
         >
@@ -559,7 +559,8 @@
         imageAttachId3:'',
         imageAttachId4:'' ,
         imageAttachId5:'',
-        action:global.address+"ventas/uploadSupnuevoCommodityPhotoImageWeb"
+        action:global.address+"ventas/uploadSupnuevoCommodityPhotoImageWeb",
+        importAction:global.address+'ventas/importCommodityPriceWeb'
       }
     },
     computed: {
