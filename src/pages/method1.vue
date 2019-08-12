@@ -5,62 +5,62 @@
 
         <el-main >
           <el-row>
-            <el-col style="margin-top: -15px;"   :span="10" offset="2">
+            <el-col :span="10" offset="2">
               <el-form-item :label="$t('hh.nickName')" disabled="disabled" >
-                <el-input  v-model="nickName" disabled="disabled" />
+                <el-input size="small" v-model="nickName" disabled="disabled" />
               </el-form-item>
             </el-col>
-            <el-col style="float: right;margin-top: -15px;" :span="10">
+            <el-col style="float: right;" :span="10">
               <el-form-item :label="$t('hh.razon')" prop="razon">
-                <el-input v-model="razon" disabled="disabled" />
+                <el-input size="small" v-model="razon" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;" :span="10" offset="2">
               <el-form-item :label="$t('hh.nombre')" prop="nombre">
-                <el-input v-model="nombre" />
+                <el-input size="small" v-model="nombre" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -20px;" :span="10">
               <el-form-item :label="$t('hh.cuit')">
-                <el-input v-model="cuit" disabled="disabled" />
+                <el-input size="small" v-model="cuit" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;"  :span="10" offset="2">
               <el-form-item :label="$t('hh.contrato')">
-                <el-input v-model="contrato" disabled="disabled" />
+                <el-input size="small" v-model="contrato" disabled="disabled" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -20px;"  :span="10">
               <el-form-item :label="$t('hh.desde')">
-                <el-date-picker style="width: 100%" v-model="desde" disabled="disabled" />
+                <el-date-picker size="small" style="width: 100%" v-model="desde" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;" :span="10" offset="2">
               <el-form-item :label="$t('hh.hasta')">
-                <el-date-picker style="width: 100%" v-model="hasta" disabled="disabled" />
+                <el-date-picker size="small"  style="width: 100%" v-model="hasta" disabled="disabled" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -20px;"  :span="10">
               <el-form-item :label="$t('hh.email')">
-                <el-input v-model="email" />
+                <el-input size="small"  v-model="email" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;"  :span="10" offset="2">
               <el-form-item :label="$t('hh.pagina')">
-                <el-input v-model="pagina" />
+                <el-input size="small"  v-model="pagina" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -20px;" :span="10">
               <el-form-item :label="$t('hh.provinceId')" prop="pro">
-                <el-select v-model="provinceId" style="width: 100%;" clearable @change="getValue" :placeholder="$t('PRODUCTO.select')">
+                <el-select  size="small"  v-model="provinceId" style="width: 100%;" clearable @change="getValue" :placeholder="$t('PRODUCTO.select')">
                   <el-option v-for="item in provinceList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
               </el-form-item>
@@ -69,20 +69,20 @@
           <el-row>
             <el-col style="margin-top: -20px;"  :span="10" offset="2">
               <el-form-item :label="$t('hh.cityId')"  prop="city">
-                <el-select v-model="cityId" style="width: 100%;"clearable :placeholder="$t('PRODUCTO.select')">
+                <el-select size="small"  v-model="cityId" style="width: 100%;"clearable :placeholder="$t('PRODUCTO.select')">
                   <el-option v-for="item in cityList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -20px;"  :span="10">
               <el-form-item :label="$t('hh.direccion')">
-                <el-input v-model="direccion" />
+                <el-input size="small"  v-model="direccion" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;"  :span="10" offset="2">
-              <el-form-item :label="$t('hh.longitude')">
+              <el-form-item size="small"  :label="$t('hh.longitude')">
                 <!--longitude  latitude-->
                 <el-input v-model="longitude" disabled="disabled" style="width: 49%"/>
                 <el-input v-model="latitude" disabled="disabled" style="width: 48%"/>
@@ -90,57 +90,57 @@
             </el-col>
             <el-col style="float: right;margin-top: -20px;"  :span="10">
               <el-form-item :label="$t('hh.telefono')">
-                <el-input v-model="telefono" @keyup.native="proving1" />
+                <el-input  size="small"  v-model="telefono" @keyup.native="proving1" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;"  :span="10" offset="2">
               <el-form-item :label="$t('hh.principalContactos')">
-                <el-input v-model="principalContactos" />
+                <el-input size="small"  v-model="principalContactos" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -20px;"  :span="10">
               <el-form-item :label="$t('hh.ropietario')">
-                <el-input v-model="ropietario" disabled="disabled" />
+                <el-input  size="small" v-model="ropietario" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;"  :span="10" offset="2">
               <el-form-item :label="$t('hh.observaciones')">
-                <el-input v-model="observaciones" />
+                <el-input size="small"  v-model="observaciones" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -20px;"  :span="10">
               <el-form-item :label="$t('hh.planNum')">
-                <el-input v-model="planNum" disabled="disabled" />
+                <el-input size="small"  v-model="planNum" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;" :span="10" offset="2">
               <el-form-item :label="$t('hh.planName')">
-                <el-input v-model="planName" disabled="disabled" />
+                <el-input size="small"  v-model="planName" disabled="disabled" />
               </el-form-item>
             </el-col>
             <el-col style="float: right;margin-top: -20px;"  :span="10">
               <el-form-item :label="$t('hh.planStartEndDate')">
-                <el-input v-model="planStartEndDate" disabled="disabled" />
+                <el-input size="small"  v-model="planStartEndDate" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;" :span="10" offset="2">
               <el-form-item :label="$t('hh.commodityCount')">
-                <el-input v-model="commodityCount" disabled="disabled" />
+                <el-input  size="small" v-model="commodityCount" disabled="disabled" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="margin-top: -20px;margin-bottom: -20px" :span="22" offset="2">
               <el-form-item :label="$t('hh.nota')" offset="2">
-                <el-input v-model="nota" type="textarea" />
+                <el-input  size="small" v-model="nota" type="textarea" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -173,7 +173,7 @@
               <el-table-column
                 :label="$t('hh.provinceName')"
                 align="center"
-                min-width="160"
+                width="160px;"
               >
                 <template slot-scope="scope">
                   {{ scope.row.provinceName }}
@@ -182,7 +182,7 @@
               <el-table-column
                 :label="$t('hh.cityName')"
                 align="center"
-                min-width="160"
+                width="160px;"
               >
                 <template slot-scope="scope">
                   {{ scope.row.cityName }}
@@ -191,7 +191,7 @@
               <el-table-column
                 :label="$t('hh.minAmount')"
                 align="center"
-                min-width="160"
+                width="160px;"
               >
                 <template slot-scope="scope">
                   {{ scope.row.minAmount }}
@@ -200,16 +200,16 @@
               <el-table-column
                 :label="$t('hh.deliverFee')"
                 align="center"
-                min-width="160"
+                width="80%"
               >
                 <template slot-scope="scope">
                   {{ scope.row.deliverFee }}
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('hh.operation')" min-width="160" align="center">
+              <el-table-column :label="$t('hh.operation')" width="250px" align="center">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="openEdit(scope.row)">{{$t('operation.modify')}}</el-button>
-                  <el-button size="mini" @click="deleteContent(scope.row)">{{$t('operation.delete')}}</el-button>
+                  <el-button style="width: 100px;margin-left: 5px;"  size="mini" @click="openEdit(scope.row)">{{$t('operation.modify')}}</el-button>
+                  <el-button style="width: 100px;margin-left: 5px;"  size="mini" @click="deleteContent(scope.row)">{{$t('operation.delete')}}</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -275,7 +275,7 @@
               </el-dialog>
             </div>
           </el-form-item>
-          <el-form-item style="margin-top: -40px;margin-left: 200px;">
+          <el-form-item style="margin-top: -10px;margin-left: 200px;">
             <el-button type="primary" @click="createSave()">{{$t('operation.add')}}</el-button>
             <!--            <el-button type="primary" @click="onSubmit">保存修改</el-button>-->
           </el-form-item>
@@ -506,6 +506,10 @@
         console.log(res)
         console.log(file)
         this.imageUrl = URL.createObjectURL(file.raw);
+        this.$message({
+          type:"success",
+          message:"上传成功"
+        })
       },
       beforeAvatarUpload(file) {
         this.$emit('preview',file)

@@ -4,33 +4,33 @@
       <el-aside style="height: 60%" >
         <el-form label-width="130px"><br>
           <el-form-item  prop="planNum" :label="$t('spgm.planNum')">
-            <el-select v-model="planNum" @change="getValue" style="width: 100% " :placeholder="$t('PRODUCTO.select')">
+            <el-select size="small" v-model="planNum" @change="getValue" style="width: 100% " :placeholder="$t('PRODUCTO.select')">
               <el-option v-for="item in list2" :key="item.planId" :label="item.planNum" :value="item.planId"/>
             </el-select>
           </el-form-item>
-          <el-form-item prop="planName" v-model="planName" :label="$t('spgm.planName')">
-            <el-input v-model="planName" disabled/>
+          <el-form-item style="margin-top:-20px;" prop="planName" v-model="planName" :label="$t('spgm.planName')">
+            <el-input size="small"  v-model="planName" disabled/>
           </el-form-item>
-          <el-form-item  prop="commodityCount" :label="$t('spgm.supnuevoZoom')">
-            <el-input v-model="commodityCount" disabled/>
+          <el-form-item  style="margin-top:-20px;"  prop="commodityCount" :label="$t('spgm.supnuevoZoom')">
+            <el-input size="small"  v-model="commodityCount" disabled/>
           </el-form-item>
-          <el-form-item prop="startDate" :label="$t('spgm.startDate')">
-            <el-input v-model="nowTime" disabled/>
+          <el-form-item style="margin-top:-20px;"  prop="startDate" :label="$t('spgm.startDate')">
+            <el-input size="small"  v-model="nowTime" disabled/>
           </el-form-item>
-          <el-form-item prop="endDate" :label="$t('spgm.endDate')">
-            <el-input v-model="endTime" disabled/>
+          <el-form-item style="margin-top:-20px;"  prop="endDate" :label="$t('spgm.endDate')">
+            <el-input  size="small"  v-model="endTime" disabled/>
           </el-form-item>
-          <el-form-item prop="rentFee" :label="$t('spgm.rentFee')">
-            <el-input v-model="rentFee" disabled/>
+          <el-form-item style="margin-top:-20px;"  prop="rentFee" :label="$t('spgm.rentFee')">
+            <el-input size="small"  v-model="rentFee" disabled/>
           </el-form-item>
-          <el-form-item prop="dayFee" :label="$t('spgm.dayFee')">
-            <el-input v-model="dayFee" disabled/>
+          <el-form-item style="margin-top:-20px;"  prop="dayFee" :label="$t('spgm.dayFee')">
+            <el-input size="small"  v-model="dayFee" disabled/>
           </el-form-item>
-          <el-form-item  :label="$t('spgm.rentFeeBalance')">
-            <el-input v-model="rentFeeBalance" disabled/>
+          <el-form-item  style="margin-top:-20px;"  :label="$t('spgm.rentFeeBalance')">
+            <el-input size="small"  v-model="rentFeeBalance" disabled/>
           </el-form-item>
-          <el-form-item  :label="$t('spgm.count')">
-            <el-input v-model="commodityCount_size" disabled/>
+          <el-form-item  style="margin-top:-20px;"  :label="$t('spgm.count')">
+            <el-input size="small"  v-model="commodityCount_size" disabled/>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="buyPlanOfVentas">{{$t('spgm.buy')}}</el-button>
@@ -90,9 +90,9 @@
           </el-dialog>
         </el-form>
       </el-aside>
-      <el-main style="margin-left: 30px;width: 1000px;">
+      <el-main style="margin-left: 30px;width: 1000px;margin-right: 100px;">
         <el-table
-          style="overflow:visible"
+          style="overflow:visible; "
           id="out-table"
           border
           v-loading="listLoading"
@@ -401,6 +401,9 @@
 <style>
    .dialogStyle{
     margin-top: -15px;
+  }
+  .cell {
+    font-weight: normal;
   }
 </style>
 
