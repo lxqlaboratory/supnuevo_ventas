@@ -16,12 +16,12 @@
                            min-width="70%"
           >
           </el-table-column>
-          <el-table-column label="" min-width="15%" align="center">
-            <template slot-scope="scope">
-              <i class="el-icon-close" @click="deleteContent(scope.row)" ></i>
-              <!--<el-button size="mini" @click="deleteContent(scope.row)">X</el-button>-->
-            </template>
-          </el-table-column>
+          <!--<el-table-column label="" min-width="15%" align="center">-->
+            <!--<template slot-scope="scope">-->
+              <!--<i class="el-icon-close" @click="deleteContent(scope.row)" ></i>-->
+              <!--&lt;!&ndash;<el-button size="mini" @click="deleteContent(scope.row)">X</el-button>&ndash;&gt;-->
+            <!--</template>-->
+          <!--</el-table-column>-->
         </el-table>
         <el-upload
                    :headers="headers"
@@ -132,8 +132,9 @@
               <el-form-item label="">
                 <img v-show="show" :src="src" style="width: 210px; height: 280px;"/>
               </el-form-item>
-              <el-button style="margin-left: 45%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
-              <el-button style="margin-left: 45%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 35%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 35%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
+              <el-button @click="deleteSupnuevoVentasCommodityPrice" type="primary">{{$t('operation.delete')}}</el-button>
             </el-aside>
             <el-container>
               <el-main width="60%" style="margin-top: -60px">
@@ -564,6 +565,7 @@
         action:global.address+"ventas/uploadSupnuevoCommodityPhotoImageWeb",
         importAction:global.address+'ventas/importCommodityPriceWeb',
         // show: false
+        nextPriceId:''
       }
     },
     computed: {
@@ -722,8 +724,43 @@
           }
         })
       },
+      deleteSupnuevoVentasCommodityPrice(){
+        // alert(item.value)
+        this.$confirm('¿ESTA SEGURO QUE DESEA ELIMINARLO?', {   //确定删除吗
+          confirmButtonText: 'ACEPTAR',   // 确定
+          cancelButtonText: 'CANCELAR',   // 取消
+          type: 'warning'
+        }).then(() => {
+          deleteSupnuevoVentasCommodityPriceWeb(this.priceId+'').then(res => {
+            if (res.re === 1) {
+              this.$message({
+                message: '¡ELIMINADO CON EXITO!',   //删除成功
+                type: 'success'
+              })
+              getVentasCommodityPriceOptionList().then(response => {   // 获取左侧序列
+                this.tableData = response.ArrayList
+                this.searchList = response.resultList
+                this.firstPriceId = response.ArrayList[0].value
+                this.result=[{}]
+                for (let item of response.resultList) {
+                  this.result.push({"value": item.codigo})
+                }
+              })
+              this.showData(this.nextPriceId)
+            } else {
+              this.$message.error('ELIMINACION SIN EXITO') //删除失败
+            }
+          }).catch(e => {
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'CANCELAR'   //取消
+          })
+        })
+      },
       deleteContent(item) {
-        alert(item.value)
+        // alert(item.value)
         this.$confirm('¿ESTA SEGURO QUE DESEA ELIMINARLO?', {   //确定删除吗
           confirmButtonText: 'ACEPTAR',   // 确定
           cancelButtonText: 'CANCELAR',   // 取消
@@ -860,12 +897,12 @@
       },
       showData(value){
         getCommodityPriceFormByPriceId(value+'').then(response => {      //点击左侧序列取得数据
-
           this.imageAttachId1 = response.imageAttachId1
           this.imageAttachId2 = response.imageAttachId2
           this.imageAttachId3 = response.imageAttachId3
           this.imageAttachId4 = response.imageAttachId4
           this.imageAttachId5 = response.imageAttachId5
+
           if(response.imageAttachId != null){
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+ response.imageAttachId
             this.show = true
@@ -913,6 +950,12 @@
           this.priceId = response.priceId
           this.commodityId= response.commodityId
           this.orderNum = response.orderNum
+          var i = 0;
+          for (i;i<this.tableData.length;i++){
+            if (this.tableData[i].num==this.orderNum + 1) {
+              this.nextPriceId = this.tableData[i].value
+            }
+          }
           // alert(this.orderNum)
           // this.getCommodityPriceFormByOrderNumWeb()
           if (response.rubroId != null) {
