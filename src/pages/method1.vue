@@ -437,16 +437,16 @@
         },
         rules: {
           provinceName: [
-            { required: true, message: 'PROVINCIA', trigger: 'blur' }   // 送货地区（省）
+            { required: true, message: 'SELECCIONAR', trigger: 'blur' }   // 送货地区（省）
           ],
           cityName: [
-            { required: true, message: 'CIUDAD', trigger: 'blur' }        // 送货地区（市）
+            { required: true, message: 'SELECCIONAR', trigger: 'blur' }        // 送货地区（市）
           ],
           minAmount: [
-            { required: true, message: 'IMPORTE MINIMO', trigger: 'blur' }   // 最小订单量
+            { required: true, message: 'SELECCIONAR', trigger: 'blur' }   // 最小订单量
           ],
           deliverFee: [
-            { required: true, message: 'FLETE', trigger: 'blur' }   // 送货费
+            { required: true, message: 'SELECCIONAR', trigger: 'blur' }   // 送货费
           ]
         },
         attachId:'',

@@ -114,7 +114,8 @@ export default {
     ok:"ACEPTAR",
     modify_success:'¡CAMBIO EXITOSO!',
     clear:'borrar',
-    input:'Razón Social'
+    input:'Razón Social',
+    pleaseInput:"SELECCIONAR"
   },
   PRODUCTO:{
     codigoEntreno:"codigo interno",
