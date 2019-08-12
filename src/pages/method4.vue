@@ -560,7 +560,8 @@
         imageAttachId4:'' ,
         imageAttachId5:'',
         action:global.address+"ventas/uploadSupnuevoCommodityPhotoImageWeb",
-        importAction:global.address+'ventas/importCommodityPriceWeb'
+        importAction:global.address+'ventas/importCommodityPriceWeb',
+        // show: false
       }
     },
     computed: {
@@ -575,7 +576,6 @@
       showPicture(){
           this.imageDialog = false
           if (this.index===1){
-            getAttachImageDataByAttachIdWeb((this.imageAttachId1)+'').then(response1 => {
               this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId1
               this.clickImage = this.imageAttachId1
               if(this.imageAttachId1 == ''){
@@ -583,10 +583,8 @@
               }else{
                 this.show= true
               }
-            })
           }
         if (this.index===2){
-          getAttachImageDataByAttachIdWeb((this.imageAttachId2)+'').then(response1 => {
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId2
             this.clickImage = this.imageAttachId2
             if(this.imageAttachId2 == ''){
@@ -594,10 +592,8 @@
             }else{
               this.show= true
             }
-          })
         }
         if (this.index===3){
-          getAttachImageDataByAttachIdWeb((this.imageAttachId3)+'').then(response1 => {
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId3
             this.clickImage = this.imageAttachId3
             if(this.imageAttachId3 == ''){
@@ -605,10 +601,8 @@
             }else{
               this.show= true
             }
-          })
         }
         if (this.index===4){
-          getAttachImageDataByAttachIdWeb((this.imageAttachId4)+'').then(response1 => {
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId4
             this.clickImage = this.imageAttachId4
             if(this.imageAttachId4 == ''){
@@ -616,10 +610,8 @@
             }else{
               this.show= true
             }
-          })
         }
         if (this.index===5){
-          getAttachImageDataByAttachIdWeb((this.imageAttachId5)+'').then(response1 => {
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId5
             this.clickImage = this.imageAttachId5
             if(this.imageAttachId5 == ''){
@@ -627,7 +619,6 @@
             }else{
               this.show= true
             }
-          })
         }
 
       },
@@ -649,7 +640,6 @@
       handleRemove1(){
         this.imageDialog = true
         this.index = 1
-        this.src = this.src1
       },
       handleRemove2(){
         this.imageDialog = true
@@ -787,7 +777,7 @@
       },
       beforeAvatarUpload(file) {
         this.$emit('preview',file)
-        const isJPG = file.type === 'image/jpeg';
+        const isJPG = file.type === 'image/jpeg'||'image/png'||'image/jpg';
         if (!isJPG) {
           // this.$message.error('上传图片只能是 JPG 格式!');
         }
@@ -867,13 +857,14 @@
       },
       showData(value){
         getCommodityPriceFormByPriceId(value+'').then(response => {      //点击左侧序列取得数据
+
           this.imageAttachId1 = response.imageAttachId1
           this.imageAttachId2 = response.imageAttachId2
           this.imageAttachId3 = response.imageAttachId3
           this.imageAttachId4 = response.imageAttachId4
           this.imageAttachId5 = response.imageAttachId5
           if(response.imageAttachId != null){
-            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId
+            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+ response.imageAttachId
             this.show = true
           }
           if(response.imageAttachId1 != null){
