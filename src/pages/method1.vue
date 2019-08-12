@@ -313,7 +313,7 @@
           <!--照片上传-->
           <div style="margin-top: -40px;">
             <el-form-item :label="$t('hh.upload')">
-              <img v-if="show" :src=src1  height="178" width="178" align="middle" border="0"  alt="ERROR AL ABRIR EL ARCHIVO">
+              <img v-if="show" :src=src1 height="178"  align="middle" border="0" >
               <el-upload v-else
                          class="avatar-uploader"
                          :action=upload1
@@ -469,6 +469,7 @@
     },
 
     created() {
+      this.src1 = '',
       this.show = false
       // var test1 = '8'
       // this.form.type[0] = test1
@@ -613,7 +614,15 @@
             this.provinceList = response.data.provinceList
             this.provinceList1 = response.data.provinceList
             this.rubroIdList = response.data.form.rubroIdList
-            // alert(this.rubroIdList)
+            this.attachIds = response.data.form.attachIds
+
+            this.src1 = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.attachIds
+
+              if(this.attachIds == ''){
+                this.show = false
+              }else{
+                this.show = true
+              }
             var i =0
             for (i;i<response.data.form.rubroIdList.length;i++){
               this.rubroIdList[i]=response.data.form.rubroIdList[i]+''
@@ -632,24 +641,7 @@
               }
             }).catch(e => {
 
-            }),
-              getAttachImageDataByAttachIdWeb((response.data.form.attachIds)+'').then(response2 => {
-                this.dataKey =  response2.data
-                // console.log(response.data.form.attachIds)
-                this.src1 = global.address+'ventas/getTempBuffedBytesDataWeb?dataKey='+this.dataKey
-                console.log(this.src1)
-                if(this.dataKey == null){
-                  this.show = false
-                }else{
-                  this.show = true
-                }
-                /*      console.log(response2.data+'--response2.data=')
-                      getTempBuffedBytesDataWeb((this.dataKey)+'').then(response3 => {
-                        this.fileload = response3.data
-                      })*/
-              }).catch(e => {
-
-              })
+            })
 
           }).catch(e => {
 
