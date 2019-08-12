@@ -130,10 +130,10 @@
                 <el-input  v-model="price"/>
               </el-form-item>
               <el-form-item label="">
-                <img v-show="show" :src="src" style="width: 280px; height: 280px;align-items: center"/>
+                <img v-show="show" :src="src" style="width: 210px; height: 280px;"/>
               </el-form-item>
-              <el-button style="margin-left: 55%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
-              <el-button style="margin-left: 55%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 45%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 45%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
             </el-aside>
             <el-container>
               <el-main width="60%" style="margin-top: -60px">
@@ -149,7 +149,7 @@
                   <el-button type="text" @click="judge1" v-show="showshangpinpinpai">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
-                  title="请输入商品品牌"
+                  :title="$t('operation.pleaseInput')"
                   :visible.sync="dialogVisible1"
                   width="40%"
                   style="margin-left: 50px">
@@ -182,7 +182,7 @@
                   <el-button type="text" @click="judge2" v-show="showxinghao">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
-                  title="请输入型号"
+                  :title="$t('operation.pleaseInput')"
                   :visible.sync="dialogVisible2"
                   width="40%"
                   style="margin-left: 50px">
@@ -216,7 +216,7 @@
                   <el-button type="text" @click="judge3" v-show="showhanliang">{{$t('operation.edit')}}</el-button>
                 </el-form-item>
                 <el-dialog
-                  title="请输入含量"
+                  :title="$t('operation.pleaseInput')"
                   :visible.sync="dialogVisible3"
                   width="40%"
                   style="margin-left: 50px">
@@ -303,7 +303,8 @@
                 <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                  <img v-if="show1" :src=src1 height="120"  width="90" align="middle" border="0" @click="handleRemove1" >
+                <div style="margin-left: 15%">
+                  <img v-if="show1" :src=src1 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove1" >
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
@@ -314,10 +315,10 @@
                     :before-upload="beforeAvatarUpload"
                     style="float:left;margin: 3px;"
                   >
-                    <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
+                    <img v-if="imageUrl1" :src="imageUrl1" class="avatar" style="width: 90px;height: 120px">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
-                <img v-if="show2" :src=src2 height="120"  width="90"  align="middle" border="0" @click="handleRemove2" >
+                <img v-if="show2" :src=src2 style="width: 90px;height: 120px"  align="middle" border="0" @click="handleRemove2" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -328,10 +329,10 @@
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 3px;"
                     >
-                      <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
+                      <img v-if="imageUrl2" :src="imageUrl2" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show3" :src=src3 height="120"  width="90" align="middle" border="0" @click="handleRemove3" >
+                <img v-if="show3" :src=src3 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove3" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -342,10 +343,10 @@
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 3px;"
                     >
-                      <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
+                      <img v-if="imageUrl3" :src="imageUrl3" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show4" :src=src4 height="120"  width="90" align="middle" border="0" @click="handleRemove4" >
+                <img v-if="show4" :src=src4 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove4" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -356,10 +357,10 @@
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 3px;"
                     >
-                      <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
+                      <img v-if="imageUrl4" :src="imageUrl4" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show5" :src=src5 height="120"  width="90" align="middle" border="0" @click="handleRemove5" >
+                <img v-if="show5" :src=src5 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove5" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -370,9 +371,10 @@
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 3px;"
                     >
-                      <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
+                      <img v-if="imageUrl5" :src="imageUrl5" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                </div>
                 <div style="margin-top:15%">
                 <el-button v-show="save1"  type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
                 <el-button v-show="save2" type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
@@ -560,7 +562,8 @@
         imageAttachId4:'' ,
         imageAttachId5:'',
         action:global.address+"ventas/uploadSupnuevoCommodityPhotoImageWeb",
-        importAction:global.address+'ventas/importCommodityPriceWeb'
+        importAction:global.address+'ventas/importCommodityPriceWeb',
+        // show: false
       }
     },
     computed: {
@@ -575,7 +578,6 @@
       showPicture(){
           this.imageDialog = false
           if (this.index===1){
-            getAttachImageDataByAttachIdWeb((this.imageAttachId1)+'').then(response1 => {
               this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId1
               this.clickImage = this.imageAttachId1
               if(this.imageAttachId1 == ''){
@@ -583,10 +585,8 @@
               }else{
                 this.show= true
               }
-            })
           }
         if (this.index===2){
-          getAttachImageDataByAttachIdWeb((this.imageAttachId2)+'').then(response1 => {
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId2
             this.clickImage = this.imageAttachId2
             if(this.imageAttachId2 == ''){
@@ -594,10 +594,8 @@
             }else{
               this.show= true
             }
-          })
         }
         if (this.index===3){
-          getAttachImageDataByAttachIdWeb((this.imageAttachId3)+'').then(response1 => {
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId3
             this.clickImage = this.imageAttachId3
             if(this.imageAttachId3 == ''){
@@ -605,10 +603,8 @@
             }else{
               this.show= true
             }
-          })
         }
         if (this.index===4){
-          getAttachImageDataByAttachIdWeb((this.imageAttachId4)+'').then(response1 => {
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId4
             this.clickImage = this.imageAttachId4
             if(this.imageAttachId4 == ''){
@@ -616,10 +612,8 @@
             }else{
               this.show= true
             }
-          })
         }
         if (this.index===5){
-          getAttachImageDataByAttachIdWeb((this.imageAttachId5)+'').then(response1 => {
             this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId5
             this.clickImage = this.imageAttachId5
             if(this.imageAttachId5 == ''){
@@ -627,7 +621,6 @@
             }else{
               this.show= true
             }
-          })
         }
 
       },
@@ -649,7 +642,6 @@
       handleRemove1(){
         this.imageDialog = true
         this.index = 1
-        this.src = this.src1
       },
       handleRemove2(){
         this.imageDialog = true
@@ -714,6 +706,7 @@
         this.imageUrl3 =''
         this.imageUrl4 =''
         this.imageUrl5 =''
+        this.src = ''
         this.showData(this.firstPriceId)
       },
       insert(){
@@ -787,7 +780,7 @@
       },
       beforeAvatarUpload(file) {
         this.$emit('preview',file)
-        const isJPG = file.type === 'image/jpeg';
+        const isJPG = file.type === 'image/jpeg'||'image/png'||'image/jpg';
         if (!isJPG) {
           // this.$message.error('上传图片只能是 JPG 格式!');
         }
@@ -867,13 +860,14 @@
       },
       showData(value){
         getCommodityPriceFormByPriceId(value+'').then(response => {      //点击左侧序列取得数据
+
           this.imageAttachId1 = response.imageAttachId1
           this.imageAttachId2 = response.imageAttachId2
           this.imageAttachId3 = response.imageAttachId3
           this.imageAttachId4 = response.imageAttachId4
           this.imageAttachId5 = response.imageAttachId5
           if(response.imageAttachId != null){
-            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId
+            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+ response.imageAttachId
             this.show = true
           }
           if(response.imageAttachId1 != null){
@@ -1401,9 +1395,6 @@
         this.codigo = ''
         this.price = ''
         this.descripcion=''
-        this.priceId = ''
-        this.commodityId= ''
-        this.orderNum = ''
         this.options1 = []
         this.options2 = []
         this.options3 = []
