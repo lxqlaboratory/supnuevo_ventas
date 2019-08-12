@@ -130,10 +130,10 @@
                 <el-input  v-model="price"/>
               </el-form-item>
               <el-form-item label="">
-                <img v-show="show" :src="src" style="width: 280px; height: 280px;align-items: center"/>
+                <img v-show="show" :src="src" style="width: 210px; height: 280px;"/>
               </el-form-item>
-              <el-button style="margin-left: 55%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
-              <el-button style="margin-left: 55%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 45%" type="primary" v-show="submit1" @click="saveOrUpdateSupnuevoVentasCommodityPrice">{{$t('operation.submit')}}</el-button>
+              <el-button style="margin-left: 45%" type="primary" v-show="submit2" @click="choose">{{$t('operation.submit')}}</el-button>
             </el-aside>
             <el-container>
               <el-main width="60%" style="margin-top: -60px">
@@ -303,7 +303,8 @@
                 <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
-                  <img v-if="show1" :src=src1 height="120"  width="90" align="middle" border="0" @click="handleRemove1" >
+                <div style="margin-left: 15%">
+                  <img v-if="show1" :src=src1 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove1" >
                     <el-upload v-else
                     :headers="headers"
                     class="avatar-uploader"
@@ -314,10 +315,10 @@
                     :before-upload="beforeAvatarUpload"
                     style="float:left;margin: 3px;"
                   >
-                    <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
+                    <img v-if="imageUrl1" :src="imageUrl1" class="avatar" style="width: 90px;height: 120px">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
-                <img v-if="show2" :src=src2 height="120"  width="90"  align="middle" border="0" @click="handleRemove2" >
+                <img v-if="show2" :src=src2 style="width: 90px;height: 120px"  align="middle" border="0" @click="handleRemove2" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -328,10 +329,10 @@
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 3px;"
                     >
-                      <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
+                      <img v-if="imageUrl2" :src="imageUrl2" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show3" :src=src3 height="120"  width="90" align="middle" border="0" @click="handleRemove3" >
+                <img v-if="show3" :src=src3 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove3" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -342,10 +343,10 @@
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 3px;"
                     >
-                      <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
+                      <img v-if="imageUrl3" :src="imageUrl3" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show4" :src=src4 height="120"  width="90" align="middle" border="0" @click="handleRemove4" >
+                <img v-if="show4" :src=src4 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove4" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -356,10 +357,10 @@
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 3px;"
                     >
-                      <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
+                      <img v-if="imageUrl4" :src="imageUrl4" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                <img v-if="show5" :src=src5 height="120"  width="90" align="middle" border="0" @click="handleRemove5" >
+                <img v-if="show5" :src=src5 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove5" >
                 <el-upload v-else
                       :headers="headers"
                       class="avatar-uploader"
@@ -370,9 +371,10 @@
                       :before-upload="beforeAvatarUpload"
                       style="float:left;margin: 3px;"
                     >
-                      <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
+                      <img v-if="imageUrl5" :src="imageUrl5" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                </div>
                 <div style="margin-top:15%">
                 <el-button v-show="save1"  type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
                 <el-button v-show="save2" type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
