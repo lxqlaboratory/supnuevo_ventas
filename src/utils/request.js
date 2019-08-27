@@ -3,7 +3,8 @@ import { Message } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: '/supnuevo_ventas/func', // url = base url + request url
+//  baseURL: '/supnuevo_ventas/func', // url = base url + request url
+  baseURL: '/func', // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
   headers: {
