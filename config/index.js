@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/supnuevo_ventas': {
-        target: 'http://localhost:8080/supnuevo_ventas/func/',
+        target: 'http://localhost:8080/supnuevo_ventas/',
         secure: true,
         changeOrigin: true,
         pathRewrite: {
@@ -52,7 +52,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/supnuevo_ventas/',
 
     /**
      * Source Maps
