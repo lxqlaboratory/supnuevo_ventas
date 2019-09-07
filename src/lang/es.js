@@ -119,7 +119,7 @@ export default {
   },
   PRODUCTO:{
     codigoEntreno:"codigo interno",
-    codigo:'CODIGO DE BARRAS DE PRODUCTO',
+    codigo:'CODIGO_DE BARRAS_DE_PRODUCTO',
     price:'precio actual',
     category:'RUBRO',
     brand:'MARCA',

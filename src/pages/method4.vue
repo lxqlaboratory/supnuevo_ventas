@@ -116,17 +116,17 @@
 
         <el-form label-width="200px">
           <el-container>
-            <el-aside style="width: 45%;margin-top: -30px;">
+            <el-aside style="width: 45%;margin-top: -50px;">
               <el-form-item  style="width: 100% " label="当前商品" >
                 <el-input disabled v-model="dangqianshangpin" />
               </el-form-item>
-              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.codigoEntreno')" @keyup.native="proving1">
+              <el-form-item  style="width: 100%;margin-top: -10px; " :label="$t('PRODUCTO.codigoEntreno')" @keyup.native="proving1">
                 <el-input v-model="codigoEntreno" />
               </el-form-item>
-              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.codigo')">
+              <el-form-item  style="width: 100%;margin-top: -10px;" :label="$t('PRODUCTO.codigo')">
                 <el-input disabled v-model="codigo"/>
               </el-form-item>
-              <el-form-item  style="width: 100% " :label="$t('PRODUCTO.price')" @keyup.native="proving1">
+              <el-form-item  style="width: 100% ;margin-top: -10px;" :label="$t('PRODUCTO.price')" @keyup.native="proving1">
                 <el-input  v-model="price"/>
               </el-form-item>
               <el-form-item label="">
@@ -137,13 +137,13 @@
               <el-button @click="deleteSupnuevoVentasCommodityPrice" type="primary">{{$t('operation.delete')}}</el-button>
             </el-aside>
             <el-container>
-              <el-main width="60%" style="margin-top: -60px">
+              <el-main width="60%" style="margin-top: -70px">
                 <el-form-item :label="$t('PRODUCTO.category')">
                   <el-select v-model="category"  @change="getValue"  style="width: 80% " :placeholder="$t('PRODUCTO.select')">
                     <el-option v-for="item in options" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId"/>
                   </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('PRODUCTO.brand')">
+                <el-form-item  style="margin-top: -10px" :label="$t('PRODUCTO.brand')">
                   <el-select v-model="brand" value="" @change="getValue1" style="width: 80% " :placeholder="$t('PRODUCTO.select')">
                     <el-option v-for="item in options1" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
                   </el-select>
@@ -162,7 +162,7 @@
                     <!--名称：<el-input v-model="shangpinpinpaidialog" style="width: 60%"></el-input>-->
                   <!--</el-row>-->
                   <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
-                    <el-form-item prop="name" :label="$t('PRODUCTO.catalogPrefixLabel')">
+                    <el-form-item style="margin-top: -10px;" prop="name" :label="$t('PRODUCTO.catalogPrefixLabel')">
                       <el-input v-model="fenlei" disabled="disable" style="width: 90%"></el-input>
                     </el-form-item>
                     <el-form-item prop="shangpinpinpaidialog" :label="$t('PRODUCTO.catalogNameLabel')">
@@ -176,7 +176,7 @@
                     <el-button @click="dialogVisible1 = false">{{$t('operation.cancel')}}</el-button>
                   </span>
                 </el-dialog>
-                <el-form-item :label="$t('PRODUCTO.tye')">
+                <el-form-item style="margin-top: -10px;" :label="$t('PRODUCTO.typ')">
                   <el-select v-model="typ"  @change="getValue2" style="width: 80% " :placeholder="$t('PRODUCTO.select')">
                     <el-option v-for="item in options2" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
                   </el-select>
@@ -196,10 +196,10 @@
                   <!--</el-row>-->
 
                   <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
-                    <el-form-item :label="$t('PRODUCTO.catalogPrefixLabel')">
+                    <el-form-item style="margin-top: -10px;" :label="$t('PRODUCTO.catalogPrefixLabel')">
                       <el-input v-model="fenlei" disabled="disable" style="width: 90%"></el-input>
                     </el-form-item>
-                    <el-form-item  prop="xinghaodialog" :label="$t('PRODUCTO.catalogNameLabel')">
+                    <el-form-item  style="margin-top: -10px;" prop="xinghaodialog" :label="$t('PRODUCTO.catalogNameLabel')">
                       <el-input v-model="rulelist.xinghaodialog" style="width: 90%" autocomplete="off" ></el-input>
                     </el-form-item>
                   </el-form>
@@ -210,7 +210,7 @@
                     <el-button @click="dialogVisible2 = false">{{$t('operation.cancel')}}</el-button>
                   </span>
                 </el-dialog>
-                <el-form-item :label="$t('PRODUCTO.volume')">
+                <el-form-item style="margin-top: -10px;" :label="$t('PRODUCTO.volume')">
                   <el-select v-model="volume"  @change="getValue3" style="width: 80% " :placeholder="$t('PRODUCTO.select')">
                     <el-option v-for="item in options3" :key="item.catalogId" :label="item.catalogName" :value="item.catalogId" />
                   </el-select>
@@ -229,10 +229,10 @@
                     <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
                   <!--</el-row>-->
                   <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
-                    <el-form-item :label="$t('PRODUCTO.catalogPrefixLabel')">
+                    <el-form-item style="margin-top: -10px;" :label="$t('PRODUCTO.catalogPrefixLabel')">
                       <el-input v-model="fenlei" disabled="disable" style="width: 90%"></el-input>
                     </el-form-item>
-                    <el-form-item prop="hanliangdialog" :label="$t('PRODUCTO.catalogNameLabel')">
+                    <el-form-item style="margin-top: -10px;" prop="hanliangdialog" :label="$t('PRODUCTO.catalogNameLabel')">
                       <el-input v-model="rulelist.hanliangdialog" style="width: 90%" autocomplete="off" ></el-input>
                     </el-form-item>
                   </el-form>
@@ -258,7 +258,7 @@
                   <!--名称：<el-input v-model="hanliangdialog" style="width: 60%"></el-input>-->
                   <!--</el-row>-->
                   <el-form ref="rulelist" :model="rulelist" :rules="rules" label-position="left" label-width="140px" style="width: 90%; margin-left:50px;">
-                    <el-form-item prop="newCodigo" :label="$t('PRODUCTO.catalogNameLabel')">
+                    <el-form-item style="margin-top: -10px;" prop="newCodigo" :label="$t('PRODUCTO.catalogNameLabel')">
                       <el-input v-model="rulelist.newCodigodialog" style="width: 90%" autocomplete="off" ></el-input>
                     </el-form-item>
                   </el-form>
@@ -301,10 +301,11 @@
                   </span>
                 </el-dialog>
 
-                <el-form-item :label="$t('PRODUCTO.descripcionLabel')">
+                <el-form-item style="margin-top: -10px;" :label="$t('PRODUCTO.descripcionLabel')">
                   <el-input style="width: 80% " v-model="descripcion" />
                 </el-form-item>
                 <div style="margin-left: 15%">
+                  <div style="float: left;">
                   <img v-if="show1" :src=src1 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove1" >
                     <el-upload v-else
                     :headers="headers"
@@ -314,11 +315,13 @@
                     :data="{commodityId : commodityId ,index : 1}"
                     :on-success="handleAvatarSuccess1"
                     :before-upload="beforeAvatarUpload"
-                    style="float:left;margin: 3px;"
+                    style="margin: 3px;"
                   >
                     <img v-if="imageUrl1" :src="imageUrl1" class="avatar" style="width: 90px;height: 120px">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
+                  </div>
+                  <div style="float: left">
                 <img v-if="show2" :src=src2 style="width: 90px;height: 120px"  align="middle" border="0" @click="handleRemove2" >
                 <el-upload v-else
                       :headers="headers"
@@ -328,11 +331,13 @@
                       :data="{commodityId : commodityId ,index : 2}"
                       :on-success="handleAvatarSuccess2"
                       :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 3px;"
+                      style="margin: 3px;"
                     >
                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                  </div>
+                  <div style="float: left;">
                 <img v-if="show3" :src=src3 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove3" >
                 <el-upload v-else
                       :headers="headers"
@@ -342,11 +347,13 @@
                       :data="{commodityId : commodityId ,index : 3}"
                       :on-success="handleAvatarSuccess3"
                       :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 3px;"
+                      style="margin: 3px;"
                     >
                       <img v-if="imageUrl3" :src="imageUrl3" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                  </div>
+                  <div style="float: left;">
                 <img v-if="show4" :src=src4 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove4" >
                 <el-upload v-else
                       :headers="headers"
@@ -356,11 +363,13 @@
                       :data="{commodityId : commodityId ,index : 4}"
                       :on-success="handleAvatarSuccess4"
                       :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 3px;"
+                      style="margin: 3px;"
                     >
                       <img v-if="imageUrl4" :src="imageUrl4" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                  </div>
+                  <div style="float: left;">
                 <img v-if="show5" :src=src5 style="width: 90px;height: 120px" align="middle" border="0" @click="handleRemove5" >
                 <el-upload v-else
                       :headers="headers"
@@ -370,13 +379,14 @@
                       :data="{commodityId : commodityId ,index : 5}"
                       :on-success="handleAvatarSuccess5"
                       :before-upload="beforeAvatarUpload"
-                      style="float:left;margin: 3px;"
+                      style="margin: 3px;"
                     >
                       <img v-if="imageUrl5" :src="imageUrl5" class="avatar" style="width: 90px;height: 120px">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                  </div>
                 </div>
-                <div style="margin-top:15%">
+                <div style="margin-top:15%;margin-top: -20px;">
                 <el-button v-show="save1"  type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity">{{$t('operation.save')}}</el-button>
                 <el-button v-show="save2" type="primary" style="margin-left: 50%;margin-top: 40px" @click="saveOrUpdateSupnuevoVentasCommodity1">{{$t('operation.save')}}</el-button>
                 </div>
@@ -897,42 +907,42 @@
       },
       showData(value){
         getCommodityPriceFormByPriceId(value+'').then(response => {      //点击左侧序列取得数据
-          this.imageAttachId1 = response.imageAttachId1
-          this.imageAttachId2 = response.imageAttachId2
-          this.imageAttachId3 = response.imageAttachId3
-          this.imageAttachId4 = response.imageAttachId4
-          this.imageAttachId5 = response.imageAttachId5
-
-          if(response.imageAttachId != null){
-            this.src = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+ response.imageAttachId
+          this.imageAttachId1 = response.imageUrl1
+          this.imageAttachId2 = response.imageUrl2
+          this.imageAttachId3 = response.imageUrl3
+          this.imageAttachId4 = response.imageUrl4
+          this.imageAttachId5 = response.imageUrl5
+          this.codigo = response.codigo
+          if(this.imageAttachId != null){
+            this.src = global.prex + response.imageUrl
             this.show = true
           }
-          if(response.imageAttachId1 != null){
-            this.src1 = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId1
+          if(this.imageAttachId1 != null){
+            this.src1 = global.prex + this.imageAttachId1
             this.show1 = true
           }else{
             this.show1 = false
           }
-          if(response.imageAttachId2 != null){
-            this.src2 = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId2
+          if(this.imageAttachId2 != null){
+            this.src2 = global.prex+this.imageAttachId2
              this.show2 = true
           }else{
             this.show2 = false
           }
-          if(response.imageAttachId3 != null) {
-            this.src3 = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.imageAttachId3
+          if(this.imageAttachId3 != null) {
+            this.src3 = global.prex+this.imageAttachId3
            this.show3 = true
           }else{
             this.show3 = false
           }
-          if(response.imageAttachId4 != null) {
-            this.src4 = global.address + 'ventas/getAttachImageDataByAttachIdWeb?attachId=' + this.imageAttachId4
+          if(this.imageAttachId4 != null) {
+            this.src4 = global.prex+this.imageAttachId4
             this.show4 = true
           }else{
             this.show4 = false
           }
-          if(response.imageAttachId5 != null) {
-            this.src5 = global.address + 'ventas/getAttachImageDataByAttachIdWeb?attachId=' + this.imageAttachId5
+          if(this.imageAttachId5 != null) {
+            this.src5 = global.prex+this.imageAttachId5
              this.show5 = true
           }else{
             this.show5 = false

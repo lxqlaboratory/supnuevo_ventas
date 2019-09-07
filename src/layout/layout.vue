@@ -3,7 +3,7 @@
     <div class="part-top">
       <div class="part-bar"/>
       <div class="part-title">
-        <img src="https://supnuevoweb.com.ar/wp-content/uploads/2019/02/logo.png" alt="SupNuevo" id="logo"
+        <img src="https://supnuevoweb.com.ar/wp-content/uploads/2019/02/logo.png" height="61px" width="216px" alt="SupNuevo" id="logo"
              data-height-percentage="54" data-actual-width="216" data-actual-height="60">
         <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">-->
         <el-menu class="el-menu-demo" mode="horizontal">
