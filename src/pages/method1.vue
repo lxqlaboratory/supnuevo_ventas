@@ -620,7 +620,7 @@
             this.rubroIdList = response.data.form.rubroIdList
             this.attachIds = response.data.form.attachIds
 
-            this.src1 = global.address+'ventas/getAttachImageDataByAttachIdWeb?attachId='+this.attachIds
+            this.src1 = global.prex + response.data.form.imageUrl
 
               if(this.attachIds == ''){
                 this.show = false
